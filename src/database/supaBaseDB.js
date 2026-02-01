@@ -42,19 +42,30 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
  */
 export const UserDB = {
   async create(phone, data = {}) {
-    const { data: user, error } = await supabase
-      .from("users")
-      .insert([
-        {
-          phone,
-          preferences: data.preferences || {},
-        },
-      ])
-      .select()
-      .single();
+    try {
+      console.log("[supabase] Inserting user for", phone);
+      const { data: user, error } = await supabase
+        .from("users")
+        .insert([
+          {
+            phone,
+            preferences: data.preferences || {},
+          },
+        ])
+        .select()
+        .single();
 
-    if (error) throw error;
-    return user;
+      if (error) {
+        console.error("[supabase] Error inserting user:", error);
+        throw error;
+      }
+
+      console.log("[supabase] Inserted user id=", user?.id);
+      return user;
+    } catch (err) {
+      console.error("[supabase] create(user) failed:", err?.message || err);
+      throw err;
+    }
   },
 
   async get(phone) {
@@ -102,22 +113,33 @@ export const UserDB = {
  */
 export const ExpenseDB = {
   async create(phone, expenseData) {
-    const { data, error } = await supabase
-      .from("expenses")
-      .insert([
-        {
-          phone,
-          amount: expenseData.amount,
-          category: expenseData.category || "uncategorized",
-          description: expenseData.description || "",
-          date: expenseData.date || new Date().toISOString(),
-        },
-      ])
-      .select()
-      .single();
+    try {
+      console.log("[supabase] Inserting expense for", phone, expenseData);
+      const { data, error } = await supabase
+        .from("expenses")
+        .insert([
+          {
+            phone,
+            amount: expenseData.amount,
+            category: expenseData.category || "uncategorized",
+            description: expenseData.description || "",
+            date: expenseData.date || new Date().toISOString(),
+          },
+        ])
+        .select()
+        .single();
 
-    if (error) throw error;
-    return data;
+      if (error) {
+        console.error("[supabase] Error inserting expense:", error);
+        throw error;
+      }
+
+      console.log("[supabase] Inserted expense id=", data?.id);
+      return data;
+    } catch (err) {
+      console.error("[supabase] create(expense) failed:", err?.message || err);
+      throw err;
+    }
   },
 
   async getByUser(phone) {
