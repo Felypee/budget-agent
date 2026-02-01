@@ -1,8 +1,8 @@
 // DB selector: exports the same names used across the app
 // Use DB_DRIVER env var to choose between 'inmemory' (default) and 'supabase'
-import * as InMemory from './inMemoryDB.js';
+import * as InMemory from "./inMemoryDB.js";
 
-const driver = (process.env.DB_DRIVER || 'inmemory').toLowerCase();
+const driver = (process.env.DB_DRIVER || "inmemory").toLowerCase();
 
 let UserDB = InMemory.UserDB;
 let ExpenseDB = InMemory.ExpenseDB;
@@ -12,9 +12,16 @@ let supabase = null;
 
 // Dynamically import supabase implementation only when requested.
 // The supabase module throws on missing env vars, so avoid static import.
-if (driver === 'supabase' || driver === 'supa') {
+if (driver === "supabase" || driver === "supa") {
   try {
-    const Supabase = await import('./supabaseDB.js');
+    // Try the expected filename first, but some filesystems/case issues can make the
+    // actual file name different (supaBaseDB.js). Try both to be robust in deploy.
+    let Supabase;
+    try {
+      Supabase = await import("./supabaseDB.js");
+    } catch (e) {
+      Supabase = await import("./supaBaseDB.js");
+    }
     UserDB = Supabase.UserDB;
     ExpenseDB = Supabase.ExpenseDB;
     BudgetDB = Supabase.BudgetDB;
@@ -22,8 +29,13 @@ if (driver === 'supabase' || driver === 'supa') {
     supabase = Supabase.supabase;
   } catch (err) {
     // If dynamic import fails, keep using in-memory and warn
-    console.warn('Could not load Supabase DB module, falling back to in-memory DB:', err.message || err);
+    console.warn(
+      "Could not load Supabase DB module, falling back to in-memory DB:",
+      err.message || err,
+    );
   }
 }
+
+console.log("[database] DB_DRIVER=", driver);
 
 export { UserDB, ExpenseDB, BudgetDB, testConnection, supabase };
