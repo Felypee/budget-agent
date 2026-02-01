@@ -1,0 +1,27 @@
+{
+  "name": "financeflow-mvp",
+  "version": "1.0.0",
+  "description": "WhatsApp-based AI expense manager with MCP integration",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "mcp-server": "node mcp-servers/expense-analytics/server.js"
+  },
+  "keywords": [
+    "whatsapp",
+    "expenses",
+    "mcp",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.93.3",
+    "axios": "^1.6.0",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  }
+}
