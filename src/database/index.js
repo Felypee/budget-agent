@@ -17,11 +17,7 @@ if (driver === "supabase" || driver === "supa") {
     // Try the expected filename first, but some filesystems/case issues can make the
     // actual file name different (supaBaseDB.js). Try both to be robust in deploy.
     let Supabase;
-    try {
-      Supabase = await import("./supabaseDB.js");
-    } catch (e) {
-      Supabase = await import("./supabaseDB.js");
-    }
+    Supabase = await import("./supabaseDB.js");
     UserDB = Supabase.UserDB;
     ExpenseDB = Supabase.ExpenseDB;
     BudgetDB = Supabase.BudgetDB;
