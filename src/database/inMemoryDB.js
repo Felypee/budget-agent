@@ -24,6 +24,7 @@ export const UserDB = {
       phone,
       createdAt: new Date(),
       preferences: {},
+      currency: null,
       ...data
     };
     users.set(phone, user);
@@ -49,6 +50,20 @@ export const UserDB = {
 
   all() {
     return Array.from(users.values());
+  },
+
+  setCurrency(phone, currency) {
+    const user = users.get(phone);
+    if (user) {
+      user.currency = currency;
+      users.set(phone, user);
+    }
+    return user;
+  },
+
+  getCurrency(phone) {
+    const user = users.get(phone);
+    return user ? user.currency : null;
   }
 };
 

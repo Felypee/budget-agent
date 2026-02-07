@@ -115,27 +115,30 @@ Be conversational, helpful, and concise. Keep responses under 200 words for What
   }
 
   /**
-   * Detect if message contains an expense and extract it
+   * Detect if message contains expenses and extract them (supports multiple expenses)
+   * Returns: { detected: boolean, expenses: Array<{amount, category, description}> }
    */
-  async detectExpense(message) {
-    const systemPrompt = `Extract expense information from user messages. 
-Return ONLY a JSON object with: amount (number), category (string), description (string).
-If no expense is detected, return: {"detected": false}
+  async detectExpenses(message) {
+    const systemPrompt = `Extract ALL expense information from user messages. A single message may contain multiple expenses.
+Return ONLY a JSON object with: {"detected": boolean, "expenses": [...]}
+Each expense in the array should have: amount (number), category (string), description (string).
+If no expenses are detected, return: {"detected": false, "expenses": []}
 
 Categories: food, transport, shopping, entertainment, bills, health, other
 
 Examples:
-"Spent 45 on groceries" → {"detected": true, "amount": 45, "category": "food", "description": "groceries"}
-"Lunch was 15 dollars" → {"detected": true, "amount": 15, "category": "food", "description": "lunch"}
-"Uber to work 12" → {"detected": true, "amount": 12, "category": "transport", "description": "Uber to work"}
-"How am I doing?" → {"detected": false}`;
+"Spent 45 on groceries" → {"detected": true, "expenses": [{"amount": 45, "category": "food", "description": "groceries"}]}
+"Lunch was 15 dollars" → {"detected": true, "expenses": [{"amount": 15, "category": "food", "description": "lunch"}]}
+"I spent 1000 on lunch and 300 on internet service" → {"detected": true, "expenses": [{"amount": 1000, "category": "food", "description": "lunch"}, {"amount": 300, "category": "bills", "description": "internet service"}]}
+"Uber 12, coffee 5, and groceries 80" → {"detected": true, "expenses": [{"amount": 12, "category": "transport", "description": "Uber"}, {"amount": 5, "category": "food", "description": "coffee"}, {"amount": 80, "category": "food", "description": "groceries"}]}
+"How am I doing?" → {"detected": false, "expenses": []}`;
 
     try {
       const response = await axios.post(
         ANTHROPIC_API_URL,
         {
           model: "claude-sonnet-4-20250514",
-          max_tokens: 200,
+          max_tokens: 500,
           messages: [{ role: "user", content: message }],
           system: systemPrompt,
         },
@@ -156,10 +159,22 @@ Examples:
       return JSON.parse(cleaned);
     } catch (error) {
       console.error(
-        "Error detecting expense:",
+        "Error detecting expenses:",
         error.response?.data || error.message,
       );
-      return { detected: false };
+      return { detected: false, expenses: [] };
     }
+  }
+
+  /**
+   * Legacy method for backward compatibility - detects single expense
+   * @deprecated Use detectExpenses() instead
+   */
+  async detectExpense(message) {
+    const result = await this.detectExpenses(message);
+    if (result.detected && result.expenses.length > 0) {
+      return { detected: true, ...result.expenses[0] };
+    }
+    return { detected: false };
   }
 }

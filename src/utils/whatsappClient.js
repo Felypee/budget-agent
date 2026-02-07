@@ -98,3 +98,41 @@ export async function markAsRead(messageId) {
     console.error('Error marking message as read:', error.response?.data || error.message);
   }
 }
+
+/**
+ * Download media from WhatsApp
+ * @param {string} mediaId - The media ID from the message
+ * @returns {Promise<{buffer: Buffer, mimeType: string}>}
+ */
+export async function downloadMedia(mediaId) {
+  try {
+    // First, get the media URL
+    const mediaResponse = await axios.get(
+      `${WHATSAPP_API_URL}/${mediaId}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${ACCESS_TOKEN}`
+        }
+      }
+    );
+
+    const mediaUrl = mediaResponse.data.url;
+    const mimeType = mediaResponse.data.mime_type;
+
+    // Download the actual media file
+    const fileResponse = await axios.get(mediaUrl, {
+      headers: {
+        'Authorization': `Bearer ${ACCESS_TOKEN}`
+      },
+      responseType: 'arraybuffer'
+    });
+
+    return {
+      buffer: Buffer.from(fileResponse.data),
+      mimeType
+    };
+  } catch (error) {
+    console.error('Error downloading media:', error.response?.data || error.message);
+    throw error;
+  }
+}

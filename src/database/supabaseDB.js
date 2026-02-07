@@ -50,6 +50,7 @@ export const UserDB = {
           {
             phone,
             preferences: data.preferences || {},
+            currency: data.currency || null,
           },
         ])
         .select()
@@ -105,6 +106,29 @@ export const UserDB = {
 
     if (error) throw error;
     return data;
+  },
+
+  async setCurrency(phone, currency) {
+    const { data: user, error } = await supabase
+      .from("users")
+      .update({ currency })
+      .eq("phone", phone)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return user;
+  },
+
+  async getCurrency(phone) {
+    const { data, error } = await supabase
+      .from("users")
+      .select("currency")
+      .eq("phone", phone)
+      .single();
+
+    if (error && error.code !== "PGRST116") throw error;
+    return data ? data.currency : null;
   },
 };
 
