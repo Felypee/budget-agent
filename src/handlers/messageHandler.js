@@ -17,6 +17,10 @@ import {
   processExpenseImage,
   processExpenseAudio,
 } from "../utils/mediaProcessor.js";
+import {
+  hasPendingReminder,
+  clearPendingReminder,
+} from "../services/reminderService.js";
 
 /**
  * Handle incoming WhatsApp messages
@@ -46,9 +50,21 @@ export async function handleIncomingMessage(message, phone) {
       console.log(`📨 Text from ${phone}: ${messageText}`);
       response = await processCommand(phone, messageText);
     } else if (message.type === "interactive") {
-      const messageText = message.interactive.button_reply.title;
-      console.log(`📨 Button from ${phone}: ${messageText}`);
-      response = await processCommand(phone, messageText);
+      const buttonId = message.interactive.button_reply.id;
+      const buttonTitle = message.interactive.button_reply.title;
+      console.log(`📨 Button from ${phone}: ${buttonTitle} (${buttonId})`);
+
+      // Handle reminder button responses
+      if (buttonId === "reminder_yes") {
+        clearPendingReminder(phone);
+        response = `Great! Tell me what you spent. You can:\n\n• Type: "Spent 50 on lunch"\n• Send a photo of your receipt\n• Send a voice message`;
+      } else if (buttonId === "reminder_no") {
+        clearPendingReminder(phone);
+        response = `No problem! I'll check in with you later. Keep tracking your expenses!`;
+      } else {
+        // Other button responses - process as command
+        response = await processCommand(phone, buttonTitle);
+      }
     } else if (message.type === "image") {
       console.log(`📷 Image from ${phone}`);
       response = await processImageMessage(phone, message.image, user.currency);

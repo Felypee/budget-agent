@@ -40,6 +40,7 @@ cd mcp-servers/expense-analytics && npm install
 - **src/agents/financeAgent.js**: Claude integration - `detectExpenses()` extracts multiple expenses from text, `processMessage()` handles general queries with financial context
 - **src/utils/currencyUtils.js**: Currency detection from phone country codes, amount validation, and formatting
 - **src/utils/mediaProcessor.js**: Image OCR (Claude Vision) and audio transcription (Whisper) for expense extraction
+- **src/services/reminderService.js**: Scheduled reminders at 12 PM and 9 PM using node-cron
 - **src/database/index.js**: DB selector using `DB_DRIVER` env var (`inmemory` or `supabase`)
 - **src/database/inMemoryDB.js**: In-memory storage with UserDB, ExpenseDB, BudgetDB classes
 - **src/database/supabaseDB.js**: Supabase implementation (same interface as inMemoryDB)
@@ -65,6 +66,9 @@ For Supabase:
 For voice messages (at least one required):
 - `GROQ_API_KEY` - Groq Whisper API (free tier available, preferred)
 - `OPENAI_API_KEY` - OpenAI Whisper API ($0.006/min fallback)
+
+For reminders (optional):
+- `REMINDER_SECRET` - Secret token to protect the /api/reminders endpoint
 
 ## Code Patterns
 

@@ -3,6 +3,11 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import { handleIncomingMessage } from './handlers/messageHandler.js';
 import { verifyWebhook } from './utils/webhookVerification.js';
+import {
+  startReminderScheduler,
+  sendRemindersToAllUsers,
+  sendExpenseReminder,
+} from './services/reminderService.js';
 
 dotenv.config();
 
@@ -14,6 +19,44 @@ app.use(bodyParser.json());
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', message: 'FinanceFlow server is running' });
+});
+
+// Reminder endpoint - can be triggered by external cron services (e.g., cron-job.org)
+// Optional: Add a secret token for security
+const REMINDER_SECRET = process.env.REMINDER_SECRET;
+
+app.post('/api/reminders/send', async (req, res) => {
+  // Verify secret if configured
+  if (REMINDER_SECRET) {
+    const token = req.headers['x-reminder-secret'] || req.query.secret;
+    if (token !== REMINDER_SECRET) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  }
+
+  try {
+    const result = await sendRemindersToAllUsers();
+    res.json({ success: true, ...result });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Send reminder to a specific user
+app.post('/api/reminders/send/:phone', async (req, res) => {
+  if (REMINDER_SECRET) {
+    const token = req.headers['x-reminder-secret'] || req.query.secret;
+    if (token !== REMINDER_SECRET) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  }
+
+  try {
+    const success = await sendExpenseReminder(req.params.phone);
+    res.json({ success });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Webhook verification endpoint (required by WhatsApp)
@@ -51,4 +94,7 @@ app.listen(PORT, () => {
   console.log(`🚀 FinanceFlow server running on port ${PORT}`);
   console.log(`📱 Webhook endpoint: http://localhost:${PORT}/webhook`);
   console.log(`💡 Make sure to configure your WhatsApp Business API webhook to point here`);
+
+  // Start the reminder scheduler
+  startReminderScheduler();
 });
