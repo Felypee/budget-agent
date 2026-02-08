@@ -1,4 +1,5 @@
 import axios from 'axios';
+import FormData from 'form-data';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -97,6 +98,61 @@ export async function markAsRead(messageId) {
   } catch (error) {
     console.error('Error marking message as read:', error.response?.data || error.message);
   }
+}
+
+/**
+ * Send a document (file) via WhatsApp
+ * @param {string} to - Recipient phone number
+ * @param {Buffer} fileBuffer - File content as Buffer
+ * @param {string} filename - Filename with extension (e.g. "expenses_2026-02-08.csv")
+ * @param {string} caption - Caption shown below the document
+ */
+export async function sendDocument(to, fileBuffer, filename, caption) {
+  // Step 1: Upload media
+  const formData = new FormData();
+  formData.append('messaging_product', 'whatsapp');
+  formData.append('type', 'text/csv');
+  formData.append('file', fileBuffer, {
+    filename,
+    contentType: 'text/csv',
+  });
+
+  const uploadResponse = await axios.post(
+    `${WHATSAPP_API_URL}/${PHONE_NUMBER_ID}/media`,
+    formData,
+    {
+      headers: {
+        'Authorization': `Bearer ${ACCESS_TOKEN}`,
+        ...formData.getHeaders(),
+      },
+    }
+  );
+
+  const mediaId = uploadResponse.data.id;
+
+  // Step 2: Send document message
+  const response = await axios.post(
+    `${WHATSAPP_API_URL}/${PHONE_NUMBER_ID}/messages`,
+    {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to,
+      type: 'document',
+      document: {
+        id: mediaId,
+        filename,
+        caption,
+      },
+    },
+    {
+      headers: {
+        'Authorization': `Bearer ${ACCESS_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+
+  return response.data;
 }
 
 /**

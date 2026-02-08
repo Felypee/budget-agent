@@ -1,6 +1,7 @@
 import {
   sendTextMessage,
   sendInteractiveButtons,
+  sendDocument,
   markAsRead,
   downloadMedia,
 } from "../utils/whatsappClient.js";
@@ -174,6 +175,11 @@ async function processCommand(phone, message, lang = 'en') {
     lowerMsg.includes("mis gastos")
   ) {
     return await handleShowExpenses(phone, lang);
+  }
+
+  // Command: Export expenses as CSV
+  if (lowerMsg === "export" || lowerMsg === "exportar") {
+    return await handleExportExpenses(phone, lang);
   }
 
   // Auto-detect and log expenses (supports multiple expenses in one message)
@@ -441,6 +447,53 @@ async function handleShowExpenses(phone, lang = 'en') {
   }
 
   return response;
+}
+
+/**
+ * Export all expenses as a CSV document
+ */
+async function handleExportExpenses(phone, lang = 'en') {
+  try {
+    const expenses = await ExpenseDB.getByUser(phone);
+
+    if (!expenses || expenses.length === 0) {
+      return getMessage('export_empty', lang);
+    }
+
+    const userCurrency = await UserDB.getCurrency(phone);
+
+    // Build CSV
+    const rows = ['Date,Amount,Currency,Category,Description'];
+    for (const exp of expenses) {
+      const date = new Date(exp.date).toISOString().split('T')[0];
+      const amount = exp.amount;
+      const currency = userCurrency || '';
+      const category = csvEscape(exp.category || '');
+      const description = csvEscape(exp.description || '');
+      rows.push(`${date},${amount},${currency},${category},${description}`);
+    }
+
+    const csvString = rows.join('\n');
+    const buffer = Buffer.from(csvString, 'utf-8');
+    const today = new Date().toISOString().split('T')[0];
+    const filename = `expenses_${today}.csv`;
+
+    await sendDocument(phone, buffer, filename, getMessage('export_caption', lang));
+    return null;
+  } catch (error) {
+    console.error('Error exporting expenses:', error);
+    return getMessage('export_error', lang);
+  }
+}
+
+/**
+ * Escape a value for CSV (handle commas, quotes, newlines)
+ */
+function csvEscape(value) {
+  if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+    return `"${value.replace(/"/g, '""')}"`;
+  }
+  return value;
 }
 
 /**

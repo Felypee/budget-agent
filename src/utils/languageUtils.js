@@ -117,6 +117,11 @@ Try it now! Tell me about a recent expense.`,
     image_saved_for_review: "I detected a transaction in this image but couldn't categorize it automatically. It has been saved for review.",
     audio_saved_for_review: "I heard your message but couldn't process it as an expense. It has been saved for review.",
 
+    // Export
+    export_empty: "You don't have any expenses to export yet.",
+    export_caption: "FinanceFlow - Expenses Export",
+    export_error: "Sorry, I couldn't generate the export. Please try again.",
+
     // General
     unsupported_message: "I can process text, images (receipts), and voice messages. Try one of those!",
     error_generic: "Sorry, I encountered an error. Please try again.",
@@ -209,6 +214,11 @@ Pregunta: "¿Cuál es mi mayor gasto?"
     image_saved_for_review: "Detecté una transacción en esta imagen pero no pude categorizarla automáticamente. Ha sido guardada para revisión.",
     audio_saved_for_review: "Escuché tu mensaje pero no pude procesarlo como gasto. Ha sido guardado para revisión.",
 
+    // Export
+    export_empty: "Aún no tienes gastos para exportar.",
+    export_caption: "FinanceFlow - Exportación de Gastos",
+    export_error: "Lo siento, no pude generar la exportación. Por favor intenta de nuevo.",
+
     // General
     unsupported_message: "Puedo procesar texto, imágenes (recibos) y mensajes de voz. ¡Intenta uno de esos!",
     error_generic: "Lo siento, ocurrió un error. Por favor intenta de nuevo.",
@@ -300,6 +310,11 @@ Experimente agora! Me conte sobre uma despesa recente.`,
     // Unprocessed cases
     image_saved_for_review: "Detectei uma transação nesta imagem, mas não consegui categorizá-la automaticamente. Foi salva para revisão.",
     audio_saved_for_review: "Ouvi sua mensagem, mas não consegui processá-la como despesa. Foi salva para revisão.",
+
+    // Export
+    export_empty: "Você ainda não tem despesas para exportar.",
+    export_caption: "FinanceFlow - Exportação de Despesas",
+    export_error: "Desculpe, não consegui gerar a exportação. Por favor, tente novamente.",
 
     // General
     unsupported_message: "Posso processar texto, imagens (recibos) e mensagens de voz. Tente um desses!",
