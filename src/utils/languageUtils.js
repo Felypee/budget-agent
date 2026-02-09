@@ -183,6 +183,39 @@ Tell me about an expense to get started!`,
     tutorial_hint: `Reply anything to continue, or *skip* to exit.`,
 
     tutorial_restart: `Welcome back! Let's do a quick refresher.`,
+
+    // Subscription & Limits
+    limit_text_exceeded: "You've reached your monthly limit of {limit} text messages. Upgrade your plan to continue.",
+    limit_voice_exceeded: "You've reached your monthly limit of {limit} voice messages. Upgrade your plan to continue.",
+    limit_image_exceeded: "You've reached your monthly limit of {limit} image/receipt scans. Upgrade your plan to continue.",
+    limit_ai_exceeded: "You've reached your monthly limit of {limit} AI conversations. Upgrade your plan to continue.",
+    limit_budget_exceeded: "You've reached your limit of {limit} budget(s). Upgrade your plan to add more.",
+    export_not_allowed: "CSV export is not available on your current plan. Upgrade to Basic or Premium to export.",
+    export_pdf_not_allowed: "PDF export is only available on Premium plan.",
+
+    upgrade_cta_free: "Type *upgrade* to see available plans and unlock more features!",
+    upgrade_cta_basic: "Type *upgrade* to see Premium features!",
+
+    subscription_status_title: "Your Plan: *{plan}*",
+    subscription_usage: "*Monthly Usage:*",
+    subscription_features: "*Features:*",
+
+    usage_text_label: "Text messages",
+    usage_voice_label: "Voice messages",
+    usage_image_label: "Receipt scans",
+    usage_ai_label: "AI conversations",
+    usage_budget_label: "Budgets",
+    unlimited: "Unlimited",
+    export: "Export",
+
+    upgrade_title: "*Available Plans*",
+    free_label: "Free",
+    feature_unlimited_text: "Unlimited text messages",
+    feature_text_messages: "text messages/mo",
+    feature_voice_messages: "voice messages/mo",
+    feature_csv_export: "CSV export",
+    feature_pdf_export: "PDF export",
+    upgrade_instructions: "To upgrade, visit: financeflow.app/upgrade",
   },
 
   es: {
@@ -338,6 +371,39 @@ Escribe *tutorial* para repasar. ¡Ahora cuéntame un gasto real!`,
     tutorial_hint: `Responde lo que sea para continuar, o *saltar* para salir.`,
 
     tutorial_restart: `¡Hola de nuevo! Hagamos un repaso rápido.`,
+
+    // Subscription & Limits
+    limit_text_exceeded: "Has alcanzado tu límite mensual de {limit} mensajes de texto. Mejora tu plan para continuar.",
+    limit_voice_exceeded: "Has alcanzado tu límite mensual de {limit} mensajes de voz. Mejora tu plan para continuar.",
+    limit_image_exceeded: "Has alcanzado tu límite mensual de {limit} escaneos de recibos. Mejora tu plan para continuar.",
+    limit_ai_exceeded: "Has alcanzado tu límite mensual de {limit} conversaciones con IA. Mejora tu plan para continuar.",
+    limit_budget_exceeded: "Has alcanzado tu límite de {limit} presupuesto(s). Mejora tu plan para agregar más.",
+    export_not_allowed: "La exportación CSV no está disponible en tu plan actual. Mejora a Basic o Premium para exportar.",
+    export_pdf_not_allowed: "La exportación PDF solo está disponible en el plan Premium.",
+
+    upgrade_cta_free: "Escribe *upgrade* para ver los planes disponibles y desbloquear más funciones.",
+    upgrade_cta_basic: "Escribe *upgrade* para ver las funciones Premium.",
+
+    subscription_status_title: "Tu Plan: *{plan}*",
+    subscription_usage: "*Uso Mensual:*",
+    subscription_features: "*Funciones:*",
+
+    usage_text_label: "Mensajes de texto",
+    usage_voice_label: "Mensajes de voz",
+    usage_image_label: "Escaneos de recibos",
+    usage_ai_label: "Conversaciones IA",
+    usage_budget_label: "Presupuestos",
+    unlimited: "Ilimitado",
+    export: "Exportar",
+
+    upgrade_title: "*Planes Disponibles*",
+    free_label: "Gratis",
+    feature_unlimited_text: "Mensajes de texto ilimitados",
+    feature_text_messages: "mensajes de texto/mes",
+    feature_voice_messages: "mensajes de voz/mes",
+    feature_csv_export: "Exportar CSV",
+    feature_pdf_export: "Exportar PDF",
+    upgrade_instructions: "Para mejorar, visita: financeflow.app/upgrade",
   },
 
   pt: {
@@ -493,6 +559,39 @@ Me conte sobre uma despesa para começar!`,
     tutorial_hint: `Responda qualquer coisa para continuar, ou *pular* para sair.`,
 
     tutorial_restart: `Olá de novo! Vamos fazer uma revisão rápida.`,
+
+    // Subscription & Limits
+    limit_text_exceeded: "Você atingiu seu limite mensal de {limit} mensagens de texto. Atualize seu plano para continuar.",
+    limit_voice_exceeded: "Você atingiu seu limite mensal de {limit} mensagens de voz. Atualize seu plano para continuar.",
+    limit_image_exceeded: "Você atingiu seu limite mensal de {limit} digitalizações de recibos. Atualize seu plano para continuar.",
+    limit_ai_exceeded: "Você atingiu seu limite mensal de {limit} conversas com IA. Atualize seu plano para continuar.",
+    limit_budget_exceeded: "Você atingiu seu limite de {limit} orçamento(s). Atualize seu plano para adicionar mais.",
+    export_not_allowed: "A exportação CSV não está disponível no seu plano atual. Atualize para Basic ou Premium para exportar.",
+    export_pdf_not_allowed: "A exportação PDF está disponível apenas no plano Premium.",
+
+    upgrade_cta_free: "Digite *upgrade* para ver os planos disponíveis e desbloquear mais recursos!",
+    upgrade_cta_basic: "Digite *upgrade* para ver os recursos Premium!",
+
+    subscription_status_title: "Seu Plano: *{plan}*",
+    subscription_usage: "*Uso Mensal:*",
+    subscription_features: "*Recursos:*",
+
+    usage_text_label: "Mensagens de texto",
+    usage_voice_label: "Mensagens de voz",
+    usage_image_label: "Digitalizações de recibos",
+    usage_ai_label: "Conversas IA",
+    usage_budget_label: "Orçamentos",
+    unlimited: "Ilimitado",
+    export: "Exportar",
+
+    upgrade_title: "*Planos Disponíveis*",
+    free_label: "Grátis",
+    feature_unlimited_text: "Mensagens de texto ilimitadas",
+    feature_text_messages: "mensagens de texto/mês",
+    feature_voice_messages: "mensagens de voz/mês",
+    feature_csv_export: "Exportar CSV",
+    feature_pdf_export: "Exportar PDF",
+    upgrade_instructions: "Para atualizar, visite: financeflow.app/upgrade",
   },
 };
 

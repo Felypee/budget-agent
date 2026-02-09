@@ -37,6 +37,19 @@ import {
   simulateSummaryResponse,
   simulateBudgetResponse,
 } from "../services/onboardingService.js";
+import {
+  checkLimit,
+  trackUsage,
+  canExport,
+  getSubscriptionStatus,
+  getAvailablePlans,
+  getLimitExceededMessage,
+  getUpgradeMessage,
+  formatSubscriptionStatus,
+  formatUpgradePlans,
+  USAGE_TYPES,
+} from "../services/subscriptionService.js";
+import { BudgetDB as BudgetDBImport } from "../database/index.js";
 
 /**
  * Handle incoming WhatsApp messages
@@ -266,6 +279,25 @@ async function processCommand(phone, message, lang = 'en') {
     return await handleExportExpenses(phone, lang);
   }
 
+  // Command: Show subscription status
+  if (lowerMsg === "subscription" || lowerMsg === "plan" || lowerMsg === "suscripcion" || lowerMsg === "plano") {
+    return await handleSubscriptionStatus(phone, lang);
+  }
+
+  // Command: Show upgrade options
+  if (lowerMsg === "upgrade" || lowerMsg === "mejorar" || lowerMsg === "atualizar") {
+    return await handleUpgradeOptions(phone, lang);
+  }
+
+  // Check text message limit before processing
+  const textLimitCheck = await checkLimit(phone, USAGE_TYPES.TEXT);
+  if (!textLimitCheck.allowed) {
+    const status = await getSubscriptionStatus(phone);
+    const limitMsg = getLimitExceededMessage(USAGE_TYPES.TEXT, lang, textLimitCheck);
+    const upgradeMsg = getUpgradeMessage(status.plan.id, lang);
+    return `${limitMsg}\n\n${upgradeMsg}`;
+  }
+
   // Auto-detect and log expenses (supports multiple expenses in one message)
   const categories = await getUserCategories(phone, lang);
   const expenseDetection = await agent.detectExpenses(message, categories);
@@ -334,11 +366,28 @@ async function processCommand(phone, message, lang = 'en') {
       response += `\n${budgetAlerts.join("\n")}`;
     }
 
+    // Track text message usage after successful expense logging
+    await trackUsage(phone, USAGE_TYPES.TEXT);
+
     return response;
   }
 
+  // Check AI conversation limit before AI fallback
+  const aiLimitCheck = await checkLimit(phone, USAGE_TYPES.AI_CONVERSATION);
+  if (!aiLimitCheck.allowed) {
+    const status = await getSubscriptionStatus(phone);
+    const limitMsg = getLimitExceededMessage(USAGE_TYPES.AI_CONVERSATION, lang, aiLimitCheck);
+    const upgradeMsg = getUpgradeMessage(status.plan.id, lang);
+    return `${limitMsg}\n\n${upgradeMsg}`;
+  }
+
   // Default: Use AI to respond
-  return await agent.processMessage(message);
+  const aiResponse = await agent.processMessage(message);
+
+  // Track AI conversation usage after successful response
+  await trackUsage(phone, USAGE_TYPES.AI_CONVERSATION);
+
+  return aiResponse;
 }
 
 /**
@@ -371,7 +420,20 @@ async function handleSetBudget(phone, message, lang = 'en') {
       await BudgetDB.update(phone, category, amount);
       return getMessage('budget_updated', lang, { category, amount: formatAmount(amount, userCurrency) });
     } else {
+      // Check budget limit before creating new budget
+      const budgetLimitCheck = await checkLimit(phone, USAGE_TYPES.BUDGET);
+      if (!budgetLimitCheck.allowed) {
+        const status = await getSubscriptionStatus(phone);
+        const limitMsg = getLimitExceededMessage(USAGE_TYPES.BUDGET, lang, budgetLimitCheck);
+        const upgradeMsg = getUpgradeMessage(status.plan.id, lang);
+        return `${limitMsg}\n\n${upgradeMsg}`;
+      }
+
       await BudgetDB.create(phone, { category, amount, period: "monthly" });
+
+      // Track budget usage after successful creation
+      await trackUsage(phone, USAGE_TYPES.BUDGET);
+
       return getMessage('budget_set', lang, { category, amount: formatAmount(amount, userCurrency) });
     }
   }
@@ -538,6 +600,14 @@ async function handleShowExpenses(phone, lang = 'en') {
  */
 async function handleExportExpenses(phone, lang = 'en') {
   try {
+    // Check if CSV export is allowed for user's plan
+    const canExportCsv = await canExport(phone, "csv");
+    if (!canExportCsv) {
+      const status = await getSubscriptionStatus(phone);
+      const upgradeMsg = getUpgradeMessage(status.plan.id, lang);
+      return `${getMessage('export_not_allowed', lang)}\n\n${upgradeMsg}`;
+    }
+
     const expenses = await ExpenseDB.getByUser(phone);
 
     if (!expenses || expenses.length === 0) {
@@ -630,6 +700,15 @@ function getProgressBar(percentage) {
  */
 async function processImageMessage(phone, imageData, userCurrency, lang = 'en') {
   try {
+    // Check image message limit
+    const imageLimitCheck = await checkLimit(phone, USAGE_TYPES.IMAGE);
+    if (!imageLimitCheck.allowed) {
+      const status = await getSubscriptionStatus(phone);
+      const limitMsg = getLimitExceededMessage(USAGE_TYPES.IMAGE, lang, imageLimitCheck);
+      const upgradeMsg = getUpgradeMessage(status.plan.id, lang);
+      return `${limitMsg}\n\n${upgradeMsg}`;
+    }
+
     // Check if currency is set
     if (!userCurrency) {
       return getMessage('currency_not_set', lang);
@@ -706,6 +785,9 @@ async function processImageMessage(phone, imageData, userCurrency, lang = 'en') 
       response += `\n${budgetAlerts.join("\n")}`;
     }
 
+    // Track image usage after successful processing
+    await trackUsage(phone, USAGE_TYPES.IMAGE);
+
     return response;
   } catch (error) {
     console.error("Error processing image:", error);
@@ -724,6 +806,15 @@ async function processImageMessage(phone, imageData, userCurrency, lang = 'en') 
  */
 async function processAudioMessage(phone, audioData, userCurrency, lang = 'en') {
   try {
+    // Check voice message limit
+    const voiceLimitCheck = await checkLimit(phone, USAGE_TYPES.VOICE);
+    if (!voiceLimitCheck.allowed) {
+      const status = await getSubscriptionStatus(phone);
+      const limitMsg = getLimitExceededMessage(USAGE_TYPES.VOICE, lang, voiceLimitCheck);
+      const upgradeMsg = getUpgradeMessage(status.plan.id, lang);
+      return `${limitMsg}\n\n${upgradeMsg}`;
+    }
+
     // Check if currency is set
     if (!userCurrency) {
       return getMessage('currency_not_set', lang);
@@ -808,6 +899,9 @@ async function processAudioMessage(phone, audioData, userCurrency, lang = 'en') 
       response += `\n${budgetAlerts.join("\n")}`;
     }
 
+    // Track voice usage after successful processing
+    await trackUsage(phone, USAGE_TYPES.VOICE);
+
     return response;
   } catch (error) {
     console.error("Error processing audio:", error);
@@ -818,5 +912,32 @@ async function processAudioMessage(phone, audioData, userCurrency, lang = 'en') 
       content: error.message,
     });
     return getMessage('audio_error', lang);
+  }
+}
+
+/**
+ * Handle subscription status command
+ */
+async function handleSubscriptionStatus(phone, lang = 'en') {
+  try {
+    const status = await getSubscriptionStatus(phone);
+    return formatSubscriptionStatus(status, lang);
+  } catch (error) {
+    console.error("Error getting subscription status:", error);
+    return getMessage('error_generic', lang);
+  }
+}
+
+/**
+ * Handle upgrade options command
+ */
+async function handleUpgradeOptions(phone, lang = 'en') {
+  try {
+    const status = await getSubscriptionStatus(phone);
+    const plans = await getAvailablePlans();
+    return formatUpgradePlans(plans, status.plan.id, lang);
+  } catch (error) {
+    console.error("Error getting upgrade options:", error);
+    return getMessage('error_generic', lang);
   }
 }
