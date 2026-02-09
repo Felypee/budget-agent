@@ -4,7 +4,12 @@ import {
   sendDocument,
   markAsRead,
   downloadMedia,
+  sendTypingIndicator,
 } from "../utils/whatsappClient.js";
+import {
+  queueMessage,
+  flushBatch,
+} from "../services/messageBatcher.js";
 import { UserDB, ExpenseDB, BudgetDB, UnprocessedDB } from "../database/index.js";
 import { FinanceAgent } from "../agents/financeAgent.js";
 import {
@@ -45,6 +50,7 @@ import {
 
 /**
  * Handle incoming WhatsApp messages
+ * Uses message batching (10s window) for text messages
  */
 export async function handleIncomingMessage(message, phone) {
   let user;
@@ -86,7 +92,7 @@ export async function handleIncomingMessage(message, phone) {
       return;
     }
 
-    // Handle tutorial mode for text messages
+    // Handle tutorial mode for text messages (don't batch during tutorial)
     if (message.type === "text") {
       const messageText = message.text.body;
       const lowerMsg = messageText.toLowerCase().trim();
@@ -98,7 +104,7 @@ export async function handleIncomingMessage(message, phone) {
         return;
       }
 
-      // Check if in tutorial and process response
+      // Check if in tutorial and process response (no batching in tutorial)
       if (await isInTutorial(phone)) {
         const tutorialResult = await processTutorialResponse(phone, messageText, lang);
 
@@ -133,14 +139,34 @@ export async function handleIncomingMessage(message, phone) {
       }
     }
 
-    // Handle different message types
+    // For text messages, use batching (10-second window)
+    if (message.type === "text") {
+      const wasQueued = queueMessage(phone, message, async (batchPhone, batchedMessage) => {
+        // This callback is called after 10 seconds of no new messages
+        await processBatchedMessage(batchPhone, batchedMessage, user, lang);
+      });
+
+      if (wasQueued) {
+        // Message was queued, will be processed later
+        console.log(`📨 Text queued for ${phone}: ${message.text.body.substring(0, 30)}...`);
+        return;
+      }
+    }
+
+    // For non-text messages (image, audio, interactive), flush any pending batch first
+    if (message.type === "image" || message.type === "audio") {
+      flushBatch(phone);
+    }
+
+    // Handle different message types immediately
     let response;
 
     if (message.type === "text") {
+      // This path is only hit if queueMessage returns false (shouldn't happen for text)
       const messageText = message.text.body;
       console.log(`📨 Text from ${phone}: ${messageText}`);
 
-      // Use the AI agent to process the message
+      await sendTypingIndicator(phone);
       const agent = new FinanceAgent(phone, user.currency, lang);
       response = await agent.processMessage(messageText);
 
@@ -158,16 +184,19 @@ export async function handleIncomingMessage(message, phone) {
         response = getMessage('reminder_no_response', lang);
       } else {
         // Other button responses - process via agent
+        await sendTypingIndicator(phone);
         const agent = new FinanceAgent(phone, user.currency, lang);
         response = await agent.processMessage(buttonTitle);
       }
 
     } else if (message.type === "image") {
       console.log(`📷 Image from ${phone}`);
+      await sendTypingIndicator(phone);
       response = await processImageMessage(phone, message.image, user.currency, lang);
 
     } else if (message.type === "audio") {
       console.log(`🎤 Audio from ${phone}`);
+      await sendTypingIndicator(phone);
       response = await processAudioMessage(phone, message.audio, user.currency, lang);
 
     } else {
@@ -182,6 +211,36 @@ export async function handleIncomingMessage(message, phone) {
     console.error("Error handling message:", error);
     const errorLang = user?.language || 'en';
     await sendTextMessage(phone, getMessage('error_generic', errorLang));
+  }
+}
+
+/**
+ * Process batched messages (called after 10-second window)
+ * @param {string} phone - User's phone number
+ * @param {object} batchedMessage - Combined message object
+ * @param {object} user - User object
+ * @param {string} lang - Language code
+ */
+async function processBatchedMessage(phone, batchedMessage, user, lang) {
+  try {
+    const messageText = batchedMessage.text.body;
+    const messageCount = batchedMessage.messageCount || 1;
+
+    console.log(`📨 Processing batch for ${phone}: ${messageCount} messages -> "${messageText.substring(0, 50)}..."`);
+
+    // Send typing indicator
+    await sendTypingIndicator(phone);
+
+    // Use the AI agent to process the combined message
+    const agent = new FinanceAgent(phone, user.currency, lang);
+    const response = await agent.processMessage(messageText);
+
+    if (response) {
+      await sendTextMessage(phone, response);
+    }
+  } catch (error) {
+    console.error("Error processing batched message:", error);
+    await sendTextMessage(phone, getMessage('error_generic', lang));
   }
 }
 

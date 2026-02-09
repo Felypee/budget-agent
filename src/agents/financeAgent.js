@@ -4,6 +4,7 @@ import { ExpenseDB, BudgetDB, UserDB } from "../database/index.js";
 import { getToolDefinitions, executeTool } from "../tools/index.js";
 import { checkLimit, trackUsage, getSubscriptionStatus, getLimitExceededMessage, getUpgradeMessage, USAGE_TYPES } from "../services/subscriptionService.js";
 import { getMessage } from "../utils/languageUtils.js";
+import { getContextForClaude, addMessage } from "../services/conversationContext.js";
 
 dotenv.config();
 
@@ -58,22 +59,26 @@ export class FinanceAgent {
   /**
    * Process user message using tool-based routing
    * Claude decides which tool to call based on user intent
+   * Uses conversation context (last 20 messages) for better understanding
    */
   async processMessage(userMessage) {
-    const context = await this.getFinancialContext();
+    const financialContext = await this.getFinancialContext();
     const tools = getToolDefinitions();
+
+    // Get conversation history (max 20 messages)
+    const conversationHistory = getContextForClaude(this.userPhone);
 
     const systemPrompt = `You are FinanceFlow, a helpful AI expense manager via WhatsApp.
 You help users track expenses, manage budgets, and understand their spending.
 
-Current user context for ${context.month}:
+Current user context for ${financialContext.month}:
 - Currency: ${this.userCurrency || 'Not set'}
-- Total spent: ${context.totalSpent.toFixed(2)}
-- Total budget: ${context.totalBudget.toFixed(2)}
-- Categories used: ${Object.keys(context.categorySummary).join(', ') || 'None yet'}
+- Total spent: ${financialContext.totalSpent.toFixed(2)}
+- Total budget: ${financialContext.totalBudget.toFixed(2)}
+- Categories used: ${Object.keys(financialContext.categorySummary).join(', ') || 'None yet'}
 
-Recent expenses: ${context.expenses.slice(-3).map(e => `${e.category}: ${e.amount}`).join(', ') || 'None'}
-Active budgets: ${context.budgets.map(b => `${b.category}: ${b.amount}`).join(', ') || 'None'}
+Recent expenses: ${financialContext.expenses.slice(-3).map(e => `${e.category}: ${e.amount}`).join(', ') || 'None'}
+Active budgets: ${financialContext.budgets.map(b => `${b.category}: ${b.amount}`).join(', ') || 'None'}
 
 IMPORTANT INSTRUCTIONS:
 1. Analyze the user's message to determine their intent
@@ -82,11 +87,18 @@ IMPORTANT INSTRUCTIONS:
 4. For categories, use: food, transport, shopping, entertainment, bills, health, other
 5. Be helpful and concise - this is WhatsApp, keep responses short
 6. Respond in the same language as the user's message
+7. Use conversation history for context when needed
 
 When logging expenses:
 - Parse amounts as numbers (e.g., "50 dollars" → 50, "mil pesos" → 1000)
 - Detect category from context (lunch → food, uber → transport, etc.)
 - Include description from the message`;
+
+    // Build messages array with conversation history + current message
+    const messages = [
+      ...conversationHistory,
+      { role: "user", content: userMessage }
+    ];
 
     try {
       const response = await axios.post(
@@ -96,7 +108,7 @@ When logging expenses:
           max_tokens: 1024,
           system: systemPrompt,
           tools: tools,
-          messages: [{ role: "user", content: userMessage }],
+          messages: messages,
         },
         {
           headers: {
@@ -128,15 +140,21 @@ When logging expenses:
         }
       }
 
+      // Save user message to context
+      addMessage(this.userPhone, 'user', userMessage);
+
       // If tools were called, return their results
       if (toolResults.length > 0) {
         // Filter out null messages (e.g., document sent)
-        const messages = toolResults
+        const responseMessages = toolResults
           .map(r => r.message)
           .filter(m => m !== null);
 
-        if (messages.length > 0) {
-          return messages.join("\n\n");
+        if (responseMessages.length > 0) {
+          const finalResponse = responseMessages.join("\n\n");
+          // Save assistant response to context
+          addMessage(this.userPhone, 'assistant', finalResponse);
+          return finalResponse;
         }
         // If all messages are null (e.g., only documents sent), return nothing
         return null;
@@ -155,6 +173,10 @@ When logging expenses:
 
         // Track AI usage
         await trackUsage(this.userPhone, USAGE_TYPES.AI_CONVERSATION);
+
+        // Save assistant response to context
+        addMessage(this.userPhone, 'assistant', textResponse);
+
         return textResponse;
       }
 

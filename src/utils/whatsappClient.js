@@ -156,6 +156,30 @@ export async function sendDocument(to, fileBuffer, filename, caption) {
 }
 
 /**
+ * Send typing indicator to show bot is processing
+ * Note: WhatsApp doesn't have a direct "typing" API, but we can use
+ * a reaction or mark as read to indicate activity. For now, this is a placeholder
+ * that could be replaced with a "processing" message approach.
+ */
+export async function sendTypingIndicator(to) {
+  try {
+    // WhatsApp Cloud API doesn't support typing indicators directly
+    // But we can use the "mark as read" to show we've seen the message
+    // For better UX, some implementations send a brief "..." message
+    // that gets replaced, but that's not ideal for WhatsApp.
+
+    // Alternative: Use presence update if available in future API versions
+    // For now, we just log - the actual "typing" effect is simulated
+    // by the quick "read" status
+    console.log(`[whatsapp] Typing indicator for ${to}`);
+    return true;
+  } catch (error) {
+    console.error('Error sending typing indicator:', error.response?.data || error.message);
+    return false;
+  }
+}
+
+/**
  * Download media from WhatsApp
  * @param {string} mediaId - The media ID from the message
  * @returns {Promise<{buffer: Buffer, mimeType: string}>}
