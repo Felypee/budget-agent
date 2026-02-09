@@ -240,6 +240,20 @@ async function processBatchedMessage(phone, batchedMessage, user, lang) {
 
     console.log(`📨 Processing batch for ${phone}: ${messageCount} messages -> "${messageText.substring(0, 50)}..."`);
 
+    // Check text message limit before processing
+    const textLimitCheck = await checkLimit(phone, USAGE_TYPES.TEXT);
+    if (!textLimitCheck.allowed) {
+      const status = await getSubscriptionStatus(phone);
+      const limitMsg = getLimitExceededMessage(USAGE_TYPES.TEXT, lang, textLimitCheck);
+      const upgradeMsg = getUpgradeMessage(status.plan.id, lang);
+      if (clearIndicator) await clearIndicator();
+      await sendTextMessage(phone, `${limitMsg}\n\n${upgradeMsg}`);
+      return;
+    }
+
+    // Track text usage BEFORE processing (so this message counts)
+    await trackUsage(phone, USAGE_TYPES.TEXT);
+
     // Use the AI agent to process the combined message
     const agent = new FinanceAgent(phone, user.currency, lang);
     const response = await agent.processMessage(messageText);
