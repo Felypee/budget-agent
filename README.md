@@ -1,4 +1,4 @@
-# 💰 FinanceFlow MVP
+# 💰 Monedita MVP
 
 WhatsApp-based AI expense manager with MCP (Model Context Protocol) integration.
 

@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', message: 'FinanceFlow server is running' });
+  res.json({ status: 'ok', message: 'Monedita server is running' });
 });
 
 // Reminder endpoint - can be triggered by external cron services (e.g., cron-job.org)
@@ -91,7 +91,7 @@ app.post('/webhook', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 FinanceFlow server running on port ${PORT}`);
+  console.log(`🚀 Monedita server running on port ${PORT}`);
   console.log(`📱 Webhook endpoint: http://localhost:${PORT}/webhook`);
   console.log(`💡 Make sure to configure your WhatsApp Business API webhook to point here`);
 

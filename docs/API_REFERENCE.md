@@ -1,4 +1,4 @@
-# 📖 API Reference - FinanceFlow MVP
+# 📖 API Reference - Monedita MVP
 
 ## WhatsApp Message Commands
 
@@ -10,7 +10,7 @@ Show welcome message with available commands.
 **Example:**
 ```
 User: hi
-Bot: 👋 Welcome to FinanceFlow!
+Bot: 👋 Welcome to Monedita!
 
 I'm your AI expense manager. Here's what I can do:
 ...
@@ -215,7 +215,7 @@ Health check endpoint.
 ```json
 {
   "status": "ok",
-  "message": "FinanceFlow server is running"
+  "message": "Monedita server is running"
 }
 ```
 

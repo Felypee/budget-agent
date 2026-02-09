@@ -1,4 +1,4 @@
-# FinanceFlow Cost & Profitability Analysis
+# Monedita Cost & Profitability Analysis
 
 > Last Updated: February 2026
 
@@ -39,7 +39,7 @@
 
 ### Overview
 
-FinanceFlow uses Claude's `tool_use` feature for intelligent intent routing. Instead of regex/if-else chains, Claude analyzes user messages and calls the appropriate tool.
+Monedita uses Claude's `tool_use` feature for intelligent intent routing. Instead of regex/if-else chains, Claude analyzes user messages and calls the appropriate tool.
 
 ### Current Tools (14 total)
 

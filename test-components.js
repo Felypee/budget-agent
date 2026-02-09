@@ -5,7 +5,7 @@
 
 import { UserDB, ExpenseDB, BudgetDB } from './src/database/inMemoryDB.js';
 
-console.log('🧪 Testing FinanceFlow Components\n');
+console.log('🧪 Testing Monedita Components\n');
 
 // Test 1: User operations
 console.log('Test 1: User Operations');

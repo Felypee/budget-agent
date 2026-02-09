@@ -1,4 +1,4 @@
-# 🏗️ FinanceFlow Architecture
+# 🏗️ Monedita Architecture
 
 ## System Overview
 

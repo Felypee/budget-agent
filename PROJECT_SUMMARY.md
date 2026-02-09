@@ -1,4 +1,4 @@
-# 🎉 FinanceFlow MVP - Project Summary
+# 🎉 Monedita MVP - Project Summary
 
 ## What You Got
 
@@ -110,7 +110,7 @@ ngrok http 3000
 
 ```
 User: hi
-Bot: 👋 Welcome to FinanceFlow!
+Bot: 👋 Welcome to Monedita!
      I'm your AI expense manager...
 
 User: spent 25 on coffee

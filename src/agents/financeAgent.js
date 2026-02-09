@@ -68,7 +68,7 @@ export class FinanceAgent {
     // Get conversation history (max 20 messages)
     const conversationHistory = getContextForClaude(this.userPhone);
 
-    const systemPrompt = `You are FinanceFlow, a helpful AI expense manager via WhatsApp.
+    const systemPrompt = `You are Monedita, a helpful AI expense manager via WhatsApp.
 You help users track expenses, manage budgets, and understand their spending.
 
 Current user context for ${financialContext.month}:

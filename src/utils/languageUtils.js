@@ -32,7 +32,7 @@ export const COUNTRY_CODE_TO_LANGUAGE = {
 const MESSAGES = {
   en: {
     // Welcome
-    welcome: `👋 Welcome to FinanceFlow!
+    welcome: `👋 Welcome to Monedita!
 
 I'm your AI expense manager. Here's what I can do:
 
@@ -121,7 +121,7 @@ Try it now! Tell me about a recent expense.`,
 
     // Export
     export_empty: "You don't have any expenses to export yet.",
-    export_caption: "FinanceFlow - Expenses Export",
+    export_caption: "Monedita - Expenses Export",
     export_error: "Sorry, I couldn't generate the export. Please try again.",
 
     // General
@@ -129,7 +129,7 @@ Try it now! Tell me about a recent expense.`,
     error_generic: "Sorry, I encountered an error. Please try again.",
 
     // Tutorial/Onboarding - Step by step guided tour
-    tutorial_welcome: `Hey! I'm FinanceFlow, your personal expense tracker.
+    tutorial_welcome: `Hey! I'm Monedita, your personal expense tracker.
 
 I'll show you around in 3 quick steps. Reply anything to start!`,
 
@@ -215,12 +215,12 @@ Tell me about an expense to get started!`,
     feature_voice_messages: "voice messages/mo",
     feature_csv_export: "CSV export",
     feature_pdf_export: "PDF export",
-    upgrade_instructions: "To upgrade, visit: financeflow.app/upgrade",
+    upgrade_instructions: "To upgrade, visit: monedita.app/upgrade",
   },
 
   es: {
     // Welcome
-    welcome: `👋 ¡Bienvenido a FinanceFlow!
+    welcome: `👋 ¡Bienvenido a Monedita!
 
 Soy tu asistente de gastos con IA. Esto es lo que puedo hacer:
 
@@ -309,7 +309,7 @@ Escribe *tutorial* para ver la guía completa.
 
     // Export
     export_empty: "Aún no tienes gastos para exportar.",
-    export_caption: "FinanceFlow - Exportación de Gastos",
+    export_caption: "Monedita - Exportación de Gastos",
     export_error: "Lo siento, no pude generar la exportación. Por favor intenta de nuevo.",
 
     // General
@@ -317,7 +317,7 @@ Escribe *tutorial* para ver la guía completa.
     error_generic: "Lo siento, ocurrió un error. Por favor intenta de nuevo.",
 
     // Tutorial/Onboarding - Guía paso a paso
-    tutorial_welcome: `¡Hola! Soy FinanceFlow, tu asistente de gastos.
+    tutorial_welcome: `¡Hola! Soy Monedita, tu asistente de gastos.
 
 Te muestro cómo funciono en 3 pasos. ¡Responde lo que sea para empezar!`,
 
@@ -403,12 +403,12 @@ Escribe *tutorial* para repasar. ¡Ahora cuéntame un gasto real!`,
     feature_voice_messages: "mensajes de voz/mes",
     feature_csv_export: "Exportar CSV",
     feature_pdf_export: "Exportar PDF",
-    upgrade_instructions: "Para mejorar, visita: financeflow.app/upgrade",
+    upgrade_instructions: "Para mejorar, visita: monedita.app/upgrade",
   },
 
   pt: {
     // Welcome
-    welcome: `👋 Bem-vindo ao FinanceFlow!
+    welcome: `👋 Bem-vindo ao Monedita!
 
 Sou seu assistente de despesas com IA. Aqui está o que posso fazer:
 
@@ -497,7 +497,7 @@ Experimente agora! Me conte sobre uma despesa recente.`,
 
     // Export
     export_empty: "Você ainda não tem despesas para exportar.",
-    export_caption: "FinanceFlow - Exportação de Despesas",
+    export_caption: "Monedita - Exportação de Despesas",
     export_error: "Desculpe, não consegui gerar a exportação. Por favor, tente novamente.",
 
     // General
@@ -505,7 +505,7 @@ Experimente agora! Me conte sobre uma despesa recente.`,
     error_generic: "Desculpe, ocorreu um erro. Por favor, tente novamente.",
 
     // Tutorial/Onboarding - Guia passo a passo
-    tutorial_welcome: `Oi! Sou o FinanceFlow, seu assistente de despesas.
+    tutorial_welcome: `Oi! Sou o Monedita, seu assistente de despesas.
 
 Vou te mostrar como funciono em 3 passos. Responda qualquer coisa para começar!`,
 
@@ -591,7 +591,7 @@ Me conte sobre uma despesa para começar!`,
     feature_voice_messages: "mensagens de voz/mês",
     feature_csv_export: "Exportar CSV",
     feature_pdf_export: "Exportar PDF",
-    upgrade_instructions: "Para atualizar, visite: financeflow.app/upgrade",
+    upgrade_instructions: "Para atualizar, visite: monedita.app/upgrade",
   },
 };
 

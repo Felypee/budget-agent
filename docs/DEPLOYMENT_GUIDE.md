@@ -1,4 +1,4 @@
-# 🚀 Deployment Guide - FinanceFlow MVP
+# 🚀 Deployment Guide - Monedita MVP
 
 ## Production Deployment Options
 

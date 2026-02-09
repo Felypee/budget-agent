@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinanceFlow - AI Expense Manager on WhatsApp</title>
-    <meta name="description" content="Track expenses, set budgets, and get financial insights - all through WhatsApp. Your AI-powered personal finance assistant.">
+    <title>Monedita - Tu Asistente de Gastos en WhatsApp</title>
+    <meta name="description" content="Controla tus gastos, establece presupuestos y obtén insights financieros - todo por WhatsApp. Tu asistente personal de finanzas con IA.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -327,12 +328,20 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-2">
-                    <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <div class="w-10 h-10">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <circle cx="50" cy="50" r="42" fill="#FFD93D"/>
+                            <circle cx="50" cy="50" r="38" fill="none" stroke="#FFC107" stroke-width="3"/>
+                            <ellipse cx="38" cy="45" rx="5" ry="6" fill="#5D4037"/>
+                            <ellipse cx="62" cy="45" rx="5" ry="6" fill="#5D4037"/>
+                            <circle cx="36" cy="43" r="2" fill="#FFFFFF"/>
+                            <circle cx="60" cy="43" r="2" fill="#FFFFFF"/>
+                            <ellipse cx="28" cy="55" rx="6" ry="4" fill="#FF8A80" opacity="0.6"/>
+                            <ellipse cx="72" cy="55" rx="6" ry="4" fill="#FF8A80" opacity="0.6"/>
+                            <path d="M 32 58 Q 50 75 68 58" fill="none" stroke="#5D4037" stroke-width="4" stroke-linecap="round"/>
                         </svg>
                     </div>
-                    <span class="text-xl font-bold gradient-text">FinanceFlow</span>
+                    <span class="text-xl font-bold text-amber-500">Monedita</span>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#features" class="text-gray-600 hover:text-gray-900 transition" data-i18n="nav.features">Features</a>
@@ -493,13 +502,18 @@
                             <div class="relative w-full h-full bg-whatsapp-bg rounded-[2.5rem] overflow-hidden">
                                 <!-- WhatsApp header -->
                                 <div class="bg-whatsapp-dark px-4 py-3 pt-10 flex items-center space-x-3">
-                                    <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center">
-                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    <div class="w-10 h-10 rounded-full overflow-hidden bg-amber-400 flex items-center justify-center">
+                                        <svg viewBox="0 0 100 100" class="w-9 h-9">
+                                            <circle cx="50" cy="50" r="42" fill="#FFD93D"/>
+                                            <ellipse cx="38" cy="45" rx="5" ry="6" fill="#5D4037"/>
+                                            <ellipse cx="62" cy="45" rx="5" ry="6" fill="#5D4037"/>
+                                            <circle cx="36" cy="43" r="2" fill="#FFFFFF"/>
+                                            <circle cx="60" cy="43" r="2" fill="#FFFFFF"/>
+                                            <path d="M 32 58 Q 50 75 68 58" fill="none" stroke="#5D4037" stroke-width="4" stroke-linecap="round"/>
                                         </svg>
                                     </div>
                                     <div class="flex-1">
-                                        <div class="text-white font-semibold">FinanceFlow</div>
+                                        <div class="text-white font-semibold">Monedita</div>
                                         <div class="text-green-200 text-xs" data-i18n="phone.assistant">AI Assistant</div>
                                     </div>
                                     <svg class="w-5 h-5 text-white opacity-80" fill="currentColor" viewBox="0 0 20 20">
@@ -1061,7 +1075,7 @@
                 Ready to take control of your finances?
             </h2>
             <p class="text-xl text-white/80 mb-8 max-w-2xl mx-auto" data-i18n="cta.subtitle">
-                Join thousands who manage their money smarter with FinanceFlow. Start your free trial in seconds.
+                Join thousands who manage their money smarter with Monedita. Start your free trial in seconds.
             </p>
             <a href="https://wa.me/573114740716?text=Hi!%20I%20want%20to%20start%20tracking%20my%20expenses" target="_blank" class="inline-flex items-center justify-center px-8 py-4 bg-white text-purple-600 rounded-full font-semibold text-lg transition hover:bg-gray-100 shadow-xl">
                 <svg class="w-6 h-6 mr-2 text-whatsapp" fill="currentColor" viewBox="0 0 24 24">
@@ -1078,12 +1092,20 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="flex items-center space-x-2 mb-4 md:mb-0">
-                    <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <div class="w-10 h-10">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <circle cx="50" cy="50" r="42" fill="#FFD93D"/>
+                            <circle cx="50" cy="50" r="38" fill="none" stroke="#FFC107" stroke-width="3"/>
+                            <ellipse cx="38" cy="45" rx="5" ry="6" fill="#5D4037"/>
+                            <ellipse cx="62" cy="45" rx="5" ry="6" fill="#5D4037"/>
+                            <circle cx="36" cy="43" r="2" fill="#FFFFFF"/>
+                            <circle cx="60" cy="43" r="2" fill="#FFFFFF"/>
+                            <ellipse cx="28" cy="55" rx="6" ry="4" fill="#FF8A80" opacity="0.6"/>
+                            <ellipse cx="72" cy="55" rx="6" ry="4" fill="#FF8A80" opacity="0.6"/>
+                            <path d="M 32 58 Q 50 75 68 58" fill="none" stroke="#5D4037" stroke-width="4" stroke-linecap="round"/>
                         </svg>
                     </div>
-                    <span class="text-xl font-bold text-white">FinanceFlow</span>
+                    <span class="text-xl font-bold text-amber-400">Monedita</span>
                 </div>
                 <div class="flex space-x-6 text-sm">
                     <a href="#" class="hover:text-white transition" data-i18n="footer.privacy">Privacy Policy</a>
@@ -1092,7 +1114,7 @@
                 </div>
             </div>
             <div class="mt-8 pt-8 border-t border-gray-800 text-center text-sm">
-                <p data-i18n="footer.copyright">&copy; 2025 FinanceFlow. All rights reserved.</p>
+                <p data-i18n="footer.copyright">&copy; 2025 Monedita. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -1207,7 +1229,7 @@
 
                 // CTA
                 "cta.title": "Ready to take control of your finances?",
-                "cta.subtitle": "Join thousands who manage their money smarter with FinanceFlow. Start your free trial in seconds.",
+                "cta.subtitle": "Join thousands who manage their money smarter with Monedita. Start your free trial in seconds.",
                 "cta.button": "Start Free on WhatsApp",
                 "cta.noCreditCard": "No credit card required",
 
@@ -1215,7 +1237,7 @@
                 "footer.privacy": "Privacy Policy",
                 "footer.terms": "Terms of Service",
                 "footer.contact": "Contact",
-                "footer.copyright": "© 2025 FinanceFlow. All rights reserved.",
+                "footer.copyright": "© 2025 Monedita. All rights reserved.",
 
                 // Chat messages
                 "chat": [
@@ -1327,7 +1349,7 @@
 
                 // CTA
                 "cta.title": "¿Listo para tomar control de tus finanzas?",
-                "cta.subtitle": "Únete a miles que manejan su dinero de forma más inteligente con FinanceFlow. Empieza tu prueba gratis en segundos.",
+                "cta.subtitle": "Únete a miles que manejan su dinero de forma más inteligente con Monedita. Empieza tu prueba gratis en segundos.",
                 "cta.button": "Empezar Gratis en WhatsApp",
                 "cta.noCreditCard": "No se requiere tarjeta de crédito",
 
@@ -1335,7 +1357,7 @@
                 "footer.privacy": "Política de Privacidad",
                 "footer.terms": "Términos de Servicio",
                 "footer.contact": "Contacto",
-                "footer.copyright": "© 2025 FinanceFlow. Todos los derechos reservados.",
+                "footer.copyright": "© 2025 Monedita. Todos los derechos reservados.",
 
                 // Chat messages
                 "chat": [
@@ -1447,7 +1469,7 @@
 
                 // CTA
                 "cta.title": "Pronto para assumir o controle das suas finanças?",
-                "cta.subtitle": "Junte-se a milhares que gerenciam seu dinheiro de forma mais inteligente com FinanceFlow. Comece sua avaliação gratuita em segundos.",
+                "cta.subtitle": "Junte-se a milhares que gerenciam seu dinheiro de forma mais inteligente com Monedita. Comece sua avaliação gratuita em segundos.",
                 "cta.button": "Começar Grátis no WhatsApp",
                 "cta.noCreditCard": "Não é necessário cartão de crédito",
 
@@ -1455,7 +1477,7 @@
                 "footer.privacy": "Política de Privacidade",
                 "footer.terms": "Termos de Serviço",
                 "footer.contact": "Contato",
-                "footer.copyright": "© 2025 FinanceFlow. Todos os direitos reservados.",
+                "footer.copyright": "© 2025 Monedita. Todos os direitos reservados.",
 
                 // Chat messages
                 "chat": [
@@ -1567,7 +1589,7 @@
 
                 // CTA
                 "cta.title": "Prêt à prendre le contrôle de vos finances?",
-                "cta.subtitle": "Rejoignez des milliers de personnes qui gèrent leur argent plus intelligemment avec FinanceFlow. Commencez votre essai gratuit en quelques secondes.",
+                "cta.subtitle": "Rejoignez des milliers de personnes qui gèrent leur argent plus intelligemment avec Monedita. Commencez votre essai gratuit en quelques secondes.",
                 "cta.button": "Commencer Gratuit sur WhatsApp",
                 "cta.noCreditCard": "Carte de crédit non requise",
 
@@ -1575,7 +1597,7 @@
                 "footer.privacy": "Politique de Confidentialité",
                 "footer.terms": "Conditions d'Utilisation",
                 "footer.contact": "Contact",
-                "footer.copyright": "© 2025 FinanceFlow. Tous droits réservés.",
+                "footer.copyright": "© 2025 Monedita. Tous droits réservés.",
 
                 // Chat messages
                 "chat": [
@@ -1759,7 +1781,7 @@
 
         // Detect browser/system language
         function detectLanguage() {
-            const savedLang = localStorage.getItem('financeflow-lang');
+            const savedLang = localStorage.getItem('monedita-lang');
             if (savedLang && translations[savedLang]) {
                 return savedLang;
             }
@@ -1804,7 +1826,7 @@
             chatMessages = t.chat;
 
             // Save preference
-            localStorage.setItem('financeflow-lang', lang);
+            localStorage.setItem('monedita-lang', lang);
 
             // Restart chat animation with new language
             restartChatAnimation();
