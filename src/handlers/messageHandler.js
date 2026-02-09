@@ -54,7 +54,12 @@ import {
  */
 export async function handleIncomingMessage(message, phone) {
   let user;
+  let clearIndicator = null;
+
   try {
+    // Show processing indicator IMMEDIATELY (before any DB calls)
+    clearIndicator = await showProcessingIndicator(phone, message.id);
+
     // Mark message as read
     await markAsRead(message.id);
 
@@ -87,6 +92,7 @@ export async function handleIncomingMessage(message, phone) {
 
     // Start tutorial for new users
     if (isNewUser) {
+      if (clearIndicator) await clearIndicator();
       const tutorialMsg = await startTutorial(phone, lang);
       await sendTextMessage(phone, tutorialMsg);
       return;
@@ -99,6 +105,7 @@ export async function handleIncomingMessage(message, phone) {
 
       // Handle "tutorial" command to restart tutorial
       if (lowerMsg === "tutorial") {
+        if (clearIndicator) await clearIndicator();
         const tutorialMsg = await startTutorial(phone, lang);
         await sendTextMessage(phone, tutorialMsg);
         return;
@@ -112,6 +119,7 @@ export async function handleIncomingMessage(message, phone) {
           if (tutorialResult.advance) {
             const userCurrency = user.currency || 'USD';
 
+            if (clearIndicator) await clearIndicator();
             if (tutorialResult.processExpense) {
               const expenseResponse = simulateExpenseResponse(phone, messageText, userCurrency, lang);
               await sendTextMessage(phone, expenseResponse);
@@ -132,6 +140,7 @@ export async function handleIncomingMessage(message, phone) {
               return;
             }
           } else {
+            if (clearIndicator) await clearIndicator();
             await sendTextMessage(phone, tutorialResult);
             return;
           }
@@ -144,10 +153,10 @@ export async function handleIncomingMessage(message, phone) {
       const wasQueued = queueMessage(phone, message, async (batchPhone, batchedMessage) => {
         // This callback is called after 10 seconds of no new messages
         await processBatchedMessage(batchPhone, batchedMessage, user, lang);
-      });
+      }, clearIndicator);  // Pass the indicator so batcher can clear when done
 
       if (wasQueued) {
-        // Message was queued, will be processed later
+        // Message was queued, indicator stays on until batch is processed
         console.log(`📨 Text queued for ${phone}: ${message.text.body.substring(0, 30)}...`);
         return;
       }
@@ -166,10 +175,8 @@ export async function handleIncomingMessage(message, phone) {
       const messageText = message.text.body;
       console.log(`📨 Text from ${phone}: ${messageText}`);
 
-      const clearIndicator = await showProcessingIndicator(phone, message.id);
       const agent = new FinanceAgent(phone, user.currency, lang);
       response = await agent.processMessage(messageText);
-      await clearIndicator();
 
     } else if (message.type === "interactive") {
       const buttonId = message.interactive.button_reply.id;
@@ -185,34 +192,34 @@ export async function handleIncomingMessage(message, phone) {
         response = getMessage('reminder_no_response', lang);
       } else {
         // Other button responses - process via agent
-        const clearIndicator = await showProcessingIndicator(phone, message.id);
         const agent = new FinanceAgent(phone, user.currency, lang);
         response = await agent.processMessage(buttonTitle);
-        await clearIndicator();
       }
 
     } else if (message.type === "image") {
       console.log(`📷 Image from ${phone}`);
-      const clearIndicator = await showProcessingIndicator(phone, message.id);
       response = await processImageMessage(phone, message.image, user.currency, lang);
-      await clearIndicator();
 
     } else if (message.type === "audio") {
       console.log(`🎤 Audio from ${phone}`);
-      const clearIndicator = await showProcessingIndicator(phone, message.id);
       response = await processAudioMessage(phone, message.audio, user.currency, lang);
-      await clearIndicator();
 
     } else {
+      if (clearIndicator) await clearIndicator();
       await sendTextMessage(phone, getMessage('unsupported_message', lang));
       return;
     }
+
+    // Clear processing indicator before sending response
+    if (clearIndicator) await clearIndicator();
 
     if (response) {
       await sendTextMessage(phone, response);
     }
   } catch (error) {
     console.error("Error handling message:", error);
+    // Clear indicator on error too
+    if (clearIndicator) await clearIndicator();
     const errorLang = user?.language || 'en';
     await sendTextMessage(phone, getMessage('error_generic', errorLang));
   }
@@ -226,28 +233,27 @@ export async function handleIncomingMessage(message, phone) {
  * @param {string} lang - Language code
  */
 async function processBatchedMessage(phone, batchedMessage, user, lang) {
+  const clearIndicator = batchedMessage.clearIndicator;
   try {
     const messageText = batchedMessage.text.body;
     const messageCount = batchedMessage.messageCount || 1;
-    const messageId = batchedMessage.lastMessageId;
 
     console.log(`📨 Processing batch for ${phone}: ${messageCount} messages -> "${messageText.substring(0, 50)}..."`);
-
-    // Show processing indicator (⏳ reaction on last message)
-    const clearIndicator = await showProcessingIndicator(phone, messageId);
 
     // Use the AI agent to process the combined message
     const agent = new FinanceAgent(phone, user.currency, lang);
     const response = await agent.processMessage(messageText);
 
-    // Clear the processing indicator
-    await clearIndicator();
+    // Clear the processing indicator (was set when first message arrived)
+    if (clearIndicator) await clearIndicator();
 
     if (response) {
       await sendTextMessage(phone, response);
     }
   } catch (error) {
     console.error("Error processing batched message:", error);
+    // Clear indicator on error too
+    if (clearIndicator) await clearIndicator();
     await sendTextMessage(phone, getMessage('error_generic', lang));
   }
 }

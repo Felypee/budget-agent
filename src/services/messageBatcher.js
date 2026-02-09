@@ -15,9 +15,10 @@ const userBatches = new Map();
  * @param {string} phone - User's phone number
  * @param {object} message - Message object { type, content, id, ... }
  * @param {Function} onBatchReady - Callback when batch is ready to process
+ * @param {Function} clearIndicator - Function to clear processing indicator when done
  * @returns {boolean} - true if message was queued, false if should process immediately
  */
-export function queueMessage(phone, message, onBatchReady) {
+export function queueMessage(phone, message, onBatchReady, clearIndicator = null) {
   // Immediately process non-text messages (images, audio, etc.)
   // They shouldn't be batched
   if (message.type !== 'text') {
@@ -33,9 +34,15 @@ export function queueMessage(phone, message, onBatchReady) {
       timer: null,
       callback: onBatchReady,
       createdAt: Date.now(),
-      lastMessageId: null
+      lastMessageId: null,
+      clearIndicator: null
     };
     userBatches.set(phone, batch);
+  }
+
+  // Store the clearIndicator (first message's indicator is used)
+  if (clearIndicator && !batch.clearIndicator) {
+    batch.clearIndicator = clearIndicator;
   }
 
   // Add message to batch and track last message ID
@@ -83,14 +90,15 @@ function processBatch(phone) {
 
   console.log(`[batcher] Processing batch for ${phone}: "${combinedContent.substring(0, 50)}..."`);
 
-  // Call the callback with combined message and last message ID for indicator
+  // Call the callback with combined message and clearIndicator function
   if (batch.callback) {
     batch.callback(phone, {
       type: 'text',
       text: { body: combinedContent },
       batched: true,
       messageCount: batch.messages.length,
-      lastMessageId: batch.lastMessageId
+      lastMessageId: batch.lastMessageId,
+      clearIndicator: batch.clearIndicator
     });
   }
 
