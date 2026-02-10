@@ -66,19 +66,14 @@ export async function createPaymentLink(phone, planId) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: `Monedita ${plan.name}`,
-        description: plan.description,
+        name: reference, // Use reference as name to track user/plan
+        description: `${plan.name}: ${plan.description}`,
         single_use: true,
         collect_shipping: false,
         currency: "COP",
         amount_in_cents: amountInCents,
         redirect_url: process.env.WOMPI_REDIRECT_URL || "https://monedita.app/gracias",
         expires_at: getExpirationDate(24), // 24 hours
-        customer_data: {
-          phone_number: phone,
-        },
-        // Reference to identify user and plan
-        sku: reference,
       }),
     });
 

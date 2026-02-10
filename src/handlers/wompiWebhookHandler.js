@@ -43,7 +43,8 @@ export async function handleWompiWebhook(payload, signature, timestamp) {
 
   const transaction = data.transaction;
   const status = transaction.status;
-  const reference = transaction.reference;
+  // Reference is stored in payment_link name or transaction reference
+  const reference = transaction.payment_link?.name || transaction.reference;
 
   console.log(`[wompi webhook] Transaction ${transaction.id}: ${status}`);
 
