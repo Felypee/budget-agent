@@ -6,6 +6,7 @@
  */
 
 import crypto from "crypto";
+import { UserDB } from "../database/index.js";
 
 const WOMPI_API_URL = process.env.WOMPI_ENV === "production"
   ? "https://production.wompi.co/v1"
@@ -69,6 +70,10 @@ export async function createPaymentLink(phone, planId) {
     // Format phone for Wompi (needs country code format)
     const formattedPhone = phone.startsWith("+") ? phone : `+${phone}`;
 
+    // Get user's name from database
+    const user = await UserDB.get(phone);
+    const userName = user?.name || `Usuario ${phone.slice(-4)}`;
+
     const response = await fetch(`${WOMPI_API_URL}/payment_links`, {
       method: "POST",
       headers: {
@@ -88,7 +93,7 @@ export async function createPaymentLink(phone, planId) {
         // Pre-fill customer data from WhatsApp
         customer_data: {
           phone_number: formattedPhone,
-          full_name: `Usuario ${phone.slice(-4)}`, // Last 4 digits as placeholder
+          full_name: userName,
         },
       }),
     });

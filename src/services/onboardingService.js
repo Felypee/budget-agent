@@ -9,13 +9,13 @@
  * practice without affecting their real data.
  */
 
-import { TutorialDB } from "../database/index.js";
+import { TutorialDB, UserDB } from "../database/index.js";
 import { getMessage } from "../utils/languageUtils.js";
 import { formatAmount } from "../utils/currencyUtils.js";
 
 // Tutorial steps - simplified flow, auto-advance after each action
 const TUTORIAL_STEPS = {
-  1: 'welcome',           // Quick greeting → user replies → step 2
+  1: 'ask_name',          // Ask for user's name
   2: 'try_expense',       // User logs expense → auto-advance to step 3
   3: 'try_summary',       // User checks status (shows their expense) → step 4
   4: 'try_media',         // Mention photos/audio → step 5
@@ -87,8 +87,15 @@ export async function processTutorialResponse(phone, message, lang = 'en') {
 
   // Handle based on current step
   switch (currentStep) {
-    case 1: // Welcome - any response advances to step 2
-      return await advanceTutorial(phone, lang);
+    case 1: // Ask name - save name and advance
+      const userName = message.trim();
+      if (userName.length > 0 && userName.length < 50) {
+        // Save name to user profile
+        await UserDB.update(phone, { name: userName });
+        // Send personalized welcome and advance
+        return await advanceTutorialWithName(phone, userName, lang);
+      }
+      return getMessage('tutorial_ask_name_hint', lang);
 
     case 2: // Waiting for expense
       if (hasExpensePattern(message)) {
@@ -143,6 +150,42 @@ function isBudgetCommand(lowerMsg, originalMsg) {
     /orçamento/i
   ];
   return budgetPatterns.some(p => p.test(originalMsg));
+}
+
+/**
+ * Advance tutorial after getting user's name (personalized welcome)
+ */
+async function advanceTutorialWithName(phone, name, lang = 'en') {
+  await TutorialDB.updateStep(phone, 2);
+
+  const messages = {
+    es: `¡Hola *${name}*! 👋
+
+Soy Monedita, tu asistente de gastos.
+
+*Paso 1 de 4: Registra un gasto*
+
+Escribe algo como:
+"Gasté 20000 en café"`,
+    en: `Hi *${name}*! 👋
+
+I'm Monedita, your expense assistant.
+
+*Step 1 of 4: Log an expense*
+
+Type something like:
+"Spent 20 on coffee"`,
+    pt: `Olá *${name}*! 👋
+
+Sou o Monedita, seu assistente de despesas.
+
+*Passo 1 de 4: Registre uma despesa*
+
+Digite algo como:
+"Gastei 20 em café"`,
+  };
+
+  return messages[lang] || messages.es;
 }
 
 /**

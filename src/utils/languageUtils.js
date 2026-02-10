@@ -129,6 +129,10 @@ Try it now! Tell me about a recent expense.`,
     error_generic: "Sorry, I encountered an error. Please try again.",
 
     // Tutorial/Onboarding - Step by step guided tour
+    tutorial_ask_name: `👋 Hey! I'm Monedita, your personal expense tracker.
+
+Before we start, what's your name?`,
+    tutorial_ask_name_hint: `Just tell me your name to continue.`,
     tutorial_welcome: `Hey! I'm Monedita, your personal expense tracker.
 
 I'll show you around in 3 quick steps. Reply anything to start!`,
@@ -317,6 +321,10 @@ Escribe *tutorial* para ver la guía completa.
     error_generic: "Lo siento, ocurrió un error. Por favor intenta de nuevo.",
 
     // Tutorial/Onboarding - Guía paso a paso
+    tutorial_ask_name: `👋 ¡Hola! Soy Monedita, tu asistente de gastos.
+
+Antes de empezar, ¿cómo te llamas?`,
+    tutorial_ask_name_hint: `Solo dime tu nombre para continuar.`,
     tutorial_welcome: `¡Hola! Soy Monedita, tu asistente de gastos.
 
 Te muestro cómo funciono en 3 pasos. ¡Responde lo que sea para empezar!`,
@@ -505,6 +513,10 @@ Experimente agora! Me conte sobre uma despesa recente.`,
     error_generic: "Desculpe, ocorreu um erro. Por favor, tente novamente.",
 
     // Tutorial/Onboarding - Guia passo a passo
+    tutorial_ask_name: `👋 Oi! Sou o Monedita, seu assistente de despesas.
+
+Antes de começar, qual é o seu nome?`,
+    tutorial_ask_name_hint: `Só me diga seu nome para continuar.`,
     tutorial_welcome: `Oi! Sou o Monedita, seu assistente de despesas.
 
 Vou te mostrar como funciono em 3 passos. Responda qualquer coisa para começar!`,
