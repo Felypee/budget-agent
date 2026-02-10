@@ -143,7 +143,8 @@ For payments (Wompi):
 - `WOMPI_EVENTS_SECRET` - Wompi events secret for webhook verification
 - `WOMPI_INTEGRITY_SECRET` - Wompi integrity secret for checkout widget
 - `WOMPI_ENV` - "sandbox" or "production" (default: sandbox)
-- `WOMPI_REDIRECT_URL` - URL to redirect after payment (default: https://monedita.app/gracias)
+- `WHATSAPP_BOT_NUMBER` - WhatsApp number for redirect after payment (e.g., 573001234567)
+- `WOMPI_REDIRECT_URL` - Optional custom redirect URL (default: WhatsApp link with bot number)
 
 ## Code Patterns
 

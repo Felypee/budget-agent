@@ -16,6 +16,9 @@ const WOMPI_PRIVATE_KEY = process.env.WOMPI_PRIVATE_KEY;
 const WOMPI_EVENTS_SECRET = process.env.WOMPI_EVENTS_SECRET;
 const WOMPI_INTEGRITY_SECRET = process.env.WOMPI_INTEGRITY_SECRET;
 
+// WhatsApp number for redirect after payment
+const WHATSAPP_BOT_NUMBER = process.env.WHATSAPP_BOT_NUMBER || "573000000000";
+
 // Subscription plans with COP prices
 export const SUBSCRIPTION_PLANS = {
   basic: {
@@ -59,6 +62,11 @@ export async function createPaymentLink(phone, planId) {
     // Amount in cents (COP doesn't use decimals, but Wompi expects cents)
     const amountInCents = plan.priceCOP * 100;
 
+    // Build WhatsApp redirect URL with pre-filled message
+    const whatsappMessage = encodeURIComponent(`¡Hola! Acabo de actualizar mi plan a ${plan.name} 🎉`);
+    const redirectUrl = process.env.WOMPI_REDIRECT_URL ||
+      `https://wa.me/${WHATSAPP_BOT_NUMBER}?text=${whatsappMessage}`;
+
     const response = await fetch(`${WOMPI_API_URL}/payment_links`, {
       method: "POST",
       headers: {
@@ -72,7 +80,7 @@ export async function createPaymentLink(phone, planId) {
         collect_shipping: false,
         currency: "COP",
         amount_in_cents: amountInCents,
-        redirect_url: process.env.WOMPI_REDIRECT_URL || "https://monedita.app/gracias",
+        redirect_url: redirectUrl,
         expires_at: getExpirationDate(24), // 24 hours
       }),
     });
