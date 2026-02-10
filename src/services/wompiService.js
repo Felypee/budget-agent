@@ -66,6 +66,9 @@ export async function createPaymentLink(phone, planId) {
     const redirectUrl = process.env.WOMPI_REDIRECT_URL ||
       `https://wa.me/${WHATSAPP_BOT_NUMBER}`;
 
+    // Format phone for Wompi (needs country code format)
+    const formattedPhone = phone.startsWith("+") ? phone : `+${phone}`;
+
     const response = await fetch(`${WOMPI_API_URL}/payment_links`, {
       method: "POST",
       headers: {
@@ -77,10 +80,16 @@ export async function createPaymentLink(phone, planId) {
         description: `${plan.name}: ${plan.description}`,
         single_use: true,
         collect_shipping: false,
+        collect_customer_legal_id: false, // Don't ask for ID
         currency: "COP",
         amount_in_cents: amountInCents,
         redirect_url: redirectUrl,
         expires_at: getExpirationDate(24), // 24 hours
+        // Pre-fill customer data from WhatsApp
+        customer_data: {
+          phone_number: formattedPhone,
+          full_name: `Usuario ${phone.slice(-4)}`, // Last 4 digits as placeholder
+        },
       }),
     });
 
