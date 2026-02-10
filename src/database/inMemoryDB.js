@@ -149,6 +149,17 @@ export const ExpenseDB = {
     return filtered.length < userExpenses.length;
   },
 
+  update(phone, id, updates) {
+    const userExpenses = expenses.get(phone) || [];
+    const expense = userExpenses.find(e => e.id === id);
+    if (expense) {
+      Object.assign(expense, updates);
+      expenses.set(phone, userExpenses);
+      return expense;
+    }
+    return null;
+  },
+
   getTotalByCategory(phone, category, startDate, endDate) {
     const userExpenses = this.getByDateRange(phone, startDate, endDate);
     return userExpenses

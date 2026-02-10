@@ -260,6 +260,19 @@ export const ExpenseDB = {
     return true;
   },
 
+  async update(phone, id, updates) {
+    const { data, error } = await supabase
+      .from("expenses")
+      .update(updates)
+      .eq("phone", phone)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error && error.code !== "PGRST116") throw error;
+    return data;
+  },
+
   async getTotalByCategory(phone, category, startDate, endDate) {
     const expenses = await this.getByDateRange(phone, startDate, endDate);
     return expenses
