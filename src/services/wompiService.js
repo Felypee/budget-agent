@@ -62,10 +62,9 @@ export async function createPaymentLink(phone, planId) {
     // Amount in cents (COP doesn't use decimals, but Wompi expects cents)
     const amountInCents = plan.priceCOP * 100;
 
-    // Build WhatsApp redirect URL with pre-filled message
-    const whatsappMessage = encodeURIComponent(`¡Hola! Acabo de actualizar mi plan a ${plan.name} 🎉`);
+    // Redirect to WhatsApp chat after payment (bot sends welcome message via webhook)
     const redirectUrl = process.env.WOMPI_REDIRECT_URL ||
-      `https://wa.me/${WHATSAPP_BOT_NUMBER}?text=${whatsappMessage}`;
+      `https://wa.me/${WHATSAPP_BOT_NUMBER}`;
 
     const response = await fetch(`${WOMPI_API_URL}/payment_links`, {
       method: "POST",
