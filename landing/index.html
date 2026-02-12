@@ -638,30 +638,75 @@
                 </h2>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Stat 1: Savings -->
-                <div class="feature-card bg-white rounded-2xl p-6 text-center hover:shadow-xl transition border-2 border-gray-100 hover:border-green-200">
-                    <p class="text-5xl font-black text-green-500 mb-2">20%</p>
-                    <p class="text-gray-800 font-semibold mb-1" data-i18n="benefits.save.title">more savings</p>
-                    <p class="text-gray-500 text-xs" data-i18n="benefits.save.source">Journal of Consumer Research</p>
-                </div>
-                <!-- Stat 2: Stress -->
-                <div class="feature-card bg-white rounded-2xl p-6 text-center hover:shadow-xl transition border-2 border-gray-100 hover:border-indigo-200">
-                    <p class="text-5xl font-black text-indigo-500 mb-2">65%</p>
-                    <p class="text-gray-800 font-semibold mb-1" data-i18n="benefits.stress.title">less financial stress</p>
-                    <p class="text-gray-500 text-xs" data-i18n="benefits.stress.source">American Psychological Association</p>
-                </div>
-                <!-- Stat 3: Goals -->
-                <div class="feature-card bg-white rounded-2xl p-6 text-center hover:shadow-xl transition border-2 border-gray-100 hover:border-amber-200">
-                    <p class="text-5xl font-black text-amber-500 mb-2">3x</p>
-                    <p class="text-gray-800 font-semibold mb-1" data-i18n="benefits.goals.title">more likely to reach goals</p>
-                    <p class="text-gray-500 text-xs" data-i18n="benefits.goals.source">Financial Health Network</p>
-                </div>
-                <!-- Stat 4: Debt -->
-                <div class="feature-card bg-white rounded-2xl p-6 text-center hover:shadow-xl transition border-2 border-gray-100 hover:border-red-200">
-                    <p class="text-5xl font-black text-red-500 mb-2">50%</p>
-                    <p class="text-gray-800 font-semibold mb-1" data-i18n="benefits.debt.title">less unexpected debt</p>
-                    <p class="text-gray-500 text-xs" data-i18n="benefits.debt.source">National Endowment for Financial Education</p>
-                </div>
+                <!-- Stat 1: Savings - Journal of Consumer Research -->
+                <a href="https://www.jstor.org/journal/jconsrese" target="_blank" rel="noopener noreferrer" class="feature-card bg-white rounded-2xl p-6 text-center hover:shadow-xl transition border-2 border-gray-100 hover:border-green-200 block group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-green-50 flex items-center justify-center group-hover:bg-green-100 transition">
+                        <svg class="w-10 h-10 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                        </svg>
+                    </div>
+                    <p class="text-4xl font-black text-green-500 mb-2">20%</p>
+                    <p class="text-gray-800 font-semibold mb-3" data-i18n="benefits.save.title">more savings</p>
+                    <div class="flex items-center justify-center gap-2 text-gray-400 group-hover:text-green-600 transition">
+                        <span class="text-xs font-medium">JCR</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                    </div>
+                    <p class="text-gray-400 text-[10px] mt-1" data-i18n="benefits.save.source">Journal of Consumer Research</p>
+                </a>
+                <!-- Stat 2: Stress - American Psychological Association -->
+                <a href="https://www.apa.org/news/press/releases/stress" target="_blank" rel="noopener noreferrer" class="feature-card bg-white rounded-2xl p-6 text-center hover:shadow-xl transition border-2 border-gray-100 hover:border-indigo-200 block group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-indigo-50 flex items-center justify-center group-hover:bg-indigo-100 transition">
+                        <svg class="w-10 h-10 text-indigo-600" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                        </svg>
+                    </div>
+                    <p class="text-4xl font-black text-indigo-500 mb-2">65%</p>
+                    <p class="text-gray-800 font-semibold mb-3" data-i18n="benefits.stress.title">less financial stress</p>
+                    <div class="flex items-center justify-center gap-2 text-gray-400 group-hover:text-indigo-600 transition">
+                        <span class="text-xs font-medium">APA</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                    </div>
+                    <p class="text-gray-400 text-[10px] mt-1" data-i18n="benefits.stress.source">American Psychological Association</p>
+                </a>
+                <!-- Stat 3: Goals - Financial Health Network -->
+                <a href="https://finhealthnetwork.org/research/" target="_blank" rel="noopener noreferrer" class="feature-card bg-white rounded-2xl p-6 text-center hover:shadow-xl transition border-2 border-gray-100 hover:border-amber-200 block group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-amber-50 flex items-center justify-center group-hover:bg-amber-100 transition">
+                        <svg class="w-10 h-10 text-amber-600" viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <p class="text-4xl font-black text-amber-500 mb-2">3x</p>
+                    <p class="text-gray-800 font-semibold mb-3" data-i18n="benefits.goals.title">more likely to reach goals</p>
+                    <div class="flex items-center justify-center gap-2 text-gray-400 group-hover:text-amber-600 transition">
+                        <span class="text-xs font-medium">FHN</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                    </div>
+                    <p class="text-gray-400 text-[10px] mt-1" data-i18n="benefits.goals.source">Financial Health Network</p>
+                </a>
+                <!-- Stat 4: Debt - National Endowment for Financial Education -->
+                <a href="https://www.nefe.org/research" target="_blank" rel="noopener noreferrer" class="feature-card bg-white rounded-2xl p-6 text-center hover:shadow-xl transition border-2 border-gray-100 hover:border-red-200 block group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-red-50 flex items-center justify-center group-hover:bg-red-100 transition">
+                        <svg class="w-10 h-10 text-red-600" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
+                            <path fill-rule="evenodd" d="M1.5 9.75v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5h-21zM9 12a.75.75 0 01.75-.75h4.5a.75.75 0 010 1.5h-4.5A.75.75 0 019 12zm-2.25 3a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <p class="text-4xl font-black text-red-500 mb-2">50%</p>
+                    <p class="text-gray-800 font-semibold mb-3" data-i18n="benefits.debt.title">less unexpected debt</p>
+                    <div class="flex items-center justify-center gap-2 text-gray-400 group-hover:text-red-600 transition">
+                        <span class="text-xs font-medium">NEFE</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                    </div>
+                    <p class="text-gray-400 text-[10px] mt-1" data-i18n="benefits.debt.source">National Endowment for Financial Education</p>
+                </a>
             </div>
             <!-- Bottom message -->
             <div class="mt-12 text-center">
