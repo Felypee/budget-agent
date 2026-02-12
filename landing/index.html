@@ -177,34 +177,6 @@
             color: white;
         }
 
-        /* Pricing Styles */
-        .pricing-card:hover {
-            transform: scale(1.02);
-        }
-        .pricing-card.popular {
-            transform: scale(1.05);
-            border: 2px solid #667eea;
-        }
-        .pricing-card.popular:hover {
-            transform: scale(1.07);
-        }
-        .price-original {
-            text-decoration: line-through;
-            color: #9ca3af;
-            font-size: 0.875rem;
-            margin-right: 0.5rem;
-        }
-        .savings-badge {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            font-size: 0.75rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 9999px;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 0.5rem;
-        }
-
         /* Feature card animation */
         .feature-icon {
             transition: transform 0.3s ease;
@@ -237,7 +209,6 @@
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#features" class="text-gray-600 hover:text-gray-900 transition" data-i18n="nav.features">Features</a>
-                    <a href="#pricing" class="text-gray-600 hover:text-gray-900 transition" data-i18n="nav.pricing">Pricing</a>
 
                     <!-- Language Dropdown -->
                     <div class="lang-dropdown">
@@ -312,7 +283,6 @@
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
             <div class="px-4 py-4 space-y-3">
                 <a href="#features" class="block text-gray-600 hover:text-gray-900" data-i18n="nav.features">Features</a>
-                <a href="#pricing" class="block text-gray-600 hover:text-gray-900" data-i18n="nav.pricing">Pricing</a>
                 <a href="https://wa.me/573222490201" target="_blank" class="wa-link wa-cta block gradient-bg text-white px-5 py-2.5 rounded-full font-medium text-center" data-i18n="nav.startFree">
                     Start Free
                 </a>
@@ -696,199 +666,93 @@
             <!-- Bottom message -->
             <div class="mt-12 text-center">
                 <p class="text-gray-600 max-w-2xl mx-auto" data-i18n="benefits.conclusion">
-                    The simple act of tracking makes you <span class="font-semibold text-gray-800">aware</span>. And awareness changes behavior.
+                    The simple act of tracking makes you aware. And awareness changes behavior.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Insights Section - Addressing the Fear: "Where did my money go?" -->
-    <section id="insights" class="py-20 bg-gradient-to-br from-red-50 via-white to-orange-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Left: The Fear & Solution -->
-                <div class="text-center lg:text-left">
-                    <!-- The Fear -->
-                    <p class="text-red-500 font-medium mb-2 flex items-center justify-center lg:justify-start" data-i18n="insights.fear.label">
-                        <span class="mr-2">😰</span> The hidden problem
-                    </p>
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">
-                        <span data-i18n="insights.fear.title1">"Where did my</span><br>
-                        <span class="text-red-500" data-i18n="insights.fear.title2">money go?"</span>
-                    </h2>
-                    <p class="text-gray-600 mb-6 text-lg" data-i18n="insights.fear.desc">
-                        Small daily expenses that seem harmless add up to hundreds every month. That $5 coffee, the $8 snack, the $3 parking... they're invisible until you track them.
-                    </p>
-
-                    <!-- The Solution -->
-                    <div class="bg-white rounded-xl p-5 shadow-lg border-l-4 border-green-500 mb-6">
-                        <p class="text-green-600 font-semibold mb-2 flex items-center" data-i18n="insights.solution.label">
-                            <span class="mr-2">✨</span> Monedita reveals the truth
-                        </p>
-                        <p class="text-gray-700" data-i18n="insights.solution.desc">
-                            Track every expense in 3 seconds. At month's end, you'll know exactly where every dollar went—no surprises.
-                        </p>
-                    </div>
-
-                    <div class="mt-8 flex justify-center lg:justify-start">
-                        <a href="https://wa.me/573222490201" target="_blank" class="wa-link wa-cta inline-flex items-center justify-center px-8 py-4 bg-whatsapp hover:bg-whatsapp-dark text-white rounded-full font-semibold text-lg transition shadow-lg shadow-green-500/30 hover:shadow-green-500/50">
-                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                            </svg>
-                            <span data-i18n="hero.cta">Try Free</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Right: Shocking Report Mockup -->
-                <div class="relative">
-                    <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-sm mx-auto">
-                        <!-- Alert Header -->
-                        <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-5">
-                            <p class="text-red-600 font-bold text-center text-sm mb-1" data-i18n="insights.alert.title">🚨 Hidden Expenses Detected</p>
-                            <p class="text-red-500 text-xs text-center" data-i18n="insights.alert.subtitle">Expenses under $10 this month</p>
-                        </div>
-
-                        <!-- The Shocking Revelation -->
-                        <div class="text-center mb-5">
-                            <p class="text-4xl font-black text-gray-800">47</p>
-                            <p class="text-sm text-gray-500" data-i18n="insights.reveal.purchases">small purchases</p>
-                            <div class="flex items-center justify-center my-2">
-                                <div class="h-px bg-gray-300 w-8"></div>
-                                <span class="mx-2 text-gray-400">=</span>
-                                <div class="h-px bg-gray-300 w-8"></div>
-                            </div>
-                            <p class="text-3xl font-black text-red-500">$312</p>
-                            <p class="text-sm text-gray-500" data-i18n="insights.reveal.thismonth">this month alone</p>
-                        </div>
-
-                        <!-- Breakdown of small expenses -->
-                        <div class="space-y-3 mb-5">
-                            <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
-                                <div class="flex items-center">
-                                    <span class="text-lg mr-2">☕</span>
-                                    <span class="text-sm text-gray-700" data-i18n="insights.small.coffee">Coffee & snacks</span>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-sm font-bold text-gray-800">$127</p>
-                                    <p class="text-xs text-gray-400">23x</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
-                                <div class="flex items-center">
-                                    <span class="text-lg mr-2">🚕</span>
-                                    <span class="text-sm text-gray-700" data-i18n="insights.small.rides">Short rides</span>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-sm font-bold text-gray-800">$98</p>
-                                    <p class="text-xs text-gray-400">14x</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
-                                <div class="flex items-center">
-                                    <span class="text-lg mr-2">🛒</span>
-                                    <span class="text-sm text-gray-700" data-i18n="insights.small.misc">Small purchases</span>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-sm font-bold text-gray-800">$87</p>
-                                    <p class="text-xs text-gray-400">10x</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Annual Projection - The Real Impact -->
-                        <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-4 border border-orange-200">
-                            <p class="text-xs font-medium text-orange-700 mb-1" data-i18n="insights.projection.label">📊 At this rate, you'll spend:</p>
-                            <p class="text-2xl font-black text-red-600">$3,744<span class="text-sm font-normal text-gray-500" data-i18n="insights.projection.year">/year</span></p>
-                            <p class="text-xs text-gray-600 mt-1" data-i18n="insights.projection.could">on things you don't even remember buying</p>
-                        </div>
-                    </div>
-
-                    <!-- Decorative elements -->
-                    <div class="absolute -top-4 -right-4 w-20 h-20 bg-red-200 rounded-full opacity-50 blur-2xl"></div>
-                    <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-orange-200 rounded-full opacity-50 blur-2xl"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="py-20 bg-gray-50">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Insights Section - Report showing benefits in action -->
+    <section id="insights" class="py-20 bg-gradient-to-br from-green-50 via-white to-emerald-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header text connecting to benefits -->
             <div class="text-center mb-12">
-                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
-                    <span data-i18n="pricing.title">Simple Pricing</span>
-                </h2>
-            </div>
-            <div class="grid md:grid-cols-3 gap-6">
-                <!-- Free Plan -->
-                <div class="pricing-card bg-white rounded-2xl p-6 shadow-sm transition duration-300">
-                    <div class="text-center mb-6">
-                        <h3 class="text-lg font-semibold mb-2" data-i18n="pricing.free.name">Free</h3>
-                        <div class="flex items-baseline justify-center">
-                            <span id="price-free" class="text-4xl font-bold">$0</span>
-                            <span class="text-gray-500 ml-1" data-i18n="pricing.perMonth">/mo</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-3 mb-6 text-sm text-gray-600">
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="pricing.free.f1">30 messages/mo</span></li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="pricing.free.f2">5 voice/images</span></li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="pricing.free.f3">1 budget</span></li>
-                    </ul>
-                    <a href="https://wa.me/573222490201" target="_blank" class="wa-link wa-cta block w-full py-3 text-center border-2 border-gray-200 rounded-full font-medium hover:border-gray-300 transition" data-i18n="pricing.free.cta">
-                        Start Free
-                    </a>
-                </div>
-
-                <!-- Basic Plan (Popular) -->
-                <div class="pricing-card popular bg-white rounded-2xl p-6 shadow-xl transition duration-300 relative">
-                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                        <span class="gradient-bg text-white text-xs font-semibold px-3 py-1 rounded-full" data-i18n="pricing.popular">Popular</span>
-                    </div>
-                    <div class="text-center mb-6">
-                        <h3 class="text-lg font-semibold mb-2" data-i18n="pricing.basic.name">Basic</h3>
-                        <div class="flex items-baseline justify-center flex-wrap">
-                            <span id="price-basic-original" class="price-original hidden">$3.99</span>
-                            <span id="price-basic" class="text-4xl font-bold gradient-text">$2.99</span>
-                            <span class="text-gray-500 ml-1" data-i18n="pricing.perMonth">/mo</span>
-                        </div>
-                        <div id="savings-basic" class="savings-badge hidden">Save 25%</div>
-                    </div>
-                    <ul class="space-y-3 mb-6 text-sm text-gray-600">
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="pricing.basic.f1">150 messages/mo</span></li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="pricing.basic.f2">30 voice, 20 images</span></li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="pricing.basic.f3">5 budgets + CSV export</span></li>
-                    </ul>
-                    <a href="https://wa.me/573222490201" target="_blank" class="wa-link wa-cta block w-full py-3 text-center gradient-bg text-white rounded-full font-medium hover:opacity-90 transition shadow-lg shadow-purple-500/25" data-i18n="pricing.basic.cta">
-                        Upgrade
-                    </a>
-                </div>
-
-                <!-- Premium Plan -->
-                <div class="pricing-card bg-white rounded-2xl p-6 shadow-sm transition duration-300">
-                    <div class="text-center mb-6">
-                        <h3 class="text-lg font-semibold mb-2" data-i18n="pricing.premium.name">Premium</h3>
-                        <div class="flex items-baseline justify-center flex-wrap">
-                            <span id="price-premium-original" class="price-original hidden">$9.99</span>
-                            <span id="price-premium" class="text-4xl font-bold">$7.99</span>
-                            <span class="text-gray-500 ml-1" data-i18n="pricing.perMonth">/mo</span>
-                        </div>
-                        <div id="savings-premium" class="savings-badge hidden">Save 20%</div>
-                    </div>
-                    <ul class="space-y-3 mb-6 text-sm text-gray-600">
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="pricing.premium.f1">Unlimited messages</span></li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="pricing.premium.f2">100 voice, 50 images</span></li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="pricing.premium.f3">Unlimited budgets + PDF</span></li>
-                    </ul>
-                    <a href="https://wa.me/573222490201" target="_blank" class="wa-link wa-cta block w-full py-3 text-center border-2 border-gray-200 rounded-full font-medium hover:border-gray-300 transition" data-i18n="pricing.premium.cta">
-                        Go Premium
-                    </a>
-                </div>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4" data-i18n="insights.title">This is what control looks like</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto" data-i18n="insights.subtitle">
+                    When you track your expenses, you discover patterns that were invisible. That clarity leads to better decisions and real savings.
+                </p>
             </div>
 
-            <!-- CTA Button -->
+            <!-- Report Mockup centered -->
+            <div class="relative max-w-sm mx-auto">
+                <div class="bg-white rounded-2xl shadow-2xl p-6">
+                    <!-- Alert Header -->
+                    <div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-5">
+                        <p class="text-green-600 font-bold text-center text-sm mb-1" data-i18n="insights.alert.title">Monthly Report</p>
+                        <p class="text-green-500 text-xs text-center" data-i18n="insights.alert.subtitle">Your expense breakdown</p>
+                    </div>
+
+                    <!-- The Revelation -->
+                    <div class="text-center mb-5">
+                        <p class="text-4xl font-black text-gray-800">47</p>
+                        <p class="text-sm text-gray-500" data-i18n="insights.reveal.purchases">tracked expenses</p>
+                        <div class="flex items-center justify-center my-2">
+                            <div class="h-px bg-gray-300 w-8"></div>
+                            <span class="mx-2 text-gray-400">=</span>
+                            <div class="h-px bg-gray-300 w-8"></div>
+                        </div>
+                        <p class="text-3xl font-black text-green-500">$312</p>
+                        <p class="text-sm text-gray-500" data-i18n="insights.reveal.thismonth">this month</p>
+                    </div>
+
+                    <!-- Breakdown of expenses -->
+                    <div class="space-y-3 mb-5">
+                        <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                            <div class="flex items-center">
+                                <span class="text-lg mr-2">☕</span>
+                                <span class="text-sm text-gray-700" data-i18n="insights.small.coffee">Coffee & snacks</span>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-bold text-gray-800">$127</p>
+                                <p class="text-xs text-gray-400">23x</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                            <div class="flex items-center">
+                                <span class="text-lg mr-2">🚕</span>
+                                <span class="text-sm text-gray-700" data-i18n="insights.small.rides">Transport</span>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-bold text-gray-800">$98</p>
+                                <p class="text-xs text-gray-400">14x</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                            <div class="flex items-center">
+                                <span class="text-lg mr-2">🛒</span>
+                                <span class="text-sm text-gray-700" data-i18n="insights.small.misc">Shopping</span>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-bold text-gray-800">$87</p>
+                                <p class="text-xs text-gray-400">10x</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Positive message -->
+                    <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
+                        <p class="text-xs font-medium text-green-700 mb-1" data-i18n="insights.projection.label">Now you know exactly where your money goes</p>
+                        <p class="text-sm text-gray-600 mt-1" data-i18n="insights.projection.could">Make informed decisions and start saving</p>
+                    </div>
+                </div>
+
+                <!-- Decorative elements -->
+                <div class="absolute -top-4 -right-4 w-20 h-20 bg-green-200 rounded-full opacity-50 blur-2xl"></div>
+                <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-emerald-200 rounded-full opacity-50 blur-2xl"></div>
+            </div>
+
+            <!-- CTA -->
             <div class="mt-12 text-center">
-                <p class="text-gray-500 mb-4" data-i18n="pricing.cta.text">Ready to take control of your finances?</p>
                 <a href="https://wa.me/573222490201" target="_blank" class="wa-link wa-cta inline-flex items-center justify-center px-8 py-4 bg-whatsapp hover:bg-whatsapp-dark text-white rounded-full font-semibold text-lg transition shadow-lg shadow-green-500/30 hover:shadow-green-500/50">
                     <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -969,27 +833,22 @@
                 "benefits.goals.source": "Financial Health Network",
                 "benefits.debt.title": "less unexpected debt",
                 "benefits.debt.source": "National Endowment for Financial Education",
-                "benefits.conclusion": "The simple act of tracking makes you <span class=\"font-semibold text-gray-800\">aware</span>. And awareness changes behavior.",
+                "benefits.conclusion": "The simple act of tracking makes you aware. And awareness changes behavior.",
                 "story.label": "End of month. Every month.",
                 "story.title": "\"I thought I had more money...\"",
                 "story.people": "7 of 10 people feel this",
                 "story.question": "Does this sound like you?",
-                "insights.fear.label": "The hidden problem",
-                "insights.fear.title1": "\"Where did my",
-                "insights.fear.title2": "money go?\"",
-                "insights.fear.desc": "Small daily expenses that seem harmless add up to hundreds every month. That $5 coffee, the $8 snack, the $3 parking... they're invisible until you track them.",
-                "insights.solution.label": "Monedita reveals the truth",
-                "insights.solution.desc": "Track every expense in 3 seconds. At month's end, you'll know exactly where every dollar went—no surprises.",
-                "insights.alert.title": "🚨 Hidden Expenses Detected",
-                "insights.alert.subtitle": "Expenses under $10 this month",
-                "insights.reveal.purchases": "small purchases",
-                "insights.reveal.thismonth": "this month alone",
+                "insights.title": "This is what control looks like",
+                "insights.subtitle": "When you track your expenses, you discover patterns that were invisible. That clarity leads to better decisions and real savings.",
+                "insights.alert.title": "Monthly Report",
+                "insights.alert.subtitle": "Your expense breakdown",
+                "insights.reveal.purchases": "tracked expenses",
+                "insights.reveal.thismonth": "this month",
                 "insights.small.coffee": "Coffee & snacks",
-                "insights.small.rides": "Short rides",
-                "insights.small.misc": "Small purchases",
-                "insights.projection.label": "📊 At this rate, you'll spend:",
-                "insights.projection.year": "/year",
-                "insights.projection.could": "on things you don't even remember buying",
+                "insights.small.rides": "Transport",
+                "insights.small.misc": "Shopping",
+                "insights.projection.label": "Now you know exactly where your money goes",
+                "insights.projection.could": "Make informed decisions and start saving",
                 "pricing.title": "Simple Pricing",
                 "pricing.perMonth": "/mo",
                 "pricing.popular": "Popular",
@@ -1047,27 +906,22 @@
                 "benefits.goals.source": "Financial Health Network",
                 "benefits.debt.title": "menos deudas inesperadas",
                 "benefits.debt.source": "National Endowment for Financial Education",
-                "benefits.conclusion": "El simple acto de registrar te hace <span class=\"font-semibold text-gray-800\">consciente</span>. Y la consciencia cambia el comportamiento.",
+                "benefits.conclusion": "El simple acto de registrar te hace consciente. Y la consciencia cambia el comportamiento.",
                 "story.label": "Fin de mes. Todos los meses.",
                 "story.title": "\"Pensé que tenía más plata...\"",
                 "story.people": "7 de cada 10 personas sienten esto",
                 "story.question": "¿Te suena familiar?",
-                "insights.fear.label": "El problema oculto",
-                "insights.fear.title1": "\"¿A dónde se fue",
-                "insights.fear.title2": "mi dinero?\"",
-                "insights.fear.desc": "Los pequeños gastos diarios que parecen inofensivos suman cientos cada mes. El café de $5, el snack de $8, el parqueadero de $3... son invisibles hasta que los registras.",
-                "insights.solution.label": "Monedita revela la verdad",
-                "insights.solution.desc": "Registra cada gasto en 3 segundos. Al final del mes, sabrás exactamente a dónde fue cada peso—sin sorpresas.",
-                "insights.alert.title": "🚨 Gastos Hormiga Detectados",
-                "insights.alert.subtitle": "Gastos menores a $10 este mes",
-                "insights.reveal.purchases": "compras pequeñas",
-                "insights.reveal.thismonth": "solo este mes",
+                "insights.title": "Así se ve el control",
+                "insights.subtitle": "Cuando registras tus gastos, descubres patrones que eran invisibles. Esa claridad lleva a mejores decisiones y ahorros reales.",
+                "insights.alert.title": "Reporte Mensual",
+                "insights.alert.subtitle": "Desglose de tus gastos",
+                "insights.reveal.purchases": "gastos registrados",
+                "insights.reveal.thismonth": "este mes",
                 "insights.small.coffee": "Café y snacks",
-                "insights.small.rides": "Viajes cortos",
-                "insights.small.misc": "Compras pequeñas",
-                "insights.projection.label": "📊 A este ritmo, gastarás:",
-                "insights.projection.year": "/año",
-                "insights.projection.could": "en cosas que ni recuerdas haber comprado",
+                "insights.small.rides": "Transporte",
+                "insights.small.misc": "Compras",
+                "insights.projection.label": "Ahora sabes exactamente a dónde va tu dinero",
+                "insights.projection.could": "Toma decisiones informadas y empieza a ahorrar",
                 "pricing.title": "Precios Simples",
                 "pricing.perMonth": "/mes",
                 "pricing.popular": "Popular",
@@ -1125,27 +979,22 @@
                 "benefits.goals.source": "Financial Health Network",
                 "benefits.debt.title": "menos dívidas inesperadas",
                 "benefits.debt.source": "National Endowment for Financial Education",
-                "benefits.conclusion": "O simples ato de registrar te torna <span class=\"font-semibold text-gray-800\">consciente</span>. E consciência muda comportamento.",
+                "benefits.conclusion": "O simples ato de registrar te torna consciente. E consciência muda comportamento.",
                 "story.label": "Fim do mês. Todo mês.",
                 "story.title": "\"Achei que tinha mais dinheiro...\"",
                 "story.people": "7 de cada 10 pessoas sentem isso",
                 "story.question": "Parece com você?",
-                "insights.fear.label": "O problema oculto",
-                "insights.fear.title1": "\"Para onde foi",
-                "insights.fear.title2": "meu dinheiro?\"",
-                "insights.fear.desc": "Pequenos gastos diários que parecem inofensivos somam centenas todo mês. O café de R$5, o lanche de R$8, o estacionamento de R$3... são invisíveis até você rastrear.",
-                "insights.solution.label": "Monedita revela a verdade",
-                "insights.solution.desc": "Registre cada gasto em 3 segundos. No fim do mês, você saberá exatamente para onde foi cada real—sem surpresas.",
-                "insights.alert.title": "🚨 Gastos Ocultos Detectados",
-                "insights.alert.subtitle": "Gastos abaixo de R$10 este mês",
-                "insights.reveal.purchases": "pequenas compras",
-                "insights.reveal.thismonth": "só este mês",
+                "insights.title": "É assim que o controle se parece",
+                "insights.subtitle": "Quando você registra seus gastos, descobre padrões que eram invisíveis. Essa clareza leva a melhores decisões e economias reais.",
+                "insights.alert.title": "Relatório Mensal",
+                "insights.alert.subtitle": "Detalhamento dos seus gastos",
+                "insights.reveal.purchases": "gastos registrados",
+                "insights.reveal.thismonth": "este mês",
                 "insights.small.coffee": "Café e lanches",
-                "insights.small.rides": "Corridas curtas",
-                "insights.small.misc": "Comprinhas",
-                "insights.projection.label": "📊 Nesse ritmo, você gastará:",
-                "insights.projection.year": "/ano",
-                "insights.projection.could": "em coisas que nem lembra de ter comprado",
+                "insights.small.rides": "Transporte",
+                "insights.small.misc": "Compras",
+                "insights.projection.label": "Agora você sabe exatamente para onde vai seu dinheiro",
+                "insights.projection.could": "Tome decisões informadas e comece a economizar",
                 "pricing.title": "Preços Simples",
                 "pricing.perMonth": "/mês",
                 "pricing.popular": "Popular",
@@ -1203,27 +1052,22 @@
                 "benefits.goals.source": "Financial Health Network",
                 "benefits.debt.title": "moins de dettes imprévues",
                 "benefits.debt.source": "National Endowment for Financial Education",
-                "benefits.conclusion": "Le simple fait de suivre vous rend <span class=\"font-semibold text-gray-800\">conscient</span>. Et la conscience change le comportement.",
+                "benefits.conclusion": "Le simple fait de suivre vous rend conscient. Et la conscience change le comportement.",
                 "story.label": "Fin du mois. Chaque mois.",
                 "story.title": "\"Je pensais avoir plus d'argent...\"",
                 "story.people": "7 personnes sur 10 ressentent ça",
                 "story.question": "Ça vous parle?",
-                "insights.fear.label": "Le problème caché",
-                "insights.fear.title1": "\"Où est passé",
-                "insights.fear.title2": "mon argent?\"",
-                "insights.fear.desc": "Les petites dépenses quotidiennes qui semblent anodines s'accumulent en centaines chaque mois. Le café à 5€, le snack à 8€, le parking à 3€... invisibles jusqu'à ce que vous les suiviez.",
-                "insights.solution.label": "Monedita révèle la vérité",
-                "insights.solution.desc": "Enregistrez chaque dépense en 3 secondes. À la fin du mois, vous saurez exactement où est allé chaque euro—sans surprises.",
-                "insights.alert.title": "🚨 Dépenses Cachées Détectées",
-                "insights.alert.subtitle": "Dépenses inférieures à 10€ ce mois",
-                "insights.reveal.purchases": "petits achats",
-                "insights.reveal.thismonth": "ce mois seulement",
+                "insights.title": "Voici à quoi ressemble le contrôle",
+                "insights.subtitle": "Lorsque vous suivez vos dépenses, vous découvrez des schémas qui étaient invisibles. Cette clarté mène à de meilleures décisions et de vraies économies.",
+                "insights.alert.title": "Rapport Mensuel",
+                "insights.alert.subtitle": "Détail de vos dépenses",
+                "insights.reveal.purchases": "dépenses suivies",
+                "insights.reveal.thismonth": "ce mois",
                 "insights.small.coffee": "Café et snacks",
-                "insights.small.rides": "Trajets courts",
-                "insights.small.misc": "Petits achats",
-                "insights.projection.label": "📊 À ce rythme, vous dépenserez:",
-                "insights.projection.year": "/an",
-                "insights.projection.could": "pour des choses dont vous ne vous souvenez même pas",
+                "insights.small.rides": "Transport",
+                "insights.small.misc": "Achats",
+                "insights.projection.label": "Maintenant vous savez exactement où va votre argent",
+                "insights.projection.could": "Prenez des décisions éclairées et commencez à économiser",
                 "pricing.title": "Tarification Simple",
                 "pricing.perMonth": "/mois",
                 "pricing.popular": "Populaire",
@@ -1257,65 +1101,10 @@
             fr: { flag: '🇫🇷', name: 'FR' }
         };
 
-        // Localized pricing
-        const pricingData = {
-            USD: { symbol: '$', free: '0', basic: '2.99', premium: '7.99', basicOriginal: null, premiumOriginal: null },
-            COP: { symbol: '$', free: '0', basic: '12,900', premium: '32,900', basicOriginal: '14,900', premiumOriginal: '39,900', savings: { basic: '13%', premium: '17%' } },
-            MXN: { symbol: '$', free: '0', basic: '49', premium: '129', basicOriginal: '59', premiumOriginal: '159', savings: { basic: '17%', premium: '19%' } },
-            BRL: { symbol: 'R$', free: '0', basic: '14,90', premium: '39,90', basicOriginal: '19,90', premiumOriginal: '49,90', savings: { basic: '25%', premium: '20%' } },
-            EUR: { symbol: '€', free: '0', basic: '2,79', premium: '7,49', basicOriginal: null, premiumOriginal: null }
-        };
-
-        const timezoneToCurrency = {
-            'America/Bogota': 'COP', 'America/Mexico_City': 'MXN', 'America/Sao_Paulo': 'BRL',
-            'America/Buenos_Aires': 'ARS', 'Europe/Paris': 'EUR', 'Europe/Madrid': 'EUR'
-        };
-
-        const savingsText = { en: 'Save', es: 'Ahorra', pt: 'Economize', fr: 'Économisez' };
-
         let currentLang = 'en';
-        let detectedCurrency = 'USD';
         let currentScene = 0;
         const scenes = ['text', 'voice', 'photo'];
         let demoInterval = null;
-
-        function detectCurrency() {
-            try {
-                const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                return timezoneToCurrency[tz] || 'USD';
-            } catch (e) { return 'USD'; }
-        }
-
-        function updatePricing(currency) {
-            const p = pricingData[currency] || pricingData.USD;
-            document.getElementById('price-free').textContent = p.symbol + p.free;
-            document.getElementById('price-basic').textContent = p.symbol + p.basic;
-            document.getElementById('price-premium').textContent = p.symbol + p.premium;
-
-            const basicOrigEl = document.getElementById('price-basic-original');
-            const premOrigEl = document.getElementById('price-premium-original');
-            const savBasicEl = document.getElementById('savings-basic');
-            const savPremEl = document.getElementById('savings-premium');
-
-            if (p.basicOriginal) {
-                basicOrigEl.textContent = p.symbol + p.basicOriginal;
-                basicOrigEl.classList.remove('hidden');
-                savBasicEl.textContent = savingsText[currentLang] + ' ' + p.savings.basic;
-                savBasicEl.classList.remove('hidden');
-            } else {
-                basicOrigEl.classList.add('hidden');
-                savBasicEl.classList.add('hidden');
-            }
-            if (p.premiumOriginal) {
-                premOrigEl.textContent = p.symbol + p.premiumOriginal;
-                premOrigEl.classList.remove('hidden');
-                savPremEl.textContent = savingsText[currentLang] + ' ' + p.savings.premium;
-                savPremEl.classList.remove('hidden');
-            } else {
-                premOrigEl.classList.add('hidden');
-                savPremEl.classList.add('hidden');
-            }
-        }
 
         function detectLanguage() {
             const saved = localStorage.getItem('monedita-lang');
@@ -1337,7 +1126,7 @@
             const t = translations[lang];
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (t[key]) el.textContent = t[key];
+                if (t[key]) el.innerHTML = t[key];
             });
             document.getElementById('current-flag').textContent = languageData[lang].flag;
             document.getElementById('current-lang').textContent = languageData[lang].name;
@@ -1347,7 +1136,6 @@
             });
             document.documentElement.lang = lang;
             localStorage.setItem('monedita-lang', lang);
-            updatePricing(detectedCurrency);
             updateWhatsAppLinks(lang);
         }
 
@@ -1476,8 +1264,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             const lang = detectLanguage();
             updateContent(lang);
-            detectedCurrency = detectCurrency();
-            updatePricing(detectedCurrency);
             startDemoLoop();
         });
     </script>
