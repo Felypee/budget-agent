@@ -633,8 +633,8 @@
     <section id="features" class="py-20 bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
-                    <span data-i18n="benefits.title">People who track their expenses:</span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 max-w-3xl mx-auto leading-tight">
+                    <span data-i18n="benefits.title">The simple act of tracking makes you aware. And awareness changes behavior.</span>
                 </h2>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -708,92 +708,148 @@
                     <p class="text-gray-400 text-[10px] mt-1" data-i18n="benefits.debt.source">National Endowment for Financial Education</p>
                 </a>
             </div>
-            <!-- Bottom message -->
-            <div class="mt-12 text-center">
-                <p class="text-gray-600 max-w-2xl mx-auto" data-i18n="benefits.conclusion">
-                    The simple act of tracking makes you aware. And awareness changes behavior.
-                </p>
-            </div>
         </div>
     </section>
 
-    <!-- Insights Section - Report showing benefits in action -->
-    <section id="insights" class="py-20 bg-gradient-to-br from-green-50 via-white to-emerald-50">
+    <!-- Insights Section - Email Report showing where you're failing -->
+    <section id="insights" class="py-20 bg-gradient-to-br from-slate-100 via-white to-gray-100">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header text connecting to benefits -->
+            <!-- Header text -->
             <div class="text-center mb-12">
-                <h2 class="text-3xl sm:text-4xl font-bold mb-4" data-i18n="insights.title">This is what control looks like</h2>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4" data-i18n="insights.title">Every week you'll receive a report like this</h2>
                 <p class="text-gray-600 text-lg max-w-2xl mx-auto" data-i18n="insights.subtitle">
-                    When you track your expenses, you discover patterns that were invisible. That clarity leads to better decisions and real savings.
+                    Direct to your inbox, showing exactly where your money went and where you need to pay attention.
                 </p>
             </div>
 
-            <!-- Report Mockup centered -->
-            <div class="relative max-w-sm mx-auto">
-                <div class="bg-white rounded-2xl shadow-2xl p-6">
-                    <!-- Alert Header -->
-                    <div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-5">
-                        <p class="text-green-600 font-bold text-center text-sm mb-1" data-i18n="insights.alert.title">Monthly Report</p>
-                        <p class="text-green-500 text-xs text-center" data-i18n="insights.alert.subtitle">Your expense breakdown</p>
+            <!-- Email Mockup -->
+            <div class="relative max-w-lg mx-auto">
+                <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-200">
+                    <!-- Email Header -->
+                    <div class="bg-gray-50 border-b border-gray-200 px-5 py-4">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
+                                <svg viewBox="0 0 100 100" class="w-7 h-7">
+                                    <circle cx="50" cy="50" r="42" fill="#FFD93D"/>
+                                    <ellipse cx="38" cy="45" rx="4" ry="5" fill="#5D4037"/>
+                                    <ellipse cx="62" cy="45" rx="4" ry="5" fill="#5D4037"/>
+                                    <path d="M 35 60 Q 50 72 65 60" fill="none" stroke="#5D4037" stroke-width="3" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-semibold text-gray-800">Monedita</p>
+                                <p class="text-xs text-gray-500 truncate">reportes@monedita.app</p>
+                            </div>
+                            <p class="text-xs text-gray-400" data-i18n="email.time">Today, 9:00 AM</p>
+                        </div>
+                        <div class="flex items-center text-xs text-gray-500">
+                            <span class="mr-1" data-i18n="email.to">To:</span>
+                            <span class="font-medium text-gray-700">maria@email.com</span>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-800 mt-2" data-i18n="email.subject">Your weekly expense report - January Week 2</p>
                     </div>
 
-                    <!-- The Revelation -->
-                    <div class="text-center mb-5">
-                        <p class="text-4xl font-black text-gray-800">47</p>
-                        <p class="text-sm text-gray-500" data-i18n="insights.reveal.purchases">tracked expenses</p>
-                        <div class="flex items-center justify-center my-2">
-                            <div class="h-px bg-gray-300 w-8"></div>
-                            <span class="mx-2 text-gray-400">=</span>
-                            <div class="h-px bg-gray-300 w-8"></div>
-                        </div>
-                        <p class="text-3xl font-black text-green-500">$312</p>
-                        <p class="text-sm text-gray-500" data-i18n="insights.reveal.thismonth">this month</p>
-                    </div>
+                    <!-- Email Body -->
+                    <div class="p-5">
+                        <!-- Greeting -->
+                        <p class="text-gray-700 mb-4" data-i18n="email.greeting">Hi Maria! Here's what happened with your money this week:</p>
 
-                    <!-- Breakdown of expenses -->
-                    <div class="space-y-3 mb-5">
-                        <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
-                            <div class="flex items-center">
-                                <span class="text-lg mr-2">☕</span>
-                                <span class="text-sm text-gray-700" data-i18n="insights.small.coffee">Coffee & snacks</span>
+                        <!-- Summary Stats -->
+                        <div class="grid grid-cols-2 gap-3 mb-5">
+                            <div class="bg-gray-50 rounded-lg p-3 text-center">
+                                <p class="text-2xl font-black text-gray-800">$312</p>
+                                <p class="text-xs text-gray-500" data-i18n="email.total">total spent</p>
                             </div>
-                            <div class="text-right">
-                                <p class="text-sm font-bold text-gray-800">$127</p>
-                                <p class="text-xs text-gray-400">23x</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
-                            <div class="flex items-center">
-                                <span class="text-lg mr-2">🚕</span>
-                                <span class="text-sm text-gray-700" data-i18n="insights.small.rides">Transport</span>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-sm font-bold text-gray-800">$98</p>
-                                <p class="text-xs text-gray-400">14x</p>
+                            <div class="bg-gray-50 rounded-lg p-3 text-center">
+                                <p class="text-2xl font-black text-gray-800">47</p>
+                                <p class="text-xs text-gray-500" data-i18n="email.transactions">transactions</p>
                             </div>
                         </div>
-                        <div class="flex items-center justify-between bg-gray-50 rounded-lg p-3">
-                            <div class="flex items-center">
-                                <span class="text-lg mr-2">🛒</span>
-                                <span class="text-sm text-gray-700" data-i18n="insights.small.misc">Shopping</span>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-sm font-bold text-gray-800">$87</p>
-                                <p class="text-xs text-gray-400">10x</p>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Positive message -->
-                    <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
-                        <p class="text-xs font-medium text-green-700 mb-1" data-i18n="insights.projection.label">Now you know exactly where your money goes</p>
-                        <p class="text-sm text-gray-600 mt-1" data-i18n="insights.projection.could">Make informed decisions and start saving</p>
+                        <!-- Warning Alert with illustration -->
+                        <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-5">
+                            <div class="flex items-start gap-3">
+                                <!-- Warning illustration -->
+                                <div class="flex-shrink-0">
+                                    <svg class="w-20 h-20" viewBox="0 0 80 80">
+                                        <!-- Coffee cup overflowing -->
+                                        <rect x="20" y="35" width="40" height="35" rx="3" fill="#92400e"/>
+                                        <rect x="23" y="38" width="34" height="29" rx="2" fill="#b45309"/>
+                                        <!-- Coffee overflow -->
+                                        <ellipse cx="40" cy="35" rx="20" ry="5" fill="#78350f"/>
+                                        <circle cx="30" cy="30" r="3" fill="#d97706" class="animate-bounce"/>
+                                        <circle cx="45" cy="28" r="2" fill="#d97706" class="animate-bounce" style="animation-delay: 0.2s"/>
+                                        <circle cx="50" cy="32" r="2.5" fill="#d97706" class="animate-bounce" style="animation-delay: 0.4s"/>
+                                        <!-- Money flying -->
+                                        <text x="25" y="20" font-size="12" class="animate-pulse">💸</text>
+                                        <text x="52" y="18" font-size="10" class="animate-pulse" style="animation-delay: 0.3s">💸</text>
+                                        <!-- Cup handle -->
+                                        <path d="M60 45 Q70 50, 60 60" fill="none" stroke="#92400e" stroke-width="4"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-red-700 font-bold text-sm mb-1" data-i18n="email.alert.title">Attention: Coffee & snacks</p>
+                                    <p class="text-red-600 text-xs mb-2" data-i18n="email.alert.detail">$127 this week (23 purchases)</p>
+                                    <p class="text-red-600/80 text-xs" data-i18n="email.alert.insight">That's 41% of your total spending. At this pace, you'll spend $508/month just on snacks.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expense History -->
+                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3" data-i18n="email.history">Recent expenses</p>
+                        <div class="space-y-2 mb-5 text-sm">
+                            <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                <div class="flex items-center gap-2">
+                                    <span>☕</span>
+                                    <span class="text-gray-600">Starbucks</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-semibold text-gray-800">$6.50</span>
+                                    <span class="text-gray-400 text-xs ml-2">Today</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                <div class="flex items-center gap-2">
+                                    <span>🚕</span>
+                                    <span class="text-gray-600">Uber</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-semibold text-gray-800">$12.00</span>
+                                    <span class="text-gray-400 text-xs ml-2">Yesterday</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                                <div class="flex items-center gap-2">
+                                    <span>☕</span>
+                                    <span class="text-gray-600">Coffee shop</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-semibold text-gray-800">$4.50</span>
+                                    <span class="text-gray-400 text-xs ml-2">Yesterday</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between py-2">
+                                <div class="flex items-center gap-2">
+                                    <span>🛒</span>
+                                    <span class="text-gray-600">Amazon</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-semibold text-gray-800">$34.99</span>
+                                    <span class="text-gray-400 text-xs ml-2">Mon</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer tip -->
+                        <div class="bg-green-50 rounded-lg p-3 text-center">
+                            <p class="text-xs text-green-700" data-i18n="email.tip">Reply to this email or send me a message on WhatsApp to keep tracking!</p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Decorative elements -->
-                <div class="absolute -top-4 -right-4 w-20 h-20 bg-green-200 rounded-full opacity-50 blur-2xl"></div>
-                <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-emerald-200 rounded-full opacity-50 blur-2xl"></div>
+                <div class="absolute -top-4 -right-4 w-20 h-20 bg-amber-200 rounded-full opacity-40 blur-2xl"></div>
+                <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-slate-200 rounded-full opacity-50 blur-2xl"></div>
             </div>
 
             <!-- CTA -->
@@ -869,7 +925,7 @@
                 "demo.voice.bot": "Saved! $8 → Transport",
                 "demo.photo.scanning": "Scanning receipt...",
                 "demo.photo.bot": "Saved! $42 → Shopping",
-                "benefits.title": "People who track their expenses:",
+                "benefits.title": "The simple act of tracking makes you aware. And awareness changes behavior.",
                 "benefits.save.title": "more savings",
                 "benefits.save.source": "Journal of Consumer Research",
                 "benefits.stress.title": "less financial stress",
@@ -878,22 +934,23 @@
                 "benefits.goals.source": "Financial Health Network",
                 "benefits.debt.title": "less unexpected debt",
                 "benefits.debt.source": "National Endowment for Financial Education",
-                "benefits.conclusion": "The simple act of tracking makes you aware. And awareness changes behavior.",
                 "story.label": "End of month. Every month.",
                 "story.title": "\"I thought I had more money...\"",
                 "story.people": "7 of 10 people feel this",
                 "story.question": "Does this sound like you?",
-                "insights.title": "This is what control looks like",
-                "insights.subtitle": "When you track your expenses, you discover patterns that were invisible. That clarity leads to better decisions and real savings.",
-                "insights.alert.title": "Monthly Report",
-                "insights.alert.subtitle": "Your expense breakdown",
-                "insights.reveal.purchases": "tracked expenses",
-                "insights.reveal.thismonth": "this month",
-                "insights.small.coffee": "Coffee & snacks",
-                "insights.small.rides": "Transport",
-                "insights.small.misc": "Shopping",
-                "insights.projection.label": "Now you know exactly where your money goes",
-                "insights.projection.could": "Make informed decisions and start saving",
+                "insights.title": "Every week you'll receive a report like this",
+                "insights.subtitle": "Direct to your inbox, showing exactly where your money went and where you need to pay attention.",
+                "email.time": "Today, 9:00 AM",
+                "email.to": "To:",
+                "email.subject": "Your weekly expense report - January Week 2",
+                "email.greeting": "Hi Maria! Here's what happened with your money this week:",
+                "email.total": "total spent",
+                "email.transactions": "transactions",
+                "email.alert.title": "Attention: Coffee & snacks",
+                "email.alert.detail": "$127 this week (23 purchases)",
+                "email.alert.insight": "That's 41% of your total spending. At this pace, you'll spend $508/month just on snacks.",
+                "email.history": "Recent expenses",
+                "email.tip": "Reply to this email or send me a message on WhatsApp to keep tracking!",
                 "pricing.title": "Simple Pricing",
                 "pricing.perMonth": "/mo",
                 "pricing.popular": "Popular",
@@ -942,7 +999,7 @@
                 "demo.voice.bot": "¡Guardado! $8 → Transporte",
                 "demo.photo.scanning": "Escaneando recibo...",
                 "demo.photo.bot": "¡Guardado! $42 → Compras",
-                "benefits.title": "Las personas que registran sus gastos:",
+                "benefits.title": "El simple acto de registrar te hace consciente. Y la consciencia cambia el comportamiento.",
                 "benefits.save.title": "más ahorro",
                 "benefits.save.source": "Journal of Consumer Research",
                 "benefits.stress.title": "menos estrés financiero",
@@ -951,22 +1008,23 @@
                 "benefits.goals.source": "Financial Health Network",
                 "benefits.debt.title": "menos deudas inesperadas",
                 "benefits.debt.source": "National Endowment for Financial Education",
-                "benefits.conclusion": "El simple acto de registrar te hace consciente. Y la consciencia cambia el comportamiento.",
                 "story.label": "Fin de mes. Todos los meses.",
                 "story.title": "\"Pensé que tenía más plata...\"",
                 "story.people": "7 de cada 10 personas sienten esto",
                 "story.question": "¿Te suena familiar?",
-                "insights.title": "Así se ve el control",
-                "insights.subtitle": "Cuando registras tus gastos, descubres patrones que eran invisibles. Esa claridad lleva a mejores decisiones y ahorros reales.",
-                "insights.alert.title": "Reporte Mensual",
-                "insights.alert.subtitle": "Desglose de tus gastos",
-                "insights.reveal.purchases": "gastos registrados",
-                "insights.reveal.thismonth": "este mes",
-                "insights.small.coffee": "Café y snacks",
-                "insights.small.rides": "Transporte",
-                "insights.small.misc": "Compras",
-                "insights.projection.label": "Ahora sabes exactamente a dónde va tu dinero",
-                "insights.projection.could": "Toma decisiones informadas y empieza a ahorrar",
+                "insights.title": "Cada semana recibirás un reporte como este",
+                "insights.subtitle": "Directo a tu correo, mostrando exactamente a dónde fue tu dinero y dónde debes prestar atención.",
+                "email.time": "Hoy, 9:00 AM",
+                "email.to": "Para:",
+                "email.subject": "Tu reporte semanal de gastos - Enero Semana 2",
+                "email.greeting": "¡Hola María! Esto pasó con tu dinero esta semana:",
+                "email.total": "gastado en total",
+                "email.transactions": "transacciones",
+                "email.alert.title": "Atención: Café y snacks",
+                "email.alert.detail": "$127 esta semana (23 compras)",
+                "email.alert.insight": "Eso es el 41% de tu gasto total. A este ritmo, gastarás $508/mes solo en snacks.",
+                "email.history": "Gastos recientes",
+                "email.tip": "¡Responde a este correo o envíame un mensaje en WhatsApp para seguir registrando!",
                 "pricing.title": "Precios Simples",
                 "pricing.perMonth": "/mes",
                 "pricing.popular": "Popular",
@@ -1015,7 +1073,7 @@
                 "demo.voice.bot": "Salvo! R$8 → Transporte",
                 "demo.photo.scanning": "Escaneando recibo...",
                 "demo.photo.bot": "Salvo! R$42 → Compras",
-                "benefits.title": "Pessoas que registram seus gastos:",
+                "benefits.title": "O simples ato de registrar te torna consciente. E consciência muda comportamento.",
                 "benefits.save.title": "mais economia",
                 "benefits.save.source": "Journal of Consumer Research",
                 "benefits.stress.title": "menos estresse financeiro",
@@ -1024,22 +1082,23 @@
                 "benefits.goals.source": "Financial Health Network",
                 "benefits.debt.title": "menos dívidas inesperadas",
                 "benefits.debt.source": "National Endowment for Financial Education",
-                "benefits.conclusion": "O simples ato de registrar te torna consciente. E consciência muda comportamento.",
                 "story.label": "Fim do mês. Todo mês.",
                 "story.title": "\"Achei que tinha mais dinheiro...\"",
                 "story.people": "7 de cada 10 pessoas sentem isso",
                 "story.question": "Parece com você?",
-                "insights.title": "É assim que o controle se parece",
-                "insights.subtitle": "Quando você registra seus gastos, descobre padrões que eram invisíveis. Essa clareza leva a melhores decisões e economias reais.",
-                "insights.alert.title": "Relatório Mensal",
-                "insights.alert.subtitle": "Detalhamento dos seus gastos",
-                "insights.reveal.purchases": "gastos registrados",
-                "insights.reveal.thismonth": "este mês",
-                "insights.small.coffee": "Café e lanches",
-                "insights.small.rides": "Transporte",
-                "insights.small.misc": "Compras",
-                "insights.projection.label": "Agora você sabe exatamente para onde vai seu dinheiro",
-                "insights.projection.could": "Tome decisões informadas e comece a economizar",
+                "insights.title": "Toda semana você receberá um relatório como este",
+                "insights.subtitle": "Direto no seu email, mostrando exatamente para onde foi seu dinheiro e onde você precisa prestar atenção.",
+                "email.time": "Hoje, 9:00 AM",
+                "email.to": "Para:",
+                "email.subject": "Seu relatório semanal de gastos - Janeiro Semana 2",
+                "email.greeting": "Oi Maria! Isso aconteceu com seu dinheiro esta semana:",
+                "email.total": "gasto total",
+                "email.transactions": "transações",
+                "email.alert.title": "Atenção: Café e lanches",
+                "email.alert.detail": "R$127 esta semana (23 compras)",
+                "email.alert.insight": "Isso é 41% do seu gasto total. Nesse ritmo, você vai gastar R$508/mês só em lanches.",
+                "email.history": "Gastos recentes",
+                "email.tip": "Responda este email ou me mande uma mensagem no WhatsApp para continuar registrando!",
                 "pricing.title": "Preços Simples",
                 "pricing.perMonth": "/mês",
                 "pricing.popular": "Popular",
@@ -1088,7 +1147,7 @@
                 "demo.voice.bot": "Enregistré! 8€ → Transport",
                 "demo.photo.scanning": "Scan du reçu...",
                 "demo.photo.bot": "Enregistré! 42€ → Achats",
-                "benefits.title": "Les personnes qui suivent leurs dépenses:",
+                "benefits.title": "Le simple fait de suivre vous rend conscient. Et la conscience change le comportement.",
                 "benefits.save.title": "plus d'économies",
                 "benefits.save.source": "Journal of Consumer Research",
                 "benefits.stress.title": "moins de stress financier",
@@ -1097,22 +1156,23 @@
                 "benefits.goals.source": "Financial Health Network",
                 "benefits.debt.title": "moins de dettes imprévues",
                 "benefits.debt.source": "National Endowment for Financial Education",
-                "benefits.conclusion": "Le simple fait de suivre vous rend conscient. Et la conscience change le comportement.",
                 "story.label": "Fin du mois. Chaque mois.",
                 "story.title": "\"Je pensais avoir plus d'argent...\"",
                 "story.people": "7 personnes sur 10 ressentent ça",
                 "story.question": "Ça vous parle?",
-                "insights.title": "Voici à quoi ressemble le contrôle",
-                "insights.subtitle": "Lorsque vous suivez vos dépenses, vous découvrez des schémas qui étaient invisibles. Cette clarté mène à de meilleures décisions et de vraies économies.",
-                "insights.alert.title": "Rapport Mensuel",
-                "insights.alert.subtitle": "Détail de vos dépenses",
-                "insights.reveal.purchases": "dépenses suivies",
-                "insights.reveal.thismonth": "ce mois",
-                "insights.small.coffee": "Café et snacks",
-                "insights.small.rides": "Transport",
-                "insights.small.misc": "Achats",
-                "insights.projection.label": "Maintenant vous savez exactement où va votre argent",
-                "insights.projection.could": "Prenez des décisions éclairées et commencez à économiser",
+                "insights.title": "Chaque semaine vous recevrez un rapport comme celui-ci",
+                "insights.subtitle": "Directement dans votre boîte mail, montrant exactement où est allé votre argent et où vous devez faire attention.",
+                "email.time": "Aujourd'hui, 9:00",
+                "email.to": "À:",
+                "email.subject": "Votre rapport hebdomadaire - Janvier Semaine 2",
+                "email.greeting": "Bonjour Marie! Voici ce qui s'est passé avec votre argent cette semaine:",
+                "email.total": "dépensé au total",
+                "email.transactions": "transactions",
+                "email.alert.title": "Attention: Café et snacks",
+                "email.alert.detail": "127€ cette semaine (23 achats)",
+                "email.alert.insight": "C'est 41% de vos dépenses totales. À ce rythme, vous dépenserez 508€/mois rien qu'en snacks.",
+                "email.history": "Dépenses récentes",
+                "email.tip": "Répondez à cet email ou envoyez-moi un message sur WhatsApp pour continuer à suivre!",
                 "pricing.title": "Tarification Simple",
                 "pricing.perMonth": "/mois",
                 "pricing.popular": "Populaire",
