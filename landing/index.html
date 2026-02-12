@@ -1267,10 +1267,14 @@
             const typing = document.getElementById('text-typing');
             const botMsg = document.getElementById('text-bot-msg');
 
+            // Reset: remove animation class and hide
+            userMsg.classList.remove('animate-fade-in-up');
+            botMsg.classList.remove('animate-fade-in-up');
             userMsg.style.opacity = '0';
             typing.style.opacity = '0';
             botMsg.style.opacity = '0';
 
+            // Animate in sequence
             setTimeout(() => { userMsg.style.opacity = '1'; userMsg.classList.add('animate-fade-in-up'); }, 300);
             setTimeout(() => { typing.style.opacity = '1'; }, 800);
             setTimeout(() => { typing.style.opacity = '0'; }, 2000);
@@ -1282,10 +1286,14 @@
             const transcription = document.getElementById('voice-transcription');
             const botMsg = document.getElementById('voice-bot-msg');
 
+            // Reset: remove animation class and hide
+            userMsg.classList.remove('animate-fade-in-up');
+            botMsg.classList.remove('animate-fade-in-up');
             userMsg.style.opacity = '0';
             transcription.style.opacity = '0';
             botMsg.style.opacity = '0';
 
+            // Animate in sequence
             setTimeout(() => { userMsg.style.opacity = '1'; userMsg.classList.add('animate-fade-in-up'); }, 300);
             setTimeout(() => { transcription.style.opacity = '1'; }, 1500);
             setTimeout(() => { botMsg.style.opacity = '1'; botMsg.classList.add('animate-fade-in-up'); }, 2500);
@@ -1296,10 +1304,14 @@
             const processing = document.getElementById('photo-processing');
             const botMsg = document.getElementById('photo-bot-msg');
 
+            // Reset: remove animation class and hide
+            userMsg.classList.remove('animate-fade-in-up');
+            botMsg.classList.remove('animate-fade-in-up');
             userMsg.style.opacity = '0';
             processing.style.opacity = '0';
             botMsg.style.opacity = '0';
 
+            // Animate in sequence
             setTimeout(() => { userMsg.style.opacity = '1'; userMsg.classList.add('animate-fade-in-up'); }, 300);
             setTimeout(() => { processing.style.opacity = '1'; }, 1000);
             setTimeout(() => { processing.style.opacity = '0'; }, 2500);
