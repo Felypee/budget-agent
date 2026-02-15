@@ -40,6 +40,12 @@
             line-height: 1.1;
         }
 
+        /* Ensure touch scroll works on mobile */
+        html, body {
+            touch-action: pan-y;
+            -webkit-overflow-scrolling: touch;
+        }
+
         /* Z-index layering */
         .z-nav { z-index: 100; }
         .z-content { z-index: 10; }
@@ -1273,7 +1279,7 @@
         </div>
 
         <!-- Report content (appears after title moves up) -->
-        <div id="insights-content" class="fixed inset-0 flex items-start justify-center pointer-events-none opacity-0 overflow-y-auto" style="z-index: 52; padding-top: 200px;">
+        <div id="insights-content" class="fixed inset-0 flex items-start justify-center pointer-events-none opacity-0" style="z-index: 52; padding-top: 200px;">
             <div class="w-full pb-20">
                 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <!-- Email Mockup - Personal email style with bar charts -->
@@ -2055,7 +2061,8 @@
                         titleContainer.style.transform = 'translateY(-150px) scale(0.8)';
                         // Content fades in
                         insightsContent.style.opacity = emailProgress;
-                        insightsContent.style.pointerEvents = emailProgress > 0.5 ? 'auto' : 'none';
+                        // Keep pointer-events none to prevent scroll hijacking on mobile
+                        insightsContent.style.pointerEvents = 'none';
                         // Email mockup appears from below
                         emailMockup.style.opacity = emailProgress;
                         emailMockup.style.transform = `translateY(${(1 - emailProgress) * 100}px)`;
