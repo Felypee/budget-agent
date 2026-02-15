@@ -1275,7 +1275,7 @@
 
         <!-- Centered title that appears first -->
         <div id="insights-title-container" class="fixed inset-0 flex flex-col items-center justify-center pointer-events-none opacity-0" style="z-index: 53;">
-            <h2 id="insights-title" class="fluid-section font-black text-gray-900 text-center px-4" data-i18n="insights.title">Weekly insights, delivered</h2>
+            <h2 id="insights-title" class="fluid-section font-black text-gray-900 text-center px-4" data-i18n="insights.title">Your weekly report, delivered</h2>
             <p id="insights-subtitle" class="text-xl text-gray-600 max-w-2xl mx-auto text-center px-4 mt-4 opacity-0" data-i18n="insights.subtitle">
                 Direct to your inbox, showing exactly where your money went.
             </p>
@@ -1522,7 +1522,7 @@
                 "demo.voice.transcription": "\"Uber eight dollars\"",
                 "demo.voice.bot": "Saved! $8 → Transport",
                 "demo.photo.bot": "Saved! $42 → Shopping",
-                "insights.title": "Weekly insights, delivered",
+                "insights.title": "Your weekly report, delivered",
                 "insights.subtitle": "Direct to your inbox, showing exactly where your money went.",
                 "email.time": "Today, 9:00 AM",
                 "email.subject": "Your weekly expense report",
@@ -1594,7 +1594,7 @@
                 "demo.voice.transcription": "\"Uber ocho dólares\"",
                 "demo.voice.bot": "¡Guardado! $8 → Transporte",
                 "demo.photo.bot": "¡Guardado! $42 → Compras",
-                "insights.title": "Insights semanales, entregados",
+                "insights.title": "Tu reporte semanal, entregado",
                 "insights.subtitle": "Directo a tu correo, mostrando exactamente a dónde fue tu dinero.",
                 "email.time": "Hoy, 9:00 AM",
                 "email.subject": "Tu reporte semanal de gastos",
@@ -1666,7 +1666,7 @@
                 "demo.voice.transcription": "\"Uber oito reais\"",
                 "demo.voice.bot": "Salvo! R$8 → Transporte",
                 "demo.photo.bot": "Salvo! R$42 → Compras",
-                "insights.title": "Insights semanais, entregues",
+                "insights.title": "Seu relatório semanal, entregue",
                 "insights.subtitle": "Direto no seu email, mostrando exatamente para onde foi seu dinheiro.",
                 "email.time": "Hoje, 9:00 AM",
                 "email.subject": "Seu relatório semanal de gastos",
@@ -1735,7 +1735,7 @@
                 "demo.voice.transcription": "\"Uber huit euros\"",
                 "demo.voice.bot": "Enregistré! 8€ → Transport",
                 "demo.photo.bot": "Enregistré! 42€ → Achats",
-                "insights.title": "Insights hebdomadaires, livrés",
+                "insights.title": "Votre rapport hebdomadaire, livré",
                 "insights.subtitle": "Directement dans votre boîte mail, montrant exactement où est allé votre argent.",
                 "email.time": "Aujourd'hui, 9:00",
                 "email.subject": "Votre rapport hebdomadaire de dépenses",
@@ -2534,8 +2534,8 @@
             });
         }
 
-        // Initialize debug on load
-        document.addEventListener('DOMContentLoaded', initDebugComponent);
+        // Debug component disabled for production
+        // document.addEventListener('DOMContentLoaded', initDebugComponent);
     </script>
 </body>
 </html>
