@@ -66,7 +66,7 @@ Each tool exports:
 - **src/handlers/messageHandler.js**: Handles message types (text → agent, image → OCR, audio → transcription), tutorial flow, and media processing
 - **src/agents/financeAgent.js**: Uses Claude's tool_use to analyze user intent and call appropriate tools. Provides financial context to Claude.
 - **src/tools/index.js**: Tool registry with `getToolDefinitions()` and `executeTool()` functions
-- **src/services/subscriptionService.js**: Subscription tiers (Free/Basic/Premium), usage limits, and tracking
+- **src/services/subscriptionService.js**: Subscription tiers (Free/Basic/Premium), moneditas (tokens) system, and usage tracking
 - **src/utils/currencyUtils.js**: Currency detection from phone country codes, amount validation, and formatting
 - **src/utils/mediaProcessor.js**: Image OCR (Claude Vision) and audio transcription (Whisper) for expense extraction
 - **src/services/reminderService.js**: Scheduled reminders at 12 PM and 9 PM using node-cron
@@ -154,16 +154,28 @@ For payments (Wompi):
 - Expense categories: `food`, `transport`, `shopping`, `entertainment`, `bills`, `health`, `other`
 - Claude model: `claude-sonnet-4-20250514`
 - Tool handlers return `{ success: boolean, message: string|null }`
-- Subscription limits: -1 means unlimited
+- Moneditas system: each operation consumes tokens (1 for text, 2 for audio, 3 for images)
 
-## Subscription Tiers
+## Subscription Tiers (Moneditas System)
+
+The app uses a token-based system called "moneditas" instead of separate limits per feature.
 
 | Feature | Free | Basic ($2.99) | Premium ($7.99) |
 |---------|------|---------------|-----------------|
-| Text Messages | 30/mo | 150/mo | Unlimited |
-| Voice Messages | 5/mo | 30/mo | 100/mo |
-| Image Scans | 5/mo | 20/mo | 50/mo |
-| AI Conversations | 10/mo | 50/mo | Unlimited |
-| Budgets | 1 | 5 | Unlimited |
-| CSV Export | No | Yes | Yes |
-| PDF Export | No | No | Yes |
+| Moneditas/month | 50 | 250 | 800 |
+| Budgets | Unlimited | Unlimited | Unlimited |
+| Weekly Summary | Yes | Yes | Yes |
+| Visual Report Page | Yes | Yes | Yes |
+| History | 30 days | 6 months | 12 months |
+
+### Moneditas Consumption
+
+| Action | Cost |
+|--------|------|
+| Log expense (text) | 1 monedita |
+| Process receipt (image) | 3 moneditas |
+| Process audio | 2 moneditas |
+| Weekly summary | 2 moneditas |
+| Reminder message | 1 monedita |
+
+See `docs/COST_ANALYSIS.md` for detailed pricing analysis and profitability calculations.

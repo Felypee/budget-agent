@@ -1,449 +1,413 @@
-# Monedita Cost & Profitability Analysis
+# Monedita - Sistema de Pricing con Tokens ("Moneditas")
 
-> Last Updated: February 2026
+> Ultima actualizacion: Febrero 2026
 
-## Table of Contents
+## Tabla de Contenidos
 
-1. [Service Costs Overview](#service-costs-overview)
-2. [Tool-Based Architecture Impact](#tool-based-architecture-impact)
-3. [Cost Per Message Type](#cost-per-message-type)
-4. [Subscription Plans](#subscription-plans)
-5. [User Scenarios Analysis](#user-scenarios-analysis)
-6. [Profitability Summary](#profitability-summary)
-
----
-
-## Service Costs Overview
-
-### API Pricing (Current as of Feb 2026)
-
-| Service            | Model          | Pricing                                |
-| ------------------ | -------------- | -------------------------------------- |
-| **Claude API**     | Sonnet 4       | $3/M input tokens, $15/M output tokens |
-| **WhatsApp API**   | Business       | Free (service messages within 24h)     |
-| **Groq Whisper**   | Large v3 Turbo | $0.04/hour (~$0.00067/min)             |
-| **OpenAI Whisper** | Whisper-1      | $0.006/minute (fallback)               |
-
-### Token Estimates Per Operation
-
-| Operation                        | Input  | Output |
-| -------------------------------- | ------ | ------ |
-| Text expense detection           | ~600   | ~150   |
-| AI conversation (processMessage) | ~800   | ~300   |
-| Image receipt OCR                | ~2,500 | ~150   |
-| Audio expense extraction         | ~600   | ~150   |
+1. [Resumen del Nuevo Sistema](#resumen-del-nuevo-sistema)
+2. [Costos Reales por Operacion](#costos-reales-por-operacion)
+3. [Planes de Suscripcion](#planes-de-suscripcion)
+4. [Consumo de Moneditas](#consumo-de-moneditas)
+5. [Analisis de Rentabilidad](#analisis-de-rentabilidad)
+6. [Escenarios de Usuarios](#escenarios-de-usuarios)
+7. [Costos de Infraestructura](#costos-de-infraestructura)
+8. [Estrategias y Recomendaciones](#estrategias-y-recomendaciones)
 
 ---
 
-## Tool-Based Architecture Impact
+## Resumen del Nuevo Sistema
 
-### Overview
+### Cambio de Modelo
 
-Monedita uses Claude's `tool_use` feature for intelligent intent routing. Instead of regex/if-else chains, Claude analyzes user messages and calls the appropriate tool.
+| Aspecto | Antes | Ahora |
+|---------|-------|-------|
+| **Modelo** | 5 limites separados (texto, voz, imagen, AI, budgets) | 1 recurso universal (moneditas) |
+| **Budgets** | Limitados por plan | Ilimitados para todos |
+| **Resumen semanal** | Solo planes pagos | Todos los planes |
+| **Pagina visual** | No existia (CSV export) | Todos los planes |
+| **Complejidad** | Alta (5 contadores) | Simple (1 contador) |
 
-### Current Tools (14 total)
+### Por que el Cambio
 
-| Tool | Description | Avg Tokens |
-|------|-------------|------------|
-| log_expense | Log expenses | ~80 |
-| set_budget | Create/update budget | ~60 |
-| show_summary | Monthly summary | ~40 |
-| show_budgets | List budgets | ~40 |
-| show_expenses | Recent transactions | ~50 |
-| export_expenses | Export to CSV | ~50 |
-| rename_category | Rename category | ~50 |
-| set_currency | Set currency | ~50 |
-| subscription_status | Plan & usage | ~40 |
-| upgrade_info | Upgrade options | ~40 |
-| help_info | Welcome/help | ~30 |
-| delete_expense | Delete expense | ~70 |
-| edit_expense | Edit expense | ~80 |
-| delete_budget | Delete budget | ~50 |
-
-### Token Overhead Per Request
-
-```
-Tool Definitions:
-- 14 tools x ~55 tokens avg = ~770 tokens
-- Sent with EVERY request as input tokens
-
-Additional Cost Per Request:
-- 770 tokens x ($3/1M) = $0.00231
-
-Monthly Impact (per user tier):
-- Free (38 msgs):    +$0.088
-- Basic (157 msgs):  +$0.363
-- Premium (365 msgs): +$0.843
-```
-
-### Updated Token Estimates (with tools)
-
-| Operation                        | Input (old) | Input (new) | Difference |
-| -------------------------------- | ----------- | ----------- | ---------- |
-| Text expense detection           | ~600        | ~1,370      | +770       |
-| AI conversation (processMessage) | ~800        | ~1,570      | +770       |
-| Image receipt OCR                | ~2,500      | ~2,500      | -          |
-| Audio expense extraction         | ~600        | ~600        | -          |
-
-> Note: Image and audio processing don't use tool_use (handled separately)
-
-### Tradeoffs
-
-| Aspect | Without Tools | With Tools |
-|--------|---------------|------------|
-| **Intent Accuracy** | Regex-based, error-prone | AI-driven, highly accurate |
-| **Maintainability** | Complex if/else chains | Modular, easy to extend |
-| **Cost per text msg** | $0.0041 | $0.0064 |
-| **User Experience** | May misunderstand intent | Natural language understanding |
-
-### Cost Optimization Strategies
-
-1. **Shorter tool descriptions** - Reduce tokens per tool definition
-2. **Lazy tool loading** - Only send relevant tools based on context
-3. **Prompt caching** - Anthropic caches repeated system prompts (automatic)
-4. **Batch similar operations** - Group multiple expenses in one call
+1. **Mas simple de entender** - Los usuarios ven un solo numero
+2. **Mas justo** - Pagan por lo que realmente usan
+3. **Mejor conversion** - Free plan mas atractivo = mas usuarios prueban = mas upgrades
+4. **Similar a Claude Code** - Modelo probado en el mercado
 
 ---
 
-## Cost Per Message Type
+## Costos Reales por Operacion
 
-### 1. Text Message (Expense Detection) - WITH TOOL_USE
+### APIs Externas (Febrero 2026)
 
-```
-Claude API:
-- Input:  1,370 tokens x ($3/1M)  = $0.00411
-  (600 base + 770 tool definitions)
-- Output: 150 tokens   x ($15/1M) = $0.00225
-                                    ─────────
-                          Subtotal = $0.00636
+| Servicio | Modelo | Pricing |
+|----------|--------|---------|
+| **Claude API** | Sonnet 4.5 | $3/M input, $15/M output |
+| **Claude Vision** | Sonnet 4.5 | Mismo precio (imagen = ~1600 tokens) |
+| **Groq Whisper** | Large v3 | Gratis (free tier) |
+| **OpenAI Whisper** | Whisper-1 | $0.006/minuto (fallback) |
+| **WhatsApp API** | Business | $0.0008/msg utility (Colombia) |
 
-WhatsApp: FREE (service message)
-                          ─────────
-               TOTAL COST = $0.0064
-```
+### Costo por Tipo de Operacion
 
-### 2. AI Conversation Message - WITH TOOL_USE
+| Operacion | Tokens (in/out) | Costo Claude | Costo WA | **Total** |
+|-----------|-----------------|--------------|----------|-----------|
+| **Mensaje texto** | ~1400/300 | $0.0042 + $0.0045 | $0 | **~$0.009** |
+| **Imagen/recibo OCR** | ~2500/150 | $0.0075 + $0.0023 | $0 | **~$0.010** |
+| **Audio (30 seg)** | ~600/150 | $0.0018 + $0.0023 | $0 | **~$0.004** |
+| **Resumen semanal** | ~800/400 | $0.0024 + $0.0060 | $0.0008 | **~$0.009** |
+| **Mensaje saliente WA** | - | - | $0.0008 | **~$0.001** |
 
-```
-Claude API:
-- Input:  1,570 tokens x ($3/1M)  = $0.00471
-  (800 base + 770 tool definitions)
-- Output: 300 tokens   x ($15/1M) = $0.0045
-                                    ─────────
-                          Subtotal = $0.00921
-
-WhatsApp: FREE (service message)
-                          ─────────
-               TOTAL COST = $0.0092
-```
-
-### 3. Image/Receipt Processing (Claude Vision)
-
-```
-Claude API:
-- Input:  2,500 tokens x ($3/1M)  = $0.0075
-- Output: 150 tokens   x ($15/1M) = $0.00225
-                                    ─────────
-                          Subtotal = $0.00975
-
-WhatsApp: FREE (service message)
-                          ─────────
-               TOTAL COST = $0.0098
-```
-
-### 4. Audio/Voice Message Processing
-
-```
-Groq Whisper (avg 30 sec):
-- Transcription: 0.5 min x $0.00067 = $0.00034
-
-Claude API:
-- Input:  600 tokens x ($3/1M)  = $0.0018
-- Output: 150 tokens x ($15/1M) = $0.00225
-                                  ─────────
-                        Subtotal = $0.00439
-
-WhatsApp: FREE (service message)
-                        ─────────
-             TOTAL COST = $0.0044
-```
-
-### Cost Summary Table
-
-| Message Type | Cost/Message | Notes                          |
-| ------------ | ------------ | ------------------------------ |
-| **Text**     | $0.0064      | Expense detection (with tools) |
-| **AI Chat**  | $0.0092      | Conversational (with tools)    |
-| **Image**    | $0.0098      | Receipt OCR (no tools)         |
-| **Audio**    | $0.0044      | Voice note (no tools)          |
-
-> Note: Text and AI Chat costs increased ~55% due to tool definitions overhead.
-> Image and Audio processing bypass tool_use for efficiency.
+> Nota: Mensajes de texto incluyen overhead de tool definitions (~770 tokens)
 
 ---
 
-## Subscription Plans
+## Planes de Suscripcion
 
-### Plan Definitions
+### Definicion de Planes
 
-| Feature              | Free     | Basic     | Premium   |
-| -------------------- | -------- | --------- | --------- |
-| **Monthly Price**    | $0       | $2.99     | $7.99     |
-| **Text Messages**    | 30/month | 150/month | Unlimited |
-| **Voice Messages**   | 5/month  | 30/month  | 100/month |
-| **Image/Receipts**   | 5/month  | 20/month  | 50/month  |
-| **AI Conversations** | 10/month | 50/month  | Unlimited |
-| **Budget Alerts**    | 1 budget | 5 budgets | Unlimited |
-| **Export Data**      | No       | CSV       | CSV + PDF |
-| **Priority Support** | No       | No        | Yes       |
+| Caracteristica | **Free** | **Basic** | **Premium** |
+|----------------|----------|-----------|-------------|
+| **Precio** | $0 | $2.99/mes | $7.99/mes |
+| **Precio COP** | $0 | ~$12,000 | ~$32,000 |
+| **Moneditas/mes** | 50 | 250 | 800 |
+| **Presupuestos** | Ilimitado | Ilimitado | Ilimitado |
+| **Resumen semanal** | Si | Si | Si |
+| **Pagina visual** | Si | Si | Si |
+| **Historial** | 30 dias | 6 meses | 12 meses |
+| **Soporte** | Comunidad | Email | Prioritario |
 
-### Average Usage Estimates Per User
+### Cambios vs Sistema Anterior
 
-| Plan        | Text | AI Chat | Images | Audio |
-| ----------- | ---- | ------- | ------ | ----- |
-| **Free**    | 25   | 8       | 3      | 2     |
-| **Basic**   | 100  | 30      | 12     | 15    |
-| **Premium** | 200  | 80      | 35     | 50    |
-
-### Cost Per User Per Month (with tool_use)
-
-#### Free Tier User
-
-```
-Text:    25 x $0.0064 = $0.16
-AI Chat:  8 x $0.0092 = $0.0736
-Images:   3 x $0.0098 = $0.0294
-Audio:    2 x $0.0044 = $0.0088
-                        ────────
-           TOTAL COST = $0.27
-```
-
-#### Basic Tier User
-
-```
-Text:   100 x $0.0064 = $0.64
-AI Chat: 30 x $0.0092 = $0.276
-Images:  12 x $0.0098 = $0.1176
-Audio:   15 x $0.0044 = $0.066
-                        ────────
-           TOTAL COST = $1.10
-```
-
-#### Premium Tier User
-
-```
-Text:   200 x $0.0064 = $1.28
-AI Chat: 80 x $0.0092 = $0.736
-Images:  35 x $0.0098 = $0.343
-Audio:   50 x $0.0044 = $0.22
-                        ────────
-           TOTAL COST = $2.58
-```
-
-### Per-User Economics (with tool_use)
-
-| Plan        | Price | API Cost | Gross Margin | Margin % |
-| ----------- | ----- | -------- | ------------ | -------- |
-| **Free**    | $0.00 | $0.27    | -$0.27       | N/A      |
-| **Basic**   | $2.99 | $1.10    | +$1.89       | 63.2%    |
-| **Premium** | $7.99 | $2.58    | +$5.41       | 67.7%    |
-
-> Note: Margins decreased ~10% due to tool_use overhead, but UX significantly improved.
+| Caracteristica | Antes | Ahora |
+|----------------|-------|-------|
+| Budgets Free | 1 | Ilimitado |
+| Budgets Basic | 5 | Ilimitado |
+| CSV Export | Basic+ | Eliminado |
+| PDF Export | Premium | Eliminado |
+| Pagina visual | No existia | Todos |
+| Resumen semanal | No existia | Todos |
 
 ---
 
-## User Scenarios Analysis
+## Consumo de Moneditas
 
-### Assumed User Distribution
+### Costo por Accion
 
-| Scenario       | Free       | Basic      | Premium   | Total |
-| -------------- | ---------- | ---------- | --------- | ----- |
-| **50 users**   | 35 (70%)   | 10 (20%)   | 5 (10%)   | 50    |
-| **500 users**  | 300 (60%)  | 150 (30%)  | 50 (10%)  | 500   |
-| **5000 users** | 2500 (50%) | 2000 (40%) | 500 (10%) | 5000  |
+| Accion | Moneditas | Costo Real | Margen |
+|--------|-----------|------------|--------|
+| Registrar gasto (texto) | 1 | ~$0.009 | - |
+| Procesar recibo (imagen) | 3 | ~$0.010 | - |
+| Procesar audio | 2 | ~$0.004 | - |
+| Recibir resumen semanal | 2 | ~$0.009 | - |
+| Mensaje recordatorio | 1 | ~$0.001 | - |
 
----
+### Que Puedes Hacer con tus Moneditas
 
-### Scenario 1: 50 Users
+| Uso | Free (50) | Basic (250) | Premium (800) |
+|-----|-----------|-------------|---------------|
+| **Solo texto** (1 c/u) | 50 gastos | 250 gastos | 800 gastos |
+| **Solo imagenes** (3 c/u) | 16 recibos | 83 recibos | 266 recibos |
+| **Solo audios** (2 c/u) | 25 audios | 125 audios | 400 audios |
+| **Uso mixto tipico*** | ~40 gastos | ~200 gastos | ~650 gastos |
 
-#### Revenue
+*Uso mixto tipico: 70% texto, 20% imagen, 10% audio
 
-| Plan      | Users  | Price | Monthly Revenue |
-| --------- | ------ | ----- | --------------- |
-| Free      | 35     | $0.00 | $0.00           |
-| Basic     | 10     | $2.99 | $29.90          |
-| Premium   | 5      | $7.99 | $39.95          |
-| **Total** | **50** |       | **$69.85**      |
+### Calculo de Uso Mixto Tipico
 
-#### API Costs (with tool_use)
+```
+Free (50 moneditas):
+- 35 textos x 1 = 35
+- 4 imagenes x 3 = 12
+- 1.5 audios x 2 = 3
+= 50 moneditas
 
-| Plan      | Users  | Cost/User | Monthly Cost |
-| --------- | ------ | --------- | ------------ |
-| Free      | 35     | $0.27     | $9.45        |
-| Basic     | 10     | $1.10     | $11.00       |
-| Premium   | 5      | $2.58     | $12.90       |
-| **Total** | **50** |           | **$33.35**   |
+Basic (250 moneditas):
+- 175 textos x 1 = 175
+- 17 imagenes x 3 = 51
+- 12 audios x 2 = 24
+= 250 moneditas
 
-#### Infrastructure Costs
-
-| Item                     | Monthly Cost |
-| ------------------------ | ------------ |
-| Hosting (Heroku/Railway) | $12.00       |
-| Database (Supabase free) | $0.00        |
-| Domain/SSL               | $1.00        |
-| **Total**                | **$13.00**   |
-
-#### Profit Summary - 50 Users
-
-| Metric            | Amount     |
-| ----------------- | ---------- |
-| Revenue           | $69.85     |
-| API Costs         | $33.35     |
-| Infrastructure    | $13.00     |
-| **Total Costs**   | **$46.35** |
-| **Net Profit**    | **$23.50** |
-| **Profit Margin** | **33.6%**  |
+Premium (800 moneditas):
+- 560 textos x 1 = 560
+- 53 imagenes x 3 = 159
+- 40 audios x 2 = 80
+= ~800 moneditas
+```
 
 ---
 
-### Scenario 2: 500 Users
+## Analisis de Rentabilidad
 
-#### Revenue
+### Costo por Usuario por Plan
 
-| Plan      | Users   | Price | Monthly Revenue |
-| --------- | ------- | ----- | --------------- |
-| Free      | 300     | $0.00 | $0.00           |
-| Basic     | 150     | $2.99 | $448.50         |
-| Premium   | 50      | $7.99 | $399.50         |
-| **Total** | **500** |       | **$848.00**     |
+#### Plan Free ($0)
 
-#### API Costs (with tool_use)
+| Concepto | Cantidad | Costo Unitario | Total |
+|----------|----------|----------------|-------|
+| Moneditas usadas (promedio 80%) | 40 | ~$0.007* | $0.28 |
+| Resumenes semanales | 4 | $0.009 | $0.036 |
+| **TOTAL** | | | **~$0.32/mes** |
 
-| Plan      | Users   | Cost/User | Monthly Cost |
-| --------- | ------- | --------- | ------------ |
-| Free      | 300     | $0.27     | $81.00       |
-| Basic     | 150     | $1.10     | $165.00      |
-| Premium   | 50      | $2.58     | $129.00      |
-| **Total** | **500** |           | **$375.00**  |
+*Promedio ponderado considerando mix de operaciones
 
-#### Infrastructure Costs
+#### Plan Basic ($2.99)
 
-| Item                    | Monthly Cost |
-| ----------------------- | ------------ |
-| Hosting (scaled)        | $25.00       |
-| Database (Supabase Pro) | $25.00       |
-| Domain/SSL              | $1.00        |
-| Monitoring              | $10.00       |
-| **Total**               | **$61.00**   |
+| Concepto | Cantidad | Costo Unitario | Total |
+|----------|----------|----------------|-------|
+| Moneditas usadas (promedio 85%) | 212 | ~$0.007 | $1.48 |
+| Resumenes semanales | 4 | $0.009 | $0.036 |
+| **TOTAL COSTO** | | | **~$1.52/mes** |
+| **INGRESO** | | | **$2.99** |
+| **MARGEN** | | | **$1.47 (49%)** |
 
-#### Profit Summary - 500 Users
+#### Plan Premium ($7.99)
 
-| Metric            | Amount      |
-| ----------------- | ----------- |
-| Revenue           | $848.00     |
-| API Costs         | $375.00     |
-| Infrastructure    | $61.00      |
-| **Total Costs**   | **$436.00** |
-| **Net Profit**    | **$412.00** |
-| **Profit Margin** | **48.6%**   |
+| Concepto | Cantidad | Costo Unitario | Total |
+|----------|----------|----------------|-------|
+| Moneditas usadas (promedio 90%) | 720 | ~$0.007 | $5.04 |
+| Resumenes semanales | 4 | $0.009 | $0.036 |
+| **TOTAL COSTO** | | | **~$5.08/mes** |
+| **INGRESO** | | | **$7.99** |
+| **MARGEN** | | | **$2.91 (36%)** |
 
----
+### Resumen de Margenes
 
-### Scenario 3: 5000 Users
+| Plan | Precio | Costo Max | Margen | Margen % |
+|------|--------|-----------|--------|----------|
+| **Free** | $0 | $0.32 | -$0.32 | N/A |
+| **Basic** | $2.99 | $1.52 | +$1.47 | 49% |
+| **Premium** | $7.99 | $5.08 | +$2.91 | 36% |
 
-#### Revenue
-
-| Plan      | Users    | Price | Monthly Revenue |
-| --------- | -------- | ----- | --------------- |
-| Free      | 2500     | $0.00 | $0.00           |
-| Basic     | 2000     | $2.99 | $5,980.00       |
-| Premium   | 500      | $7.99 | $3,995.00       |
-| **Total** | **5000** |       | **$9,975.00**   |
-
-#### API Costs (with tool_use)
-
-| Plan      | Users    | Cost/User | Monthly Cost  |
-| --------- | -------- | --------- | ------------- |
-| Free      | 2500     | $0.27     | $675.00       |
-| Basic     | 2000     | $1.10     | $2,200.00     |
-| Premium   | 500      | $2.58     | $1,290.00     |
-| **Total** | **5000** |           | **$4,165.00** |
-
-#### Infrastructure Costs
-
-| Item                      | Monthly Cost  |
-| ------------------------- | ------------- |
-| Hosting (AWS/GCP)         | $150.00       |
-| Database (Supabase Team)  | $599.00       |
-| Domain/SSL                | $1.00         |
-| Monitoring/Logging        | $50.00        |
-| Support staff (part-time) | $500.00       |
-| **Total**                 | **$1,300.00** |
-
-#### Profit Summary - 5000 Users
-
-| Metric            | Amount        |
-| ----------------- | ------------- |
-| Revenue           | $9,975.00     |
-| API Costs         | $4,165.00     |
-| Infrastructure    | $1,300.00     |
-| **Total Costs**   | **$5,465.00** |
-| **Net Profit**    | **$4,510.00** |
-| **Profit Margin** | **45.2%**     |
+> Nota: Margenes mas conservadores que el modelo anterior debido a:
+> 1. Resumen semanal para todos (incluyendo Free)
+> 2. Mas moneditas por plan para mejor UX
+> 3. Estimacion de uso mas alta (usuarios mas engaged)
 
 ---
 
-## Profitability Summary
+## Escenarios de Usuarios
 
-### Comparison Across Scenarios (with tool_use)
+### Distribucion Esperada
 
-| Metric              | 50 Users | 500 Users | 5000 Users |
-| ------------------- | -------- | --------- | ---------- |
-| **Monthly Revenue** | $69.85   | $848.00   | $9,975.00  |
-| **API Costs**       | $33.35   | $375.00   | $4,165.00  |
-| **Infrastructure**  | $13.00   | $61.00    | $1,300.00  |
-| **Total Costs**     | $46.35   | $436.00   | $5,465.00  |
-| **Net Profit**      | $23.50   | $412.00   | $4,510.00  |
-| **Profit Margin**   | 33.6%    | 48.6%     | 45.2%      |
-| **Revenue/User**    | $1.40    | $1.70     | $2.00      |
-| **Cost/User**       | $0.93    | $0.87     | $1.09      |
-| **Profit/User**     | $0.47    | $0.82     | $0.90      |
+| Escenario | Free | Basic | Premium | Total |
+|-----------|------|-------|---------|-------|
+| **100 usuarios** | 75 (75%) | 18 (18%) | 7 (7%) | 100 |
+| **500 usuarios** | 350 (70%) | 110 (22%) | 40 (8%) | 500 |
+| **2000 usuarios** | 1300 (65%) | 500 (25%) | 200 (10%) | 2000 |
 
-### Annual Projections (with tool_use)
+### Escenario 1: 100 Usuarios
 
-| Metric             | 50 Users | 500 Users | 5000 Users |
-| ------------------ | -------- | --------- | ---------- |
-| **Annual Revenue** | $838     | $10,176   | $119,700   |
-| **Annual Costs**   | $556     | $5,232    | $65,580    |
-| **Annual Profit**  | $282     | $4,944    | $54,120    |
+#### Ingresos
 
-### Key Insights
+| Plan | Usuarios | Precio | Mensual |
+|------|----------|--------|---------|
+| Free | 75 | $0 | $0 |
+| Basic | 18 | $2.99 | $53.82 |
+| Premium | 7 | $7.99 | $55.93 |
+| **TOTAL** | **100** | | **$109.75** |
 
-1. **Break-even Point**: ~30 paying users cover infrastructure + API costs
-2. **Optimal Mix**: Higher Basic tier adoption improves margins
-3. **Free Tier Strategy**: Each free user costs $0.27/month but aids conversion
-4. **Tool_use Tradeoff**: ~35% higher API costs but significantly better UX
-5. **Still Profitable**: Even with tool overhead, all tiers remain profitable
+#### Costos
 
-### Cost Optimization Strategies
+| Plan | Usuarios | Costo/Usuario | Mensual |
+|------|----------|---------------|---------|
+| Free | 75 | $0.32 | $24.00 |
+| Basic | 18 | $1.52 | $27.36 |
+| Premium | 7 | $5.08 | $35.56 |
+| **API Total** | | | **$86.92** |
+| **Infraestructura** | | | **$15.00** |
+| **TOTAL COSTOS** | | | **$101.92** |
 
-1. **Use Groq over OpenAI Whisper** - 10x cheaper for audio
-2. **Batch API for non-urgent tasks** - 50% discount on Claude
-3. **Implement response caching** - Reduce duplicate API calls
-4. **Limit free tier usage** - Prevents abuse while maintaining funnel
-5. **Shorten tool descriptions** - Reduce ~100-200 tokens per request
-6. **Prompt caching** - Anthropic automatically caches repeated prompts
-7. **Selective tool loading** - Only send relevant tools based on user context
+#### Resultado
+
+| Metrica | Valor |
+|---------|-------|
+| Ingreso | $109.75 |
+| Costos | $101.92 |
+| **Ganancia** | **$7.83** |
+| **Margen** | **7.1%** |
+
+### Escenario 2: 500 Usuarios
+
+#### Ingresos
+
+| Plan | Usuarios | Precio | Mensual |
+|------|----------|--------|---------|
+| Free | 350 | $0 | $0 |
+| Basic | 110 | $2.99 | $328.90 |
+| Premium | 40 | $7.99 | $319.60 |
+| **TOTAL** | **500** | | **$648.50** |
+
+#### Costos
+
+| Plan | Usuarios | Costo/Usuario | Mensual |
+|------|----------|---------------|---------|
+| Free | 350 | $0.32 | $112.00 |
+| Basic | 110 | $1.52 | $167.20 |
+| Premium | 40 | $5.08 | $203.20 |
+| **API Total** | | | **$482.40** |
+| **Infraestructura** | | | **$50.00** |
+| **TOTAL COSTOS** | | | **$532.40** |
+
+#### Resultado
+
+| Metrica | Valor |
+|---------|-------|
+| Ingreso | $648.50 |
+| Costos | $532.40 |
+| **Ganancia** | **$116.10** |
+| **Margen** | **17.9%** |
+
+### Escenario 3: 2000 Usuarios
+
+#### Ingresos
+
+| Plan | Usuarios | Precio | Mensual |
+|------|----------|--------|---------|
+| Free | 1300 | $0 | $0 |
+| Basic | 500 | $2.99 | $1,495.00 |
+| Premium | 200 | $7.99 | $1,598.00 |
+| **TOTAL** | **2000** | | **$3,093.00** |
+
+#### Costos
+
+| Plan | Usuarios | Costo/Usuario | Mensual |
+|------|----------|---------------|---------|
+| Free | 1300 | $0.32 | $416.00 |
+| Basic | 500 | $1.52 | $760.00 |
+| Premium | 200 | $5.08 | $1,016.00 |
+| **API Total** | | | **$2,192.00** |
+| **Infraestructura** | | | **$150.00** |
+| **TOTAL COSTOS** | | | **$2,342.00** |
+
+#### Resultado
+
+| Metrica | Valor |
+|---------|-------|
+| Ingreso | $3,093.00 |
+| Costos | $2,342.00 |
+| **Ganancia** | **$751.00** |
+| **Margen** | **24.3%** |
 
 ---
 
-## Sources
+## Costos de Infraestructura
+
+### Por Escala
+
+| Usuarios | Hosting | Base de Datos | Dominio | Monitoring | Total |
+|----------|---------|---------------|---------|------------|-------|
+| 100 | $7 | $0 (free) | $1 | $5 | **$13** |
+| 500 | $20 | $25 | $1 | $10 | **$56** |
+| 2000 | $50 | $50 | $1 | $25 | **$126** |
+| 5000 | $100 | $100 | $1 | $50 | **$251** |
+
+### Detalle de Servicios
+
+| Servicio | Free Tier | Pro | Notas |
+|----------|-----------|-----|-------|
+| **Railway/Render** | $0-5 | $20+ | Hosting Node.js |
+| **Supabase** | 500MB, 50k MAU | $25/mes | Base de datos |
+| **Vercel** | 100GB BW | $20/mes | Landing + pagina visual |
+| **Sentry/LogRocket** | Limitado | $26/mes | Monitoring |
+
+---
+
+## Estrategias y Recomendaciones
+
+### Optimizacion de Costos
+
+1. **Prompt Caching** - Anthropic cachea system prompts automaticamente (~90% ahorro en tokens repetidos)
+2. **Batch API** - 50% descuento para operaciones no urgentes (resumenes)
+3. **Groq como primario** - Whisper gratis vs $0.006/min de OpenAI
+4. **Compresion de imagenes** - Redimensionar a 800px max antes de Vision
+
+### Metricas Clave a Monitorear
+
+```javascript
+// Agregar a usageMonitor.js
+- moneditas_consumed_daily
+- moneditas_by_operation_type
+- conversion_rate_free_to_paid
+- churn_rate_by_plan
+- cost_per_active_user
+```
+
+### Politicas Sugeridas
+
+1. **Rollover parcial**: 20% de moneditas no usadas pasan al siguiente mes (max 50)
+2. **Usuarios inactivos**: Pausar resumenes semanales despues de 3 meses sin actividad
+3. **Alerta de moneditas bajas**: Notificar cuando quedan <10 moneditas
+4. **Bonus por referidos**: +30 moneditas por cada amigo que se registre
+
+### Riesgos y Mitigaciones
+
+| Riesgo | Probabilidad | Impacto | Mitigacion |
+|--------|--------------|---------|------------|
+| Usuarios Free no convierten | Media | Alto | Mejorar onboarding, mostrar valor de Premium |
+| Abuso de imagenes 4K | Baja | Medio | Comprimir antes de procesar |
+| Spike de costos WhatsApp | Baja | Bajo | Colombia tiene tarifas muy bajas |
+| Claude API price increase | Media | Alto | Prompt caching, considerar Haiku para tareas simples |
+
+---
+
+## Punto de Equilibrio
+
+### Usuarios Minimos para Rentabilidad
+
+Con costos fijos de ~$50/mes (infraestructura basica):
+
+| Escenario | Usuarios Pagos Necesarios |
+|-----------|---------------------------|
+| 100% Basic | ~34 usuarios Basic |
+| 100% Premium | ~17 usuarios Premium |
+| Mix 70/30 Basic/Premium | ~25 usuarios pagos |
+| **Realista (22% Basic, 8% Premium)** | **~100 usuarios totales** |
+
+### Formula de Break-even
+
+```
+Break-even usuarios = Costos Fijos / (ARPU - Costo Variable por Usuario)
+
+Donde:
+- Costos Fijos = $50/mes (infraestructura)
+- ARPU (Average Revenue Per User) = $1.30 (con 70% free, 22% basic, 8% premium)
+- Costo Variable = $0.70/usuario promedio
+
+Break-even = $50 / ($1.30 - $0.70) = ~83 usuarios
+```
+
+---
+
+## Comparacion: Sistema Anterior vs Nuevo
+
+| Metrica | Limites Separados | Moneditas |
+|---------|-------------------|-----------|
+| **Complejidad para usuario** | Alta (5 contadores) | Baja (1 contador) |
+| **Margen Basic** | ~63% | ~49% |
+| **Margen Premium** | ~68% | ~36% |
+| **Costo Free user** | $0.27/mes | $0.32/mes |
+| **Valor percibido Free** | Bajo | Alto |
+| **Conversion esperada** | 10-15% | 20-30% |
+| **Retencion esperada** | Media | Alta |
+
+### Por que Margenes Menores son OK
+
+1. **Mayor conversion** compensa menor margen por usuario
+2. **Mejor retencion** = mayor LTV (lifetime value)
+3. **Resumen semanal** es marketing gratis (engagement)
+4. **Usuarios Free felices** = mejor word-of-mouth
+
+---
+
+## Fuentes
 
 - [Claude API Pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+- [WhatsApp Business API Pricing Colombia](https://www.heltar.com/blogs/whatsapp-api-pricing-in-columbia-2025-cm73iygsn0080r1l2vyv39xpd)
+- [WhatsApp Business Platform Pricing](https://business.whatsapp.com/products/platform-pricing)
 - [Groq Pricing](https://groq.com/pricing)
-- [OpenAI Whisper Pricing](https://openai.com/api/pricing/)
-- [WhatsApp Business API Pricing](https://business.whatsapp.com/products/platform-pricing)
+- [Supabase Pricing](https://supabase.com/pricing)
 
 ---
 
-_This analysis is based on current API pricing as of February 2026 and typical usage patterns. Actual costs may vary based on user behavior and API pricing changes._
+*Este analisis esta basado en precios de APIs de Febrero 2026 y patrones de uso estimados. Los costos reales pueden variar segun comportamiento de usuarios y cambios en pricing de APIs.*
