@@ -32,8 +32,8 @@
     <style>
         /* Fluid typography */
         .fluid-hero {
-            font-size: clamp(2.5rem, 8vw, 7rem);
-            line-height: 1.05;
+            font-size: clamp(1.75rem, 6vw, 5rem);
+            line-height: 1.1;
         }
         .fluid-section {
             font-size: clamp(2rem, 5vw, 4rem);
@@ -257,7 +257,7 @@
         /* Scroll-driven chat section */
         .chat-scroll-section {
             position: relative;
-            height: 400vh;
+            height: 500vh;
         }
         .chat-container {
             position: sticky;
@@ -268,20 +268,31 @@
             justify-content: center;
             overflow: hidden;
         }
-        .chat-window {
-            position: relative;
-            width: 340px;
-            max-width: 90vw;
-            background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 2rem;
-            overflow: hidden;
-            box-shadow: 0 25px 80px -20px rgba(0,0,0,0.5);
+
+        /* Hero phone styling */
+        #hero-phone {
+            opacity: 0;
+            transition: transform 0.1s ease-out;
+        }
+        #phone-logo, #phone-chat {
+            transition: opacity 0.3s ease;
+        }
+        #hero-content {
+            z-index: 5;
+            transition: opacity 0.3s ease;
+        }
+        #hero-headline {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        /* Phone chat state */
+        #phone-chat {
+            display: flex;
+            flex-direction: column;
+            background: #E5DDD5;
         }
         .chat-header {
             background: linear-gradient(135deg, #128C7E 0%, #075E54 100%);
-            padding: 1rem 1.25rem;
+            padding: 0.75rem 1rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
@@ -289,11 +300,12 @@
         .chat-messages {
             background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
                         linear-gradient(180deg, #E5DDD5 0%, #d1ccc3 100%);
-            padding: 1.5rem 1rem;
-            min-height: 400px;
+            padding: 1rem 0.75rem;
+            flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.5rem;
+            overflow-y: auto;
         }
         .chat-message {
             max-width: 85%;
@@ -429,41 +441,46 @@
 
         /* Mobile optimizations */
         @media (max-width: 768px) {
-            .chat-scroll-section {
-                height: 350vh;
+            .fluid-hero {
+                font-size: clamp(1.5rem, 5vw, 3rem);
             }
-            .chat-window {
-                width: 320px;
-                max-width: 95vw;
+            .chat-scroll-section {
+                height: 400vh;
+            }
+            #hero-phone {
+                width: 260px;
             }
             .chat-messages {
-                min-height: 350px;
-                padding: 1rem 0.75rem;
+                padding: 0.75rem 0.5rem;
+            }
+            .chat-message {
+                font-size: 0.8rem;
+                padding: 0.5rem 0.75rem;
             }
             .mode-label {
                 top: 1.5rem;
-                font-size: 0.8rem;
-                padding: 0.4rem 1rem;
+                font-size: 0.75rem;
+                padding: 0.375rem 0.875rem;
             }
             .progress-dots {
                 bottom: 1.5rem;
             }
             .scroll-hint {
                 bottom: 4rem;
-                font-size: 0.75rem;
+                font-size: 0.7rem;
             }
             #chat-cta {
-                bottom: 5.5rem;
-                padding: 0.625rem 1.25rem;
-                font-size: 0.875rem;
+                bottom: 5rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
             }
             .orb {
                 filter: blur(60px);
                 opacity: 0.3;
             }
-            .orb-1 { width: 250px; height: 250px; }
-            .orb-2 { width: 200px; height: 200px; }
-            .orb-3 { width: 150px; height: 150px; }
+            .orb-1 { width: 200px; height: 200px; }
+            .orb-2 { width: 150px; height: 150px; }
+            .orb-3 { width: 120px; height: 120px; }
         }
 
         /* Card stack animation */
@@ -579,89 +596,20 @@
         </div>
     </nav>
 
-    <!-- Section 1: Hero (Dark, Pinned for scroll) -->
-    <section id="hero" class="relative h-screen overflow-hidden z-10">
-
-        <div class="relative z-content h-full flex flex-col items-center justify-center px-4">
-            <!-- Hero headline - word by word reveal -->
-            <h1 id="hero-headline" class="fluid-hero font-black text-center max-w-5xl mb-8">
-                <span class="word" data-i18n="hero.title1">Small expenses</span>
-                <br class="hidden sm:block">
-                <span class="word text-red-500" data-i18n="hero.title2">are hurting you</span>
-                <br class="hidden sm:block">
-                <span class="word text-white/80" data-i18n="hero.title3">and you don't know it</span>
-            </h1>
-
-            <!-- Phone mockup - scales up on scroll -->
-            <div id="hero-phone" class="relative w-[200px] sm:w-[240px] opacity-0 scale-75">
-                <div class="relative bg-gray-900 rounded-[2rem] p-2 phone-shadow">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-20 h-5 bg-gray-900 rounded-b-xl z-20"></div>
-                    <div class="relative w-full aspect-[9/19] bg-whatsapp-bg rounded-[1.5rem] overflow-hidden flex items-center justify-center">
-                        <div class="w-12 h-12 rounded-full bg-amber-400 flex items-center justify-center">
-                            <svg viewBox="0 0 100 100" class="w-10 h-10">
-                                <circle cx="50" cy="50" r="42" fill="#FFD93D"/>
-                                <ellipse cx="38" cy="45" rx="5" ry="6" fill="#5D4037"/>
-                                <ellipse cx="62" cy="45" rx="5" ry="6" fill="#5D4037"/>
-                                <path d="M 32 58 Q 50 75 68 58" fill="none" stroke="#5D4037" stroke-width="4" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scroll indicator -->
-            <div id="scroll-indicator" class="absolute bottom-8 left-1/2 scroll-indicator opacity-0">
-                <div class="flex flex-col items-center text-white/50">
-                    <span class="text-sm mb-2" data-i18n="hero.scroll">Scroll to explore</span>
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 2: Pain Point (Dark, Full-screen) -->
-    <section id="pain-point" class="relative min-h-screen flex items-center overflow-hidden py-20 z-10">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Illustration -->
-                <div id="pain-illustration" class="relative order-2 lg:order-1 opacity-0 scale-90">
-                    <img
-                        src="money-stress.svg"
-                        alt="Person stressed about money"
-                        class="w-full max-w-md mx-auto drop-shadow-2xl"
-                        loading="lazy"
-                    >
-                    <a href="https://storyset.com/money" target="_blank" rel="noopener" class="text-xs text-white/30 hover:text-white/50 block text-center mt-4">Illustration by Storyset</a>
-                </div>
-
-                <!-- Text -->
-                <div class="text-center lg:text-left order-1 lg:order-2">
-                    <p class="text-purple-400 text-sm mb-3 uppercase tracking-widest font-medium" data-i18n="story.label">End of month. Every month.</p>
-                    <h2 id="pain-quote" class="fluid-section font-black text-white mb-8 opacity-0" data-i18n="story.title">
-                        "I thought I had more money..."
-                    </h2>
-                    <div id="pain-stat" class="flex items-center gap-4 mb-8 justify-center lg:justify-start opacity-0">
-                        <div class="flex -space-x-3">
-                            <div class="w-12 h-12 rounded-full bg-slate-700 border-2 border-slate-800 flex items-center justify-center text-xl">👤</div>
-                            <div class="w-12 h-12 rounded-full bg-slate-700 border-2 border-slate-800 flex items-center justify-center text-xl">👤</div>
-                            <div class="w-12 h-12 rounded-full bg-slate-700 border-2 border-slate-800 flex items-center justify-center text-xl">👤</div>
-                        </div>
-                        <p class="text-white/70 text-lg">
-                            <span id="people-counter" class="counter font-bold text-white">0</span>
-                            <span data-i18n="story.people"> of 10 people feel this</span>
-                        </p>
-                    </div>
-                    <p id="pain-question" class="text-red-400 font-bold text-2xl opacity-0" data-i18n="story.question">Does this sound like you?</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 3: Solution Reveal (Scroll-Driven Chat) -->
-    <section id="solution" class="chat-scroll-section relative z-10">
+    <!-- Section 1: Hero + Chat Demo (Unified Scroll Experience) -->
+    <section id="hero-chat" class="chat-scroll-section relative z-10">
         <div class="chat-container">
+            <!-- Hero headline - fades out on scroll -->
+            <div id="hero-content" class="absolute inset-0 flex flex-col items-center justify-center px-4 pointer-events-none">
+                <h1 id="hero-headline" class="fluid-hero font-black text-center max-w-4xl mb-8 px-4">
+                    <span class="word" data-i18n="hero.title1">Small expenses</span>
+                    <br class="hidden sm:block">
+                    <span class="word text-red-500" data-i18n="hero.title2">are hurting you</span>
+                    <br class="hidden sm:block">
+                    <span class="word text-white/80" data-i18n="hero.title3">and you don't know it</span>
+                </h1>
+            </div>
+
             <!-- Mode Labels -->
             <div id="mode-text" class="mode-label" data-mode="1">
                 <span class="icon">💬</span>
@@ -676,80 +624,94 @@
                 <span data-i18n="solution.photo.badge">Photo Mode</span>
             </div>
 
-            <!-- Chat Window (Only the chat area, no full phone) -->
-            <div class="chat-window">
-                <div class="chat-header">
-                    <div class="w-10 h-10 rounded-full bg-amber-400 flex items-center justify-center flex-shrink-0">
-                        <svg viewBox="0 0 100 100" class="w-7 h-7">
-                            <circle cx="50" cy="50" r="42" fill="#FFD93D"/>
-                            <ellipse cx="38" cy="45" rx="5" ry="6" fill="#5D4037"/>
-                            <ellipse cx="62" cy="45" rx="5" ry="6" fill="#5D4037"/>
-                            <path d="M 32 58 Q 50 75 68 58" fill="none" stroke="#5D4037" stroke-width="4" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="text-white font-semibold">Monedita</div>
-                        <div class="text-green-200 text-xs" data-i18n="phone.status">AI Assistant</div>
-                    </div>
-                    <div class="flex gap-4 text-white/70">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                    </div>
-                </div>
-                <div class="chat-messages" id="chat-messages">
-                    <!-- Text Mode Messages (1) -->
-                    <div class="chat-message user" data-step="1" data-i18n="demo.text.user">Lunch $15 🍔</div>
-                    <div class="chat-message bot" data-step="2"><span class="text-green-500 font-medium">✓ </span><span data-i18n="demo.text.bot">Saved! $15 → Food</span></div>
-
-                    <!-- Voice Mode Messages (2) -->
-                    <div class="chat-message user voice" data-step="3">
-                        <div class="w-8 h-8 bg-whatsapp rounded-full flex items-center justify-center flex-shrink-0">
-                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+            <!-- Phone with transforming content -->
+            <div id="hero-phone" class="relative phone-shadow rounded-[2.5rem] bg-gray-900 p-2 sm:p-3 w-[280px] sm:w-[320px]">
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-6 bg-gray-900 rounded-b-2xl z-20"></div>
+                <div id="phone-screen" class="relative w-full rounded-[2rem] overflow-hidden" style="aspect-ratio: 9/19;">
+                    <!-- Initial Logo State -->
+                    <div id="phone-logo" class="absolute inset-0 bg-whatsapp-bg flex items-center justify-center transition-opacity duration-500">
+                        <div class="w-16 h-16 rounded-full bg-amber-400 flex items-center justify-center">
+                            <svg viewBox="0 0 100 100" class="w-14 h-14">
+                                <circle cx="50" cy="50" r="42" fill="#FFD93D"/>
+                                <ellipse cx="38" cy="45" rx="5" ry="6" fill="#5D4037"/>
+                                <ellipse cx="62" cy="45" rx="5" ry="6" fill="#5D4037"/>
+                                <path d="M 32 58 Q 50 75 68 58" fill="none" stroke="#5D4037" stroke-width="4" stroke-linecap="round"/>
                             </svg>
                         </div>
-                        <div class="flex items-center gap-0.5 h-5">
-                            <div class="w-1 bg-gray-500 rounded-full waveform-bar" style="height: 40%;"></div>
-                            <div class="w-1 bg-gray-500 rounded-full waveform-bar" style="height: 70%; animation-delay: 0.1s;"></div>
-                            <div class="w-1 bg-gray-500 rounded-full waveform-bar" style="height: 50%; animation-delay: 0.2s;"></div>
-                            <div class="w-1 bg-gray-500 rounded-full waveform-bar" style="height: 90%; animation-delay: 0.3s;"></div>
-                            <div class="w-1 bg-gray-500 rounded-full waveform-bar" style="height: 60%; animation-delay: 0.4s;"></div>
-                            <div class="w-1 bg-gray-500 rounded-full waveform-bar" style="height: 45%; animation-delay: 0.5s;"></div>
-                        </div>
-                        <span class="text-xs text-gray-500">0:02</span>
                     </div>
-                    <div class="chat-message bot text-xs italic text-gray-500" data-step="4" data-i18n="demo.voice.transcription">"Uber eight dollars"</div>
-                    <div class="chat-message bot" data-step="5"><span class="text-green-500 font-medium">✓ </span><span data-i18n="demo.voice.bot">Saved! $8 → Transport</span></div>
 
-                    <!-- Photo Mode Messages (3) -->
-                    <div class="chat-message user photo" data-step="6">
-                        <div class="receipt-preview">
-                            <div class="space-y-1">
-                                <div class="h-2 bg-gray-300 rounded w-16"></div>
-                                <div class="h-1.5 bg-gray-200 rounded w-12"></div>
-                                <div class="border-t border-dashed border-gray-300 my-2"></div>
-                                <div class="flex justify-between">
-                                    <div class="h-1 bg-gray-200 rounded w-10"></div>
-                                    <div class="h-1 bg-gray-400 rounded w-6"></div>
+                    <!-- Chat State (revealed on scroll) -->
+                    <div id="phone-chat" class="absolute inset-0 opacity-0 transition-opacity duration-500">
+                        <div class="chat-header">
+                            <div class="w-10 h-10 rounded-full bg-amber-400 flex items-center justify-center flex-shrink-0">
+                                <svg viewBox="0 0 100 100" class="w-7 h-7">
+                                    <circle cx="50" cy="50" r="42" fill="#FFD93D"/>
+                                    <ellipse cx="38" cy="45" rx="5" ry="6" fill="#5D4037"/>
+                                    <ellipse cx="62" cy="45" rx="5" ry="6" fill="#5D4037"/>
+                                    <path d="M 32 58 Q 50 75 68 58" fill="none" stroke="#5D4037" stroke-width="4" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-white font-semibold text-sm">Monedita</div>
+                                <div class="text-green-200 text-xs" data-i18n="phone.status">AI Assistant</div>
+                            </div>
+                        </div>
+                        <div class="chat-messages" id="chat-messages">
+                            <!-- Text Mode Messages (1) -->
+                            <div class="chat-message user" data-step="1" data-i18n="demo.text.user">Lunch $15 🍔</div>
+                            <div class="chat-message bot" data-step="2"><span class="text-green-500 font-medium">✓ </span><span data-i18n="demo.text.bot">Saved! $15 → Food</span></div>
+
+                            <!-- Voice Mode Messages (2) -->
+                            <div class="chat-message user voice" data-step="3">
+                                <div class="w-8 h-8 bg-whatsapp rounded-full flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                                    </svg>
                                 </div>
-                                <div class="flex justify-between">
-                                    <div class="h-1 bg-gray-200 rounded w-8"></div>
-                                    <div class="h-1 bg-gray-400 rounded w-5"></div>
+                                <div class="flex items-center gap-0.5 h-5">
+                                    <div class="w-1 bg-gray-500 rounded-full waveform-bar" style="height: 40%;"></div>
+                                    <div class="w-1 bg-gray-500 rounded-full waveform-bar" style="height: 70%; animation-delay: 0.1s;"></div>
+                                    <div class="w-1 bg-gray-500 rounded-full waveform-bar" style="height: 50%; animation-delay: 0.2s;"></div>
+                                    <div class="w-1 bg-gray-500 rounded-full waveform-bar" style="height: 90%; animation-delay: 0.3s;"></div>
+                                    <div class="w-1 bg-gray-500 rounded-full waveform-bar" style="height: 60%; animation-delay: 0.4s;"></div>
+                                    <div class="w-1 bg-gray-500 rounded-full waveform-bar" style="height: 45%; animation-delay: 0.5s;"></div>
                                 </div>
-                                <div class="flex justify-between">
-                                    <div class="h-1 bg-gray-200 rounded w-12"></div>
-                                    <div class="h-1 bg-gray-400 rounded w-4"></div>
-                                </div>
-                                <div class="border-t border-gray-300 my-2"></div>
-                                <div class="flex justify-between">
-                                    <div class="h-2 bg-gray-500 rounded w-8 font-bold"></div>
-                                    <div class="h-2 bg-green-500 rounded w-8"></div>
+                                <span class="text-xs text-gray-500">0:02</span>
+                            </div>
+                            <div class="chat-message bot text-xs italic text-gray-500" data-step="4" data-i18n="demo.voice.transcription">"Uber eight dollars"</div>
+                            <div class="chat-message bot" data-step="5"><span class="text-green-500 font-medium">✓ </span><span data-i18n="demo.voice.bot">Saved! $8 → Transport</span></div>
+
+                            <!-- Photo Mode Messages (3) -->
+                            <div class="chat-message user photo" data-step="6">
+                                <div class="receipt-preview">
+                                    <div class="space-y-1">
+                                        <div class="h-2 bg-gray-300 rounded w-16"></div>
+                                        <div class="h-1.5 bg-gray-200 rounded w-12"></div>
+                                        <div class="border-t border-dashed border-gray-300 my-2"></div>
+                                        <div class="flex justify-between">
+                                            <div class="h-1 bg-gray-200 rounded w-10"></div>
+                                            <div class="h-1 bg-gray-400 rounded w-6"></div>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <div class="h-1 bg-gray-200 rounded w-8"></div>
+                                            <div class="h-1 bg-gray-400 rounded w-5"></div>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <div class="h-1 bg-gray-200 rounded w-12"></div>
+                                            <div class="h-1 bg-gray-400 rounded w-4"></div>
+                                        </div>
+                                        <div class="border-t border-gray-300 my-2"></div>
+                                        <div class="flex justify-between">
+                                            <div class="h-2 bg-gray-500 rounded w-8 font-bold"></div>
+                                            <div class="h-2 bg-green-500 rounded w-8"></div>
+                                        </div>
+                                    </div>
+                                    <div class="scan-line"></div>
                                 </div>
                             </div>
-                            <div class="scan-line"></div>
+                            <div class="chat-message bot" data-step="7"><span class="text-green-500 font-medium">✓ </span><span data-i18n="demo.photo.bot">Saved! $42 → Shopping</span></div>
                         </div>
                     </div>
-                    <div class="chat-message bot" data-step="7"><span class="text-green-500 font-medium">✓ </span><span data-i18n="demo.photo.bot">Saved! $42 → Shopping</span></div>
                 </div>
             </div>
 
@@ -873,78 +835,7 @@
         </div>
     </section>
 
-    <!-- Section 5: Benefits (Card Stack Animation) -->
-    <section id="benefits" class="relative min-h-screen bg-white flex items-center py-20 overflow-hidden z-10">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="text-center mb-16">
-                <h2 class="fluid-section font-black text-gray-900 max-w-4xl mx-auto leading-tight" data-i18n="benefits.title">
-                    Awareness changes behavior
-                </h2>
-            </div>
-
-            <!-- Card Stack -->
-            <div id="card-stack" class="relative h-[400px] max-w-4xl mx-auto">
-                <!-- Card 1 -->
-                <a href="https://www.jstor.org/journal/jconsrese" target="_blank" rel="noopener noreferrer"
-                   class="benefit-card absolute w-[calc(50%-1rem)] bg-white rounded-2xl p-6 shadow-xl border-2 border-gray-100 hover:border-green-200 group"
-                   style="top: 0; left: 0; transform: translate(50%, 50%) rotate(-5deg);">
-                    <div class="w-14 h-14 mx-auto mb-4 rounded-xl bg-green-50 flex items-center justify-center group-hover:bg-green-100 transition">
-                        <svg class="w-8 h-8 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                        </svg>
-                    </div>
-                    <p class="text-4xl font-black text-green-500 mb-2 text-center counter-stat" data-target="20">0%</p>
-                    <p class="text-gray-800 font-semibold text-center" data-i18n="benefits.save.title">more savings</p>
-                    <p class="text-gray-400 text-xs mt-2 text-center" data-i18n="benefits.save.source">Journal of Consumer Research</p>
-                </a>
-
-                <!-- Card 2 -->
-                <a href="https://www.apa.org/news/press/releases/stress" target="_blank" rel="noopener noreferrer"
-                   class="benefit-card absolute w-[calc(50%-1rem)] bg-white rounded-2xl p-6 shadow-xl border-2 border-gray-100 hover:border-indigo-200 group"
-                   style="top: 0; left: 0; transform: translate(50%, 50%) rotate(3deg);">
-                    <div class="w-14 h-14 mx-auto mb-4 rounded-xl bg-indigo-50 flex items-center justify-center group-hover:bg-indigo-100 transition">
-                        <svg class="w-8 h-8 text-indigo-600" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                        </svg>
-                    </div>
-                    <p class="text-4xl font-black text-indigo-500 mb-2 text-center counter-stat" data-target="65">0%</p>
-                    <p class="text-gray-800 font-semibold text-center" data-i18n="benefits.stress.title">less financial stress</p>
-                    <p class="text-gray-400 text-xs mt-2 text-center" data-i18n="benefits.stress.source">American Psychological Association</p>
-                </a>
-
-                <!-- Card 3 -->
-                <a href="https://finhealthnetwork.org/research/" target="_blank" rel="noopener noreferrer"
-                   class="benefit-card absolute w-[calc(50%-1rem)] bg-white rounded-2xl p-6 shadow-xl border-2 border-gray-100 hover:border-amber-200 group"
-                   style="top: 0; left: 0; transform: translate(50%, 50%) rotate(-2deg);">
-                    <div class="w-14 h-14 mx-auto mb-4 rounded-xl bg-amber-50 flex items-center justify-center group-hover:bg-amber-100 transition">
-                        <svg class="w-8 h-8 text-amber-600" viewBox="0 0 24 24" fill="currentColor">
-                            <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <p class="text-4xl font-black text-amber-500 mb-2 text-center">3x</p>
-                    <p class="text-gray-800 font-semibold text-center" data-i18n="benefits.goals.title">more likely to reach goals</p>
-                    <p class="text-gray-400 text-xs mt-2 text-center" data-i18n="benefits.goals.source">Financial Health Network</p>
-                </a>
-
-                <!-- Card 4 -->
-                <a href="https://www.nefe.org/research" target="_blank" rel="noopener noreferrer"
-                   class="benefit-card absolute w-[calc(50%-1rem)] bg-white rounded-2xl p-6 shadow-xl border-2 border-gray-100 hover:border-red-200 group"
-                   style="top: 0; left: 0; transform: translate(50%, 50%) rotate(5deg);">
-                    <div class="w-14 h-14 mx-auto mb-4 rounded-xl bg-red-50 flex items-center justify-center group-hover:bg-red-100 transition">
-                        <svg class="w-8 h-8 text-red-600" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z" />
-                            <path fill-rule="evenodd" d="M1.5 9.75v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5h-21zM9 12a.75.75 0 01.75-.75h4.5a.75.75 0 010 1.5h-4.5A.75.75 0 019 12zm-2.25 3a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <p class="text-4xl font-black text-red-500 mb-2 text-center counter-stat" data-target="50">0%</p>
-                    <p class="text-gray-800 font-semibold text-center" data-i18n="benefits.debt.title">less unexpected debt</p>
-                    <p class="text-gray-400 text-xs mt-2 text-center" data-i18n="benefits.debt.source">National Endowment for Financial Education</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 6: Final CTA (Split Dark/Green) -->
+    <!-- Section 4: Final CTA (Split Dark/Green) -->
     <section id="final-cta" class="relative min-h-screen flex items-center overflow-hidden z-10">
         <div class="absolute inset-0 flex">
             <div class="w-1/2 bg-slate-900"></div>
@@ -1324,13 +1215,22 @@
         // Mobile detection
         const isMobile = window.innerWidth < 768;
 
-        // Hero section animations
-        function initHeroAnimations() {
+        // Unified Hero + Chat scroll animation
+        function initHeroChatAnimation() {
+            const section = document.getElementById('hero-chat');
+            const heroContent = document.getElementById('hero-content');
+            const heroHeadline = document.getElementById('hero-headline');
             const words = document.querySelectorAll('#hero-headline .word');
             const phone = document.getElementById('hero-phone');
-            const scrollIndicator = document.getElementById('scroll-indicator');
+            const phoneLogo = document.getElementById('phone-logo');
+            const phoneChat = document.getElementById('phone-chat');
+            const messages = document.querySelectorAll('.chat-message');
+            const modeLabels = document.querySelectorAll('.mode-label');
+            const progressDots = document.querySelectorAll('.progress-dot');
+            const scrollHint = document.getElementById('chat-scroll-hint');
+            const chatCta = document.getElementById('chat-cta');
 
-            // Initial word reveal animation
+            // Initial animations (on page load)
             gsap.to(words, {
                 opacity: 1,
                 y: 0,
@@ -1340,133 +1240,101 @@
                 delay: 0.3
             });
 
-            // Phone appears
             gsap.to(phone, {
                 opacity: 1,
-                scale: 1,
                 duration: 1,
                 ease: "power3.out",
                 delay: 1.2
             });
 
-            // Scroll indicator appears
-            gsap.to(scrollIndicator, {
-                opacity: 1,
-                duration: 0.5,
-                delay: 2
-            });
-
-            // On scroll - phone scales up
-            if (!isMobile) {
-                gsap.to(phone, {
-                    scale: 1.2,
-                    scrollTrigger: {
-                        trigger: "#hero",
-                        start: "top top",
-                        end: "bottom top",
-                        scrub: 1
-                    }
-                });
-            }
-        }
-
-        // Pain point section animations
-        function initPainPointAnimations() {
-            const illustration = document.getElementById('pain-illustration');
-            const quote = document.getElementById('pain-quote');
-            const stat = document.getElementById('pain-stat');
-            const question = document.getElementById('pain-question');
-            const counter = document.getElementById('people-counter');
-
-            ScrollTrigger.create({
-                trigger: "#pain-point",
-                start: "top 70%",
-                onEnter: () => {
-                    gsap.to(illustration, { opacity: 1, scale: 1, duration: 0.8, ease: "power3.out" });
-                    gsap.to(quote, { opacity: 1, duration: 0.6, delay: 0.3 });
-                    gsap.to(stat, { opacity: 1, duration: 0.6, delay: 0.5 });
-                    gsap.to(question, { opacity: 1, duration: 0.6, delay: 0.7 });
-
-                    // Counter animation
-                    gsap.to(counter, {
-                        innerHTML: 7,
-                        duration: 1.5,
-                        delay: 0.5,
-                        snap: { innerHTML: 1 },
-                        ease: "power2.out"
-                    });
-                }
-            });
-        }
-
-        // Scroll-driven chat animation
-        function initChatScrollAnimation() {
-            const section = document.getElementById('solution');
-            const messages = document.querySelectorAll('.chat-message');
-            const modeLabels = document.querySelectorAll('.mode-label');
-            const progressDots = document.querySelectorAll('.progress-dot');
-            const scrollHint = document.getElementById('chat-scroll-hint');
-            const chatCta = document.getElementById('chat-cta');
-
-            // Create scroll-driven timeline
+            // Scroll-driven animation
             ScrollTrigger.create({
                 trigger: section,
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 0.5,
+                scrub: 0.3,
                 onUpdate: (self) => {
                     const progress = self.progress;
 
-                    // Determine current mode based on progress
-                    let currentMode = 1;
-                    if (progress > 0.66) currentMode = 3;
-                    else if (progress > 0.33) currentMode = 2;
+                    // Phase 1: 0-15% - Fade out headline, show logo
+                    // Phase 2: 15-25% - Logo fades, chat appears, zoom in
+                    // Phase 3: 25-85% - Messages appear with zoom
+                    // Phase 4: 85-100% - Zoom out, show CTA
 
-                    // Update mode labels
-                    modeLabels.forEach(label => {
-                        const mode = parseInt(label.dataset.mode);
-                        label.classList.toggle('visible', mode === currentMode);
-                    });
+                    // Headline fades out (0-15%)
+                    const headlineFade = Math.max(0, 1 - (progress / 0.15));
+                    heroHeadline.style.opacity = headlineFade;
+                    heroHeadline.style.transform = `translateY(${-progress * 100}px)`;
 
-                    // Update progress dots
-                    progressDots.forEach(dot => {
-                        const mode = parseInt(dot.dataset.mode);
-                        dot.classList.toggle('active', mode === currentMode);
-                    });
-
-                    // Hide scroll hint after scrolling
-                    if (progress > 0.05) {
-                        scrollHint.style.opacity = '0';
+                    // Phone logo to chat transition (15-25%)
+                    if (progress < 0.15) {
+                        phoneLogo.style.opacity = '1';
+                        phoneChat.style.opacity = '0';
+                    } else if (progress < 0.25) {
+                        const transitionProgress = (progress - 0.15) / 0.10;
+                        phoneLogo.style.opacity = 1 - transitionProgress;
+                        phoneChat.style.opacity = transitionProgress;
                     } else {
-                        scrollHint.style.opacity = '1';
+                        phoneLogo.style.opacity = '0';
+                        phoneChat.style.opacity = '1';
                     }
 
-                    // Show CTA at the end
-                    if (progress > 0.85) {
+                    // Zoom effect (25-85% zoom in, 85-100% zoom out)
+                    let scale = 1;
+                    if (progress >= 0.15 && progress < 0.85) {
+                        // Zoom in from 1 to 1.3
+                        const zoomProgress = (progress - 0.15) / 0.70;
+                        scale = 1 + (0.3 * Math.min(zoomProgress, 1));
+                    } else if (progress >= 0.85) {
+                        // Zoom out from 1.3 to 1
+                        const zoomOutProgress = (progress - 0.85) / 0.15;
+                        scale = 1.3 - (0.3 * zoomOutProgress);
+                    }
+                    phone.style.transform = `scale(${scale})`;
+
+                    // Mode labels (after transition starts)
+                    if (progress > 0.20) {
+                        const chatProgress = (progress - 0.20) / 0.65;
+                        let currentMode = 1;
+                        if (chatProgress > 0.66) currentMode = 3;
+                        else if (chatProgress > 0.33) currentMode = 2;
+
+                        modeLabels.forEach(label => {
+                            const mode = parseInt(label.dataset.mode);
+                            label.classList.toggle('visible', mode === currentMode);
+                        });
+
+                        progressDots.forEach(dot => {
+                            const mode = parseInt(dot.dataset.mode);
+                            dot.classList.toggle('active', mode === currentMode);
+                        });
+
+                        // Show messages based on chat progress
+                        const totalSteps = 7;
+                        const currentStep = Math.floor(chatProgress * totalSteps) + 1;
+                        messages.forEach(msg => {
+                            const step = parseInt(msg.dataset.step);
+                            msg.classList.toggle('visible', step <= currentStep);
+                        });
+                    } else {
+                        // Hide all messages and labels before transition
+                        modeLabels.forEach(label => label.classList.remove('visible'));
+                        messages.forEach(msg => msg.classList.remove('visible'));
+                    }
+
+                    // Scroll hint
+                    scrollHint.style.opacity = progress < 0.05 ? '1' : '0';
+
+                    // CTA at the end
+                    if (progress > 0.90) {
                         chatCta.style.opacity = '1';
                         chatCta.style.transform = 'translateX(-50%) translateY(0)';
                     } else {
                         chatCta.style.opacity = '0';
                         chatCta.style.transform = 'translateX(-50%) translateY(20px)';
                     }
-
-                    // Show/hide messages based on progress
-                    const totalSteps = 7;
-                    const currentStep = Math.floor(progress * totalSteps) + 1;
-
-                    messages.forEach(msg => {
-                        const step = parseInt(msg.dataset.step);
-                        if (step <= currentStep) {
-                            msg.classList.add('visible');
-                        } else {
-                            msg.classList.remove('visible');
-                        }
-                    });
                 }
             });
-
-            // Show first mode label initially
-            modeLabels[0].classList.add('visible');
         }
 
         // Email section animations
@@ -1514,60 +1382,6 @@
             });
         }
 
-        // Benefits card stack animation
-        function initBenefitsAnimations() {
-            const cards = document.querySelectorAll('.benefit-card');
-            const positions = [
-                { x: 0, y: 0, rotate: 0 },      // Top left
-                { x: '100%', y: 0, rotate: 0 }, // Top right
-                { x: 0, y: '100%', rotate: 0 }, // Bottom left
-                { x: '100%', y: '100%', rotate: 0 } // Bottom right
-            ];
-
-            ScrollTrigger.create({
-                trigger: "#benefits",
-                start: "top 60%",
-                onEnter: () => {
-                    cards.forEach((card, i) => {
-                        gsap.to(card, {
-                            x: isMobile ? 0 : positions[i].x,
-                            y: isMobile ? (i * 220) : positions[i].y,
-                            rotate: 0,
-                            duration: 0.8,
-                            delay: i * 0.1,
-                            ease: "power3.out"
-                        });
-                    });
-
-                    // Animate counter stats
-                    document.querySelectorAll('.counter-stat').forEach(stat => {
-                        const target = parseInt(stat.dataset.target);
-                        gsap.to(stat, {
-                            innerHTML: target + '%',
-                            duration: 1.5,
-                            delay: 0.5,
-                            ease: "power2.out",
-                            onUpdate: function() {
-                                const val = Math.round(gsap.getProperty(this.targets()[0], "innerHTML").replace('%', ''));
-                                this.targets()[0].innerHTML = val + '%';
-                            }
-                        });
-                    });
-                }
-            });
-
-            // Mobile layout adjustment
-            if (isMobile) {
-                const cardStack = document.getElementById('card-stack');
-                cardStack.style.height = 'auto';
-                cards.forEach((card, i) => {
-                    card.style.position = 'relative';
-                    card.style.width = '100%';
-                    card.style.marginBottom = '1rem';
-                    card.style.transform = 'none';
-                });
-            }
-        }
 
         // Final CTA animations
         function initCtaAnimations() {
@@ -1593,11 +1407,8 @@
             updateContent(lang);
 
             // Initialize GSAP animations
-            initHeroAnimations();
-            initPainPointAnimations();
-            initChatScrollAnimation();
+            initHeroChatAnimation();
             initEmailAnimations();
-            initBenefitsAnimations();
             initCtaAnimations();
         });
 
