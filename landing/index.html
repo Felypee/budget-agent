@@ -1515,6 +1515,10 @@
                     } else {
                         heroHeadline.style.opacity = '0';
                         setPhoneOpacity(1);
+                        // Keep scale at 1.4 between 15-20%
+                        if (progress < 0.20) {
+                            setPhoneScale(1.4);
+                        }
                     }
 
                     // Logo to chat transition (15-20%)
@@ -1530,7 +1534,7 @@
                         phoneChat.style.opacity = '1';
                     }
 
-                    // Messages and zoom (20-92%) - EXTRA SLOW experience
+                    // Messages and zoom (20-92%) - BIG SCALE for immersive effect
                     if (progress >= 0.20 && progress < 0.92) {
                         const chatProgress = (progress - 0.20) / 0.72;
                         const totalSteps = 7;
