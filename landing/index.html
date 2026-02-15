@@ -484,14 +484,12 @@
             font-size: 1.25rem;
         }
 
-        /* CTA wrapper - centered with inset-x-0 and flex */
-        .cta-wrapper {
+        /* CTA wrapper - centered exactly like mode-labels */
+        #chat-cta-wrapper {
             position: absolute;
             bottom: 3rem;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 20;
         }
 
@@ -844,7 +842,7 @@
             </div>
 
             <!-- CTA Button with exaggerated glow - centered with CSS -->
-            <div id="chat-cta-wrapper" class="cta-wrapper opacity-0">
+            <div id="chat-cta-wrapper" class="opacity-0">
                 <!-- Button with glows inside -->
                 <a href="https://wa.me/573222490201" target="_blank" id="chat-cta" class="wa-link wa-cta relative inline-flex items-center justify-center px-10 py-5 bg-whatsapp hover:bg-whatsapp-dark text-white rounded-full font-bold text-xl transition shadow-lg shadow-green-500/50 hover:shadow-green-500/70 hover:scale-105">
                     <!-- Glow layers (absolutely positioned from button center) -->
@@ -1518,12 +1516,10 @@
                         const clipAmount = outProgress * 35;
                         phone.style.clipPath = `inset(0 0 ${clipAmount}% 0)`;
 
-                        // Show CTA - flex handles centering, only animate opacity and Y
+                        // Show CTA - CSS handles centering, only animate opacity
                         ctaWrapper.style.opacity = outProgress;
-                        ctaWrapper.style.transform = `translateY(${(1 - outProgress) * 30}px)`;
                     } else {
                         ctaWrapper.style.opacity = '0';
-                        ctaWrapper.style.transform = 'translateY(30px)';
                     }
 
                     // Scroll hint
