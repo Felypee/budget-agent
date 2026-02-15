@@ -178,6 +178,14 @@
             50% { opacity: 1; transform: scale(1.2); }
         }
 
+        /* Bar chart animations */
+        .bar-fill {
+            will-change: width;
+        }
+        .category-bar {
+            will-change: transform, opacity;
+        }
+
         /* CTA Glow effect */
         .cta-glow {
             position: absolute;
@@ -320,7 +328,8 @@
         /* Hero phone styling */
         #hero-phone {
             opacity: 0;
-            transition: transform 0.1s ease-out;
+            will-change: transform, opacity;
+            transition: none;
         }
         #phone-logo, #phone-chat {
             transition: opacity 0.3s ease;
@@ -825,12 +834,12 @@
                 </p>
             </div>
 
-            <!-- Email Mockup with 3D tilt -->
+            <!-- Email Mockup - Personal email style with bar charts -->
             <div id="email-mockup" class="relative max-w-lg mx-auto email-tilt opacity-0">
                 <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-200">
-                    <!-- Email Header -->
-                    <div class="bg-gray-50 border-b border-gray-200 px-5 py-4">
-                        <div class="flex items-center gap-3 mb-3">
+                    <!-- Email Header - Gmail style -->
+                    <div class="bg-white border-b border-gray-100 px-5 py-4">
+                        <div class="flex items-center gap-3 mb-2">
                             <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
                                 <svg viewBox="0 0 100 100" class="w-7 h-7">
                                     <circle cx="50" cy="50" r="42" fill="#FFD93D"/>
@@ -840,65 +849,93 @@
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-semibold text-gray-800">Monedita</p>
-                                <p class="text-xs text-gray-500 truncate">reportes@monedita.app</p>
+                                <div class="flex items-center justify-between">
+                                    <p class="text-sm font-semibold text-gray-900">Monedita</p>
+                                    <p class="text-xs text-gray-400" data-i18n="email.time">Today, 9:00 AM</p>
+                                </div>
+                                <p class="text-xs text-gray-500">to me</p>
                             </div>
-                            <p class="text-xs text-gray-400" data-i18n="email.time">Today, 9:00 AM</p>
                         </div>
-                        <p class="text-sm font-semibold text-gray-800" data-i18n="email.subject">Your weekly expense report</p>
+                        <p class="text-base font-semibold text-gray-900 mt-3" data-i18n="email.subject">Your weekly expense report</p>
                     </div>
 
-                    <!-- Email Body -->
-                    <div class="p-5">
-                        <p class="text-gray-700 mb-4" data-i18n="email.greeting">Hi Maria! Here's what happened with your money:</p>
+                    <!-- Email Body - Clean and personal -->
+                    <div class="p-5 bg-gray-50">
+                        <p class="text-gray-700 mb-5" data-i18n="email.greeting">Hi Maria! Here's what happened with your money:</p>
 
-                        <!-- Summary Stats with counter animation -->
-                        <div class="grid grid-cols-2 gap-3 mb-5">
-                            <div class="bg-gray-50 rounded-lg p-3 text-center">
-                                <p class="text-2xl font-black text-gray-800">$<span id="stat-total" class="counter">0</span></p>
-                                <p class="text-xs text-gray-500" data-i18n="email.total">total spent</p>
-                            </div>
-                            <div class="bg-gray-50 rounded-lg p-3 text-center">
-                                <p class="text-2xl font-black text-gray-800"><span id="stat-transactions" class="counter">0</span></p>
-                                <p class="text-xs text-gray-500" data-i18n="email.transactions">transactions</p>
+                        <!-- Total spent - Big and clear -->
+                        <div class="bg-white rounded-xl p-4 mb-5 shadow-sm border border-gray-100">
+                            <p class="text-xs text-gray-500 uppercase tracking-wide mb-1" data-i18n="email.total">Total spent this week</p>
+                            <p class="text-3xl font-black text-gray-900">$<span id="stat-total" class="counter">0</span></p>
+                            <p class="text-xs text-gray-400 mt-1"><span id="stat-transactions" class="counter">0</span> <span data-i18n="email.transactions">transactions</span></p>
+                        </div>
+
+                        <!-- Category Breakdown - Visual Bar Chart -->
+                        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                            <p class="text-xs text-gray-500 uppercase tracking-wide mb-4" data-i18n="email.breakdown">Where your money went</p>
+
+                            <!-- Category bars -->
+                            <div class="space-y-4">
+                                <!-- Food & Coffee -->
+                                <div class="category-bar opacity-0 translate-y-2">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-sm text-gray-700 flex items-center gap-2">
+                                            <span>☕</span> <span data-i18n="email.cat.food">Food & Coffee</span>
+                                        </span>
+                                        <span class="text-sm font-bold text-gray-900">$127</span>
+                                    </div>
+                                    <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                                        <div class="bar-fill h-full bg-gradient-to-r from-amber-400 to-orange-500 rounded-full" style="width: 0%" data-width="65%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Transport -->
+                                <div class="category-bar opacity-0 translate-y-2">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-sm text-gray-700 flex items-center gap-2">
+                                            <span>🚕</span> <span data-i18n="email.cat.transport">Transport</span>
+                                        </span>
+                                        <span class="text-sm font-bold text-gray-900">$89</span>
+                                    </div>
+                                    <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                                        <div class="bar-fill h-full bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full" style="width: 0%" data-width="45%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Shopping -->
+                                <div class="category-bar opacity-0 translate-y-2">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-sm text-gray-700 flex items-center gap-2">
+                                            <span>🛒</span> <span data-i18n="email.cat.shopping">Shopping</span>
+                                        </span>
+                                        <span class="text-sm font-bold text-gray-900">$56</span>
+                                    </div>
+                                    <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                                        <div class="bar-fill h-full bg-gradient-to-r from-pink-400 to-rose-500 rounded-full" style="width: 0%" data-width="28%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Entertainment -->
+                                <div class="category-bar opacity-0 translate-y-2">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-sm text-gray-700 flex items-center gap-2">
+                                            <span>🎬</span> <span data-i18n="email.cat.entertainment">Entertainment</span>
+                                        </span>
+                                        <span class="text-sm font-bold text-gray-900">$40</span>
+                                    </div>
+                                    <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                                        <div class="bar-fill h-full bg-gradient-to-r from-purple-400 to-violet-500 rounded-full" style="width: 0%" data-width="20%"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Warning Alert -->
-                        <div id="email-alert" class="bg-red-50 border border-red-200 rounded-xl p-4 mb-5 opacity-0">
-                            <div class="flex items-start gap-3">
-                                <div class="flex-shrink-0 text-3xl">☕</div>
-                                <div class="flex-1">
-                                    <p class="text-red-700 font-bold text-sm mb-1" data-i18n="email.alert.title">Attention: Coffee & snacks</p>
-                                    <p class="text-red-600 text-xs" data-i18n="email.alert.detail">$127 this week (23 purchases)</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Recent expenses - reveal one by one -->
-                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3" data-i18n="email.history">Recent expenses</p>
-                        <div id="expense-list" class="space-y-2 text-sm">
-                            <div class="expense-item flex items-center justify-between py-2 border-b border-gray-100 opacity-0 translate-y-4">
-                                <div class="flex items-center gap-2">
-                                    <span>☕</span>
-                                    <span class="text-gray-600">Starbucks</span>
-                                </div>
-                                <span class="font-semibold text-gray-800">$6.50</span>
-                            </div>
-                            <div class="expense-item flex items-center justify-between py-2 border-b border-gray-100 opacity-0 translate-y-4">
-                                <div class="flex items-center gap-2">
-                                    <span>🚕</span>
-                                    <span class="text-gray-600">Uber</span>
-                                </div>
-                                <span class="font-semibold text-gray-800">$12.00</span>
-                            </div>
-                            <div class="expense-item flex items-center justify-between py-2 border-b border-gray-100 opacity-0 translate-y-4">
-                                <div class="flex items-center gap-2">
-                                    <span>🛒</span>
-                                    <span class="text-gray-600">Amazon</span>
-                                </div>
-                                <span class="font-semibold text-gray-800">$34.99</span>
-                            </div>
+                        <!-- Alert tip -->
+                        <div id="email-alert" class="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3 opacity-0">
+                            <p class="text-amber-800 text-sm flex items-center gap-2">
+                                <span class="text-lg">💡</span>
+                                <span data-i18n="email.tip">Coffee spending up 23% vs last week!</span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -1037,11 +1074,14 @@
                 "email.time": "Today, 9:00 AM",
                 "email.subject": "Your weekly expense report",
                 "email.greeting": "Hi Maria! Here's what happened with your money:",
-                "email.total": "total spent",
+                "email.total": "Total spent this week",
                 "email.transactions": "transactions",
-                "email.alert.title": "Attention: Coffee & snacks",
-                "email.alert.detail": "$127 this week (23 purchases)",
-                "email.history": "Recent expenses",
+                "email.breakdown": "Where your money went",
+                "email.cat.food": "Food & Coffee",
+                "email.cat.transport": "Transport",
+                "email.cat.shopping": "Shopping",
+                "email.cat.entertainment": "Entertainment",
+                "email.tip": "Coffee spending up 23% vs last week!",
                 "benefits.title": "Awareness changes behavior",
                 "benefits.save.title": "more savings",
                 "benefits.save.source": "Journal of Consumer Research",
@@ -1094,11 +1134,14 @@
                 "email.time": "Hoy, 9:00 AM",
                 "email.subject": "Tu reporte semanal de gastos",
                 "email.greeting": "¡Hola María! Esto pasó con tu dinero:",
-                "email.total": "gastado en total",
+                "email.total": "Gastado esta semana",
                 "email.transactions": "transacciones",
-                "email.alert.title": "Atención: Café y snacks",
-                "email.alert.detail": "$127 esta semana (23 compras)",
-                "email.history": "Gastos recientes",
+                "email.breakdown": "A dónde fue tu dinero",
+                "email.cat.food": "Comida y Café",
+                "email.cat.transport": "Transporte",
+                "email.cat.shopping": "Compras",
+                "email.cat.entertainment": "Entretenimiento",
+                "email.tip": "¡Gastos en café subieron 23% vs semana pasada!",
                 "benefits.title": "La consciencia cambia el comportamiento",
                 "benefits.save.title": "más ahorro",
                 "benefits.save.source": "Journal of Consumer Research",
@@ -1315,16 +1358,21 @@
                 delay: 0.3
             });
 
-            // Phone starts hidden
-            phone.style.opacity = '0';
-            phone.style.transform = 'scale(0.8)';
+            // Phone starts hidden - use GSAP for smoother control
+            gsap.set(phone, { opacity: 0, scale: 0.8, y: 0 });
+            gsap.set(ctaWrapper, { opacity: 0, y: 30 });
 
-            // Scroll-driven animation
+            // Create smooth setters for fluid animation (quickTo provides interpolation)
+            const setPhoneScale = gsap.quickTo(phone, "scale", { duration: 0.5, ease: "power2.out" });
+            const setPhoneY = gsap.quickTo(phone, "y", { duration: 0.5, ease: "power2.out" });
+            const setPhoneOpacity = gsap.quickTo(phone, "opacity", { duration: 0.4, ease: "power2.out" });
+
+            // Scroll-driven animation with smoother scrub
             ScrollTrigger.create({
                 trigger: section,
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 0.3,
+                scrub: 1.5,
                 onUpdate: (self) => {
                     const progress = self.progress;
 
@@ -1338,17 +1386,17 @@
                     if (progress < 0.12) {
                         heroHeadline.style.opacity = '1';
                         heroHeadline.style.transform = 'translateY(0)';
-                        phone.style.opacity = '0';
-                        phone.style.transform = 'scale(0.8)';
+                        setPhoneOpacity(0);
+                        setPhoneScale(0.8);
                     } else if (progress < 0.20) {
                         const fadeProgress = (progress - 0.12) / 0.08;
                         heroHeadline.style.opacity = 1 - fadeProgress;
                         heroHeadline.style.transform = `translateY(${-fadeProgress * 50}px)`;
-                        phone.style.opacity = fadeProgress;
-                        phone.style.transform = `scale(${0.8 + (0.2 * fadeProgress)})`;
+                        setPhoneOpacity(fadeProgress);
+                        setPhoneScale(0.8 + (0.2 * fadeProgress));
                     } else {
                         heroHeadline.style.opacity = '0';
-                        phone.style.opacity = '1';
+                        setPhoneOpacity(1);
                     }
 
                     // Logo to chat transition (20-28%)
@@ -1387,25 +1435,18 @@
                             dot.classList.toggle('active', mode === currentMode);
                         });
 
-                        // Show messages and apply zoom to focus on current message
-                        let lastVisibleMsg = null;
+                        // Show messages
                         messages.forEach(msg => {
                             const step = parseInt(msg.dataset.step);
-                            const isVisible = step <= currentStep;
-                            msg.classList.toggle('visible', isVisible);
-                            if (isVisible) lastVisibleMsg = msg;
+                            msg.classList.toggle('visible', step <= currentStep);
                         });
 
-                        // Zoom effect - scale up and translate to focus on newest message
-                        const baseScale = 1.2 + (chatProgress * 0.4); // 1.2 to 1.6
-                        let translateY = 0;
+                        // Smooth zoom effect using quickTo for fluid interpolation
+                        const targetScale = 1.2 + (chatProgress * 0.4);
+                        const targetY = currentStep >= 2 ? -((currentStep - 1) * 18) : 0;
 
-                        // Calculate translateY based on current step to keep message in view
-                        if (currentStep >= 2) {
-                            translateY = -((currentStep - 1) * 15); // Move up as messages appear
-                        }
-
-                        phone.style.transform = `scale(${Math.min(baseScale, 1.6)}) translateY(${translateY}px)`;
+                        setPhoneScale(Math.min(targetScale, 1.6));
+                        setPhoneY(targetY);
                         phone.style.clipPath = 'none';
 
                     } else if (progress < 0.28) {
@@ -1413,28 +1454,34 @@
                         modeLabels.forEach(label => label.classList.remove('visible'));
                         messages.forEach(msg => msg.classList.remove('visible'));
                         phone.style.clipPath = 'none';
+                        setPhoneY(0);
                     }
 
                     // Zoom out and clip phone for CTA (85-100%)
                     if (progress >= 0.85) {
                         const outProgress = (progress - 0.85) / 0.15;
 
-                        // Zoom out from 1.6 to 1
-                        const scale = 1.6 - (0.6 * outProgress);
+                        // Smooth zoom out from 1.6 to 1
+                        const targetScale = 1.6 - (0.6 * outProgress);
                         // Move phone up to clip bottom and show CTA
-                        const moveUp = outProgress * 100;
-                        phone.style.transform = `scale(${scale}) translateY(-${moveUp}px)`;
+                        const targetY = -100 - (outProgress * 60);
+
+                        setPhoneScale(targetScale);
+                        setPhoneY(targetY);
 
                         // Clip bottom of phone
                         const clipAmount = outProgress * 20;
                         phone.style.clipPath = `inset(0 0 ${clipAmount}% 0)`;
 
-                        // Show CTA
-                        ctaWrapper.style.opacity = outProgress;
-                        ctaWrapper.style.transform = `translateX(-50%) translateY(${(1 - outProgress) * 30}px)`;
+                        // Show CTA with smooth fade
+                        gsap.to(ctaWrapper, {
+                            opacity: outProgress,
+                            y: (1 - outProgress) * 30,
+                            duration: 0.3,
+                            overwrite: 'auto'
+                        });
                     } else {
-                        ctaWrapper.style.opacity = '0';
-                        ctaWrapper.style.transform = 'translateX(-50%) translateY(30px)';
+                        gsap.to(ctaWrapper, { opacity: 0, y: 30, duration: 0.3, overwrite: 'auto' });
                     }
 
                     // Scroll hint
@@ -1447,7 +1494,8 @@
         function initEmailAnimations() {
             const emailMockup = document.getElementById('email-mockup');
             const emailAlert = document.getElementById('email-alert');
-            const expenseItems = document.querySelectorAll('.expense-item');
+            const categoryBars = document.querySelectorAll('.category-bar');
+            const barFills = document.querySelectorAll('.bar-fill');
             const statTotal = document.getElementById('stat-total');
             const statTransactions = document.getElementById('stat-transactions');
 
@@ -1473,17 +1521,29 @@
                         ease: "power2.out"
                     });
 
-                    // Alert reveal
-                    gsap.to(emailAlert, { opacity: 1, duration: 0.6, delay: 1 });
-
-                    // Expense items reveal
-                    gsap.to(expenseItems, {
+                    // Category bars reveal with stagger
+                    gsap.to(categoryBars, {
                         opacity: 1,
                         y: 0,
-                        duration: 0.4,
+                        duration: 0.5,
                         stagger: 0.15,
-                        delay: 1.2
+                        delay: 0.8,
+                        ease: "power2.out"
                     });
+
+                    // Animate bar fills with stagger
+                    barFills.forEach((bar, i) => {
+                        const targetWidth = bar.dataset.width;
+                        gsap.to(bar, {
+                            width: targetWidth,
+                            duration: 1,
+                            delay: 1 + (i * 0.15),
+                            ease: "power2.out"
+                        });
+                    });
+
+                    // Alert reveal at the end
+                    gsap.to(emailAlert, { opacity: 1, y: 0, duration: 0.6, delay: 1.8 });
                 }
             });
         }
