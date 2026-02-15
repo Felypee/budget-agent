@@ -261,7 +261,7 @@ async function processImageMessage(phone, imageData, userCurrency, lang = 'en') 
 
     // Process with Claude Vision
     const categories = await getUserCategories(phone, lang);
-    const result = await processExpenseImage(buffer, mimeType, categories);
+    const result = await processExpenseImage(buffer, mimeType, categories, userCurrency);
 
     if (!result.detected || result.expenses.length === 0) {
       await UnprocessedDB.create(phone, {

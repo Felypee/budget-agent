@@ -18,13 +18,26 @@ const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
+// Currencies that use comma as thousand separator (not decimal)
+// Includes all Latin American + European + Asian currencies that use this format
+const COMMA_THOUSAND_CURRENCIES = [
+  // Latin America
+  'COP', 'CLP', 'ARS', 'PEN', 'MXN', 'BRL',
+  // Europe
+  'EUR',
+  // Asia
+  'IDR', 'VND', 'KRW', 'JPY'
+];
+
 /**
  * Extract expense data from an image using Claude Vision
  * @param {Buffer} imageBuffer - The image data
  * @param {string} mimeType - The image MIME type (image/jpeg, image/png, etc.)
+ * @param {string[]} categories - List of expense categories
+ * @param {string} currency - User's currency code (e.g., 'COP', 'USD')
  * @returns {Promise<{detected: boolean, expenses: Array}>}
  */
-export async function processExpenseImage(imageBuffer, mimeType, categories = null) {
+export async function processExpenseImage(imageBuffer, mimeType, categories = null, currency = null) {
   const base64Image = imageBuffer.toString("base64");
 
   // Normalize mime type for Claude API
@@ -37,12 +50,23 @@ export async function processExpenseImage(imageBuffer, mimeType, categories = nu
 
   const categoryList = categories ? categories.join(', ') : 'food, transport, shopping, entertainment, bills, health, other';
 
+  // Build currency context for the prompt
+  let currencyContext = '';
+  if (currency && COMMA_THOUSAND_CURRENCIES.includes(currency)) {
+    currencyContext = `
+IMPORTANT: The user's currency is ${currency}, which uses COMMA as thousand separator (not decimal).
+- "13,489" means 13489 (thirteen thousand four hundred eighty-nine), NOT 13.489
+- "27,181" means 27181 (twenty-seven thousand), NOT 27.181
+- Always return whole numbers for this currency. Do NOT include decimals.`;
+  }
+
   const systemPrompt = `You are an expense extraction assistant. Analyze the image (receipt, invoice, bill, or photo of expenses) and extract ALL expense information.
 
 Return ONLY a JSON object with: {"detected": boolean, "expenses": [...]}
 Each expense should have: amount (number), category (string), description (string).
 
 Categories: ${categoryList}
+${currencyContext}
 
 If the image shows a receipt or bill:
 - Extract the total amount as the main expense
