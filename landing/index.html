@@ -949,6 +949,121 @@
         </div>
     </section>
 
+    <!-- Section: Budgets & Alerts (Cinematic Scroll) -->
+    <section id="budgets-section" class="relative min-h-[500vh] bg-gradient-to-br from-emerald-50 via-white to-teal-50/30" style="z-index: 45;">
+        <!-- Floating gradient blobs -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute w-96 h-96 bg-gradient-to-br from-emerald-200/40 to-teal-200/40 rounded-full blur-3xl top-20 -left-20 animate-float-slow"></div>
+            <div class="absolute w-80 h-80 bg-gradient-to-br from-amber-200/30 to-orange-200/30 rounded-full blur-3xl bottom-40 right-10 animate-float-slow" style="animation-delay: -5s;"></div>
+            <div class="absolute w-64 h-64 bg-gradient-to-br from-violet-200/30 to-purple-200/30 rounded-full blur-3xl top-1/2 left-1/3 animate-float-slow" style="animation-delay: -10s;"></div>
+        </div>
+
+        <!-- Title 1: Smart Alerts (centered, appears first) -->
+        <div id="budget-title-1" class="fixed inset-0 flex flex-col items-center justify-center pointer-events-none opacity-0" style="z-index: 46;">
+            <h2 class="fluid-section font-black text-gray-900 text-center px-4" data-i18n="budget.title1">Never overspend again</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto text-center px-4 mt-4 opacity-0" id="budget-subtitle-1" data-i18n="budget.subtitle1">
+                Get smart alerts before you hit your budget limits.
+            </p>
+        </div>
+
+        <!-- WhatsApp Alert Mockup -->
+        <div id="budget-alert-mockup" class="fixed inset-0 flex items-center justify-center pointer-events-none opacity-0" style="z-index: 47;">
+            <div class="w-full max-w-sm mx-4">
+                <!-- Phone notification style -->
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
+                    <!-- Notification header -->
+                    <div class="bg-gradient-to-r from-whatsapp to-emerald-500 px-4 py-3 flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                            <svg viewBox="0 0 100 100" class="w-7 h-7">
+                                <circle cx="50" cy="50" r="42" fill="#FFD93D"/>
+                                <ellipse cx="38" cy="45" rx="4" ry="5" fill="#5D4037"/>
+                                <ellipse cx="62" cy="45" rx="4" ry="5" fill="#5D4037"/>
+                                <path d="M 35 60 Q 50 72 65 60" fill="none" stroke="#5D4037" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-white font-semibold text-sm">Monedita</p>
+                            <p class="text-white/80 text-xs">now</p>
+                        </div>
+                    </div>
+                    <!-- Alert message -->
+                    <div class="p-4 bg-amber-50">
+                        <div class="flex items-start gap-3">
+                            <span class="text-3xl">⚠️</span>
+                            <div>
+                                <p class="font-bold text-amber-800 text-lg" data-i18n="budget.alert.title">Budget Alert!</p>
+                                <p class="text-amber-700 mt-1" data-i18n="budget.alert.msg">You've used <span class="font-bold">85%</span> of your Food budget.</p>
+                                <p class="text-amber-600 text-sm mt-2" data-i18n="budget.alert.remaining">$30 remaining this month</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Progress bar -->
+                    <div class="px-4 pb-4 bg-amber-50">
+                        <div class="h-3 bg-amber-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-amber-400 to-orange-500 rounded-full transition-all duration-1000" id="alert-progress-bar" style="width: 0%"></div>
+                        </div>
+                        <p class="text-xs text-amber-600 mt-2 text-center">🍔 Food: $170 / $200</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Title 2: Create Budgets (centered) -->
+        <div id="budget-title-2" class="fixed inset-0 flex flex-col items-center justify-center pointer-events-none opacity-0" style="z-index: 46;">
+            <h2 class="fluid-section font-black text-gray-900 text-center px-4" data-i18n="budget.title2">Set your limits</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto text-center px-4 mt-4 opacity-0" id="budget-subtitle-2" data-i18n="budget.subtitle2">
+                Create budgets for any category in seconds.
+            </p>
+        </div>
+
+        <!-- WhatsApp Budget Creation Mockup -->
+        <div id="budget-create-mockup" class="fixed inset-0 flex items-center justify-center pointer-events-none opacity-0" style="z-index: 47;">
+            <div class="w-full max-w-sm mx-4">
+                <div class="bg-gray-900 rounded-[2rem] p-2 shadow-2xl">
+                    <div class="bg-white rounded-[1.5rem] overflow-hidden">
+                        <!-- Chat header -->
+                        <div class="bg-gradient-to-r from-whatsapp to-emerald-600 px-4 py-3 flex items-center gap-3">
+                            <div class="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center">
+                                <svg viewBox="0 0 100 100" class="w-5 h-5">
+                                    <circle cx="50" cy="50" r="42" fill="#FFD93D"/>
+                                    <ellipse cx="38" cy="45" rx="4" ry="5" fill="#5D4037"/>
+                                    <ellipse cx="62" cy="45" rx="4" ry="5" fill="#5D4037"/>
+                                    <path d="M 35 60 Q 50 72 65 60" fill="none" stroke="#5D4037" stroke-width="3"/>
+                                </svg>
+                            </div>
+                            <span class="text-white font-semibold">Monedita</span>
+                        </div>
+                        <!-- Chat messages -->
+                        <div class="p-3 space-y-2 bg-[#E5DDD5] min-h-[280px]">
+                            <div id="budget-msg-1" class="flex justify-end opacity-0 translate-y-4">
+                                <div class="bg-[#DCF8C6] rounded-lg px-3 py-2 max-w-[80%]">
+                                    <p class="text-sm text-gray-800" data-i18n="budget.chat.user">Create budget food $200</p>
+                                </div>
+                            </div>
+                            <div id="budget-msg-2" class="flex justify-start opacity-0 translate-y-4">
+                                <div class="bg-white rounded-lg px-3 py-2 max-w-[80%] shadow-sm">
+                                    <p class="text-sm text-gray-800"><span class="text-green-500">✓</span> <span data-i18n="budget.chat.created">Budget created!</span></p>
+                                    <div class="mt-2 p-2 bg-gray-50 rounded-lg">
+                                        <p class="text-xs text-gray-500" data-i18n="budget.chat.food">🍔 Food</p>
+                                        <p class="text-lg font-bold text-gray-900">$200<span class="text-xs font-normal text-gray-500" data-i18n="budget.chat.month">/month</span></p>
+                                        <div class="h-1.5 bg-gray-200 rounded-full mt-1">
+                                            <div class="h-full bg-emerald-500 rounded-full" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="budget-msg-3" class="flex justify-start opacity-0 translate-y-4">
+                                <div class="bg-white rounded-lg px-3 py-2 max-w-[80%] shadow-sm">
+                                    <p class="text-sm text-gray-800" data-i18n="budget.chat.notify">I'll notify you at 50%, 75%, and 90% 🔔</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Section: Transition + Email Insights -->
     <section id="insights-transition" class="relative min-h-[400vh]" style="z-index: 50;">
         <!-- White overlay that fades in with floating blobs -->
@@ -1082,121 +1197,6 @@
                 <div class="absolute -top-4 -right-4 w-20 h-20 bg-amber-200 rounded-full opacity-40 blur-2xl"></div>
                 <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-slate-200 rounded-full opacity-50 blur-2xl"></div>
             </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section: Budgets & Alerts (Cinematic Scroll) -->
-    <section id="budgets-section" class="relative min-h-[500vh] bg-gradient-to-br from-emerald-50 via-white to-teal-50/30" style="z-index: 45;">
-        <!-- Floating gradient blobs -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute w-96 h-96 bg-gradient-to-br from-emerald-200/40 to-teal-200/40 rounded-full blur-3xl top-20 -left-20 animate-float-slow"></div>
-            <div class="absolute w-80 h-80 bg-gradient-to-br from-amber-200/30 to-orange-200/30 rounded-full blur-3xl bottom-40 right-10 animate-float-slow" style="animation-delay: -5s;"></div>
-            <div class="absolute w-64 h-64 bg-gradient-to-br from-violet-200/30 to-purple-200/30 rounded-full blur-3xl top-1/2 left-1/3 animate-float-slow" style="animation-delay: -10s;"></div>
-        </div>
-
-        <!-- Title 1: Smart Alerts (centered, appears first) -->
-        <div id="budget-title-1" class="fixed inset-0 flex flex-col items-center justify-center pointer-events-none opacity-0" style="z-index: 46;">
-            <h2 class="fluid-section font-black text-gray-900 text-center px-4">Never overspend again</h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto text-center px-4 mt-4 opacity-0" id="budget-subtitle-1">
-                Get smart alerts before you hit your budget limits.
-            </p>
-        </div>
-
-        <!-- WhatsApp Alert Mockup -->
-        <div id="budget-alert-mockup" class="fixed inset-0 flex items-center justify-center pointer-events-none opacity-0" style="z-index: 47;">
-            <div class="w-full max-w-sm mx-4">
-                <!-- Phone notification style -->
-                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
-                    <!-- Notification header -->
-                    <div class="bg-gradient-to-r from-whatsapp to-emerald-500 px-4 py-3 flex items-center gap-3">
-                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                            <svg viewBox="0 0 100 100" class="w-7 h-7">
-                                <circle cx="50" cy="50" r="42" fill="#FFD93D"/>
-                                <ellipse cx="38" cy="45" rx="4" ry="5" fill="#5D4037"/>
-                                <ellipse cx="62" cy="45" rx="4" ry="5" fill="#5D4037"/>
-                                <path d="M 35 60 Q 50 72 65 60" fill="none" stroke="#5D4037" stroke-width="3" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-white font-semibold text-sm">Monedita</p>
-                            <p class="text-white/80 text-xs">now</p>
-                        </div>
-                    </div>
-                    <!-- Alert message -->
-                    <div class="p-4 bg-amber-50">
-                        <div class="flex items-start gap-3">
-                            <span class="text-3xl">⚠️</span>
-                            <div>
-                                <p class="font-bold text-amber-800 text-lg">Budget Alert!</p>
-                                <p class="text-amber-700 mt-1">You've used <span class="font-bold">85%</span> of your Food budget.</p>
-                                <p class="text-amber-600 text-sm mt-2">$30 remaining this month</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Progress bar -->
-                    <div class="px-4 pb-4 bg-amber-50">
-                        <div class="h-3 bg-amber-200 rounded-full overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-amber-400 to-orange-500 rounded-full transition-all duration-1000" id="alert-progress-bar" style="width: 0%"></div>
-                        </div>
-                        <p class="text-xs text-amber-600 mt-2 text-center">🍔 Food: $170 / $200</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Title 2: Create Budgets (centered) -->
-        <div id="budget-title-2" class="fixed inset-0 flex flex-col items-center justify-center pointer-events-none opacity-0" style="z-index: 46;">
-            <h2 class="fluid-section font-black text-gray-900 text-center px-4">Set your limits</h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto text-center px-4 mt-4 opacity-0" id="budget-subtitle-2">
-                Create budgets for any category in seconds.
-            </p>
-        </div>
-
-        <!-- WhatsApp Budget Creation Mockup -->
-        <div id="budget-create-mockup" class="fixed inset-0 flex items-center justify-center pointer-events-none opacity-0" style="z-index: 47;">
-            <div class="w-full max-w-sm mx-4">
-                <div class="bg-gray-900 rounded-[2rem] p-2 shadow-2xl">
-                    <div class="bg-white rounded-[1.5rem] overflow-hidden">
-                        <!-- Chat header -->
-                        <div class="bg-gradient-to-r from-whatsapp to-emerald-600 px-4 py-3 flex items-center gap-3">
-                            <div class="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center">
-                                <svg viewBox="0 0 100 100" class="w-5 h-5">
-                                    <circle cx="50" cy="50" r="42" fill="#FFD93D"/>
-                                    <ellipse cx="38" cy="45" rx="4" ry="5" fill="#5D4037"/>
-                                    <ellipse cx="62" cy="45" rx="4" ry="5" fill="#5D4037"/>
-                                    <path d="M 35 60 Q 50 72 65 60" fill="none" stroke="#5D4037" stroke-width="3"/>
-                                </svg>
-                            </div>
-                            <span class="text-white font-semibold">Monedita</span>
-                        </div>
-                        <!-- Chat messages -->
-                        <div class="p-3 space-y-2 bg-[#E5DDD5] min-h-[280px]">
-                            <div id="budget-msg-1" class="flex justify-end opacity-0 translate-y-4">
-                                <div class="bg-[#DCF8C6] rounded-lg px-3 py-2 max-w-[80%]">
-                                    <p class="text-sm text-gray-800">Create budget food $200</p>
-                                </div>
-                            </div>
-                            <div id="budget-msg-2" class="flex justify-start opacity-0 translate-y-4">
-                                <div class="bg-white rounded-lg px-3 py-2 max-w-[80%] shadow-sm">
-                                    <p class="text-sm text-gray-800"><span class="text-green-500">✓</span> Budget created!</p>
-                                    <div class="mt-2 p-2 bg-gray-50 rounded-lg">
-                                        <p class="text-xs text-gray-500">🍔 Food</p>
-                                        <p class="text-lg font-bold text-gray-900">$200<span class="text-xs font-normal text-gray-500">/month</span></p>
-                                        <div class="h-1.5 bg-gray-200 rounded-full mt-1">
-                                            <div class="h-full bg-emerald-500 rounded-full" style="width: 0%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="budget-msg-3" class="flex justify-start opacity-0 translate-y-4">
-                                <div class="bg-white rounded-lg px-3 py-2 max-w-[80%] shadow-sm">
-                                    <p class="text-sm text-gray-800">I'll notify you at 50%, 75%, and 90% 🔔</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1356,7 +1356,19 @@
                 "footer.terms": "Terms",
                 "footer.contact": "Contact",
                 "footer.copyright": "© 2025 Monedita. All rights reserved.",
-                "footer.cta": "Try Monedita Free"
+                "footer.cta": "Try Monedita Free",
+                "budget.title1": "Never overspend again",
+                "budget.subtitle1": "Get smart alerts before you hit your budget limits.",
+                "budget.alert.title": "Budget Alert!",
+                "budget.alert.msg": "You've used <span class=\"font-bold\">85%</span> of your Food budget.",
+                "budget.alert.remaining": "$30 remaining this month",
+                "budget.title2": "Set your limits",
+                "budget.subtitle2": "Create budgets for any category in seconds.",
+                "budget.chat.user": "Create budget food $200",
+                "budget.chat.created": "Budget created!",
+                "budget.chat.food": "🍔 Food",
+                "budget.chat.month": "/month",
+                "budget.chat.notify": "I'll notify you at 50%, 75%, and 90% 🔔"
             },
             es: {
                 "wa.message": "Hola! Quiero registrar mi primer gasto",
@@ -1416,7 +1428,19 @@
                 "footer.terms": "Términos",
                 "footer.contact": "Contacto",
                 "footer.copyright": "© 2025 Monedita. Todos los derechos reservados.",
-                "footer.cta": "Prueba Monedita Gratis"
+                "footer.cta": "Prueba Monedita Gratis",
+                "budget.title1": "Nunca gastes de más",
+                "budget.subtitle1": "Recibe alertas inteligentes antes de llegar a tu límite.",
+                "budget.alert.title": "¡Alerta de Presupuesto!",
+                "budget.alert.msg": "Has usado <span class=\"font-bold\">85%</span> de tu presupuesto de Comida.",
+                "budget.alert.remaining": "$30 restantes este mes",
+                "budget.title2": "Define tus límites",
+                "budget.subtitle2": "Crea presupuestos para cualquier categoría en segundos.",
+                "budget.chat.user": "Crear presupuesto comida $200",
+                "budget.chat.created": "¡Presupuesto creado!",
+                "budget.chat.food": "🍔 Comida",
+                "budget.chat.month": "/mes",
+                "budget.chat.notify": "Te notificaré al 50%, 75% y 90% 🔔"
             },
             pt: {
                 "wa.message": "Oi! Quero registrar minha primeira despesa",
@@ -1473,7 +1497,19 @@
                 "footer.terms": "Termos",
                 "footer.contact": "Contato",
                 "footer.copyright": "© 2025 Monedita. Todos os direitos reservados.",
-                "footer.cta": "Experimente Monedita Grátis"
+                "footer.cta": "Experimente Monedita Grátis",
+                "budget.title1": "Nunca gaste demais",
+                "budget.subtitle1": "Receba alertas inteligentes antes de atingir seus limites.",
+                "budget.alert.title": "Alerta de Orçamento!",
+                "budget.alert.msg": "Você usou <span class=\"font-bold\">85%</span> do seu orçamento de Comida.",
+                "budget.alert.remaining": "R$30 restantes este mês",
+                "budget.title2": "Defina seus limites",
+                "budget.subtitle2": "Crie orçamentos para qualquer categoria em segundos.",
+                "budget.chat.user": "Criar orçamento comida R$200",
+                "budget.chat.created": "Orçamento criado!",
+                "budget.chat.food": "🍔 Comida",
+                "budget.chat.month": "/mês",
+                "budget.chat.notify": "Vou te avisar em 50%, 75% e 90% 🔔"
             },
             fr: {
                 "wa.message": "Bonjour! Je veux enregistrer ma première dépense",
@@ -1530,7 +1566,19 @@
                 "footer.terms": "Conditions",
                 "footer.contact": "Contact",
                 "footer.copyright": "© 2025 Monedita. Tous droits réservés.",
-                "footer.cta": "Essayez Monedita Gratuitement"
+                "footer.cta": "Essayez Monedita Gratuitement",
+                "budget.title1": "Ne dépensez plus jamais trop",
+                "budget.subtitle1": "Recevez des alertes intelligentes avant d'atteindre vos limites.",
+                "budget.alert.title": "Alerte Budget!",
+                "budget.alert.msg": "Vous avez utilisé <span class=\"font-bold\">85%</span> de votre budget Alimentation.",
+                "budget.alert.remaining": "30€ restants ce mois",
+                "budget.title2": "Définissez vos limites",
+                "budget.subtitle2": "Créez des budgets pour n'importe quelle catégorie en quelques secondes.",
+                "budget.chat.user": "Créer budget alimentation 200€",
+                "budget.chat.created": "Budget créé!",
+                "budget.chat.food": "🍔 Alimentation",
+                "budget.chat.month": "/mois",
+                "budget.chat.notify": "Je vous préviendrai à 50%, 75% et 90% 🔔"
             }
         };
 
