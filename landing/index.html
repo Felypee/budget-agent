@@ -1559,8 +1559,18 @@
                             msg.classList.toggle('visible', step <= currentStep);
                         });
 
-                        // Smooth zoom and Y movement (continuous, not step-based)
-                        const targetScale = 1.4 + (chatProgress * 0.8);
+                        // Quick zoom in at start (20-28%), then gradual zoom for rest
+                        let targetScale;
+                        if (progress < 0.28) {
+                            // Quick zoom from 1.4 to 2.0 in first 8%
+                            const quickZoom = (progress - 0.20) / 0.08;
+                            targetScale = 1.4 + (quickZoom * 0.6); // 1.4 → 2.0
+                        } else {
+                            // Slow zoom from 2.0 to 2.2 for rest
+                            const slowZoom = (progress - 0.28) / 0.64;
+                            targetScale = 2.0 + (slowZoom * 0.2); // 2.0 → 2.2
+                        }
+
                         // Smooth Y: gradually move up as messages appear (max -120px)
                         const targetY = -(chatProgress * 120);
 
