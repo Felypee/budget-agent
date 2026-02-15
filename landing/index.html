@@ -887,17 +887,9 @@
         </div>
 
         <!-- Report content (appears after title moves up) -->
-        <div id="insights-content" class="fixed inset-0 flex items-start justify-center pointer-events-none opacity-0 overflow-y-auto" style="z-index: 52; padding-top: 100px;">
+        <div id="insights-content" class="fixed inset-0 flex items-start justify-center pointer-events-none opacity-0 overflow-y-auto" style="z-index: 52; padding-top: 140px;">
             <div class="w-full pb-20">
                 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                    <!-- Title placeholder at top (invisible, just for spacing) -->
-                    <div id="title-at-top" class="text-center mb-8 opacity-0">
-                        <h2 class="fluid-section font-black text-gray-900 mb-2" data-i18n="insights.title">Weekly insights, delivered</h2>
-                        <p class="text-lg text-gray-600 max-w-2xl mx-auto" data-i18n="insights.subtitle">
-                            Direct to your inbox, showing exactly where your money went.
-                        </p>
-                    </div>
-
             <!-- Email Mockup - Personal email style with bar charts -->
             <div id="email-mockup" class="relative max-w-lg mx-auto email-tilt opacity-0">
                 <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-200">
@@ -1521,19 +1513,18 @@
                         setPhoneY(0);
                     }
 
-                    // Zoom out completely and show CTA (92-100%)
+                    // Zoom out at the end (92-100%) - keep phone visible for transition
                     if (progress >= 0.92) {
                         const outProgress = (progress - 0.92) / 0.08;
 
-                        // Zoom out from 2.2 to 0.85 (smaller than start)
+                        // Zoom out from 2.2 to 1.0
                         const targetScale = 2.2 - (1.2 * outProgress);
-                        const targetY = -100 * outProgress;
 
                         setPhoneScale(Math.max(targetScale, 1));
-                        setPhoneY(targetY);
+                        setPhoneY(0);
 
-                        // Fade out phone at the end
-                        phone.style.opacity = 1 - (outProgress * 0.5);
+                        // Keep phone visible - transition section will fade it
+                        phone.style.opacity = '1';
                     }
 
                     // Scroll hint
@@ -1549,85 +1540,84 @@
             const insightsTitle = document.getElementById('insights-title');
             const insightsSubtitle = document.getElementById('insights-subtitle');
             const insightsContent = document.getElementById('insights-content');
-            const titleAtTop = document.getElementById('title-at-top');
             const emailMockup = document.getElementById('email-mockup');
             const emailAlert = document.getElementById('email-alert');
             const categoryBars = document.querySelectorAll('.category-bar');
             const statTotal = document.getElementById('stat-total');
             const statTransactions = document.getElementById('stat-transactions');
-            const heroSection = document.getElementById('hero-chat');
             const phone = document.getElementById('hero-phone');
 
             let countersAnimated = false;
 
             ScrollTrigger.create({
                 trigger: "#insights-transition",
-                start: "top top",
+                start: "top 80%",
                 end: "bottom bottom",
                 scrub: 2,
                 onUpdate: (self) => {
                     const progress = self.progress;
 
-                    // Phase 1 (0-12%): White overlay fades in, hero fades out
-                    if (progress < 0.12) {
-                        const fadeProgress = progress / 0.12;
+                    // Phase 1 (0-10%): White overlay fades in while phone fades out
+                    if (progress < 0.10) {
+                        const fadeProgress = progress / 0.10;
                         transitionOverlay.style.opacity = fadeProgress;
                         transitionOverlay.style.pointerEvents = 'none';
                         phone.style.opacity = 1 - fadeProgress;
                         titleContainer.style.opacity = '0';
+                        titleContainer.style.transform = 'translateY(0)';
                         insightsContent.style.opacity = '0';
                     }
-                    // Phase 2 (12-25%): Title appears in center with scale
-                    else if (progress < 0.25) {
-                        const titleProgress = (progress - 0.12) / 0.13;
+                    // Phase 2 (10-20%): Title appears in center with scale
+                    else if (progress < 0.20) {
+                        const titleProgress = (progress - 0.10) / 0.10;
                         transitionOverlay.style.opacity = '1';
                         phone.style.opacity = '0';
                         titleContainer.style.opacity = '1';
+                        titleContainer.style.transform = 'translateY(0)';
                         insightsTitle.style.opacity = titleProgress;
                         insightsTitle.style.transform = `scale(${0.8 + (0.2 * titleProgress)}) translateY(${(1 - titleProgress) * 30}px)`;
                         insightsSubtitle.style.opacity = '0';
                         insightsContent.style.opacity = '0';
                     }
-                    // Phase 3 (25-35%): Subtitle appears
-                    else if (progress < 0.35) {
-                        const subtitleProgress = (progress - 0.25) / 0.10;
+                    // Phase 3 (20-30%): Subtitle appears
+                    else if (progress < 0.30) {
+                        const subtitleProgress = (progress - 0.20) / 0.10;
                         titleContainer.style.opacity = '1';
+                        titleContainer.style.transform = 'translateY(0)';
                         insightsTitle.style.opacity = '1';
                         insightsTitle.style.transform = 'scale(1) translateY(0)';
                         insightsSubtitle.style.opacity = subtitleProgress;
                         insightsSubtitle.style.transform = `translateY(${(1 - subtitleProgress) * 20}px)`;
                         insightsContent.style.opacity = '0';
                     }
-                    // Phase 4 (35-50%): Title/subtitle move to top, content container appears
-                    else if (progress < 0.50) {
-                        const moveProgress = (progress - 0.35) / 0.15;
-                        // Move title container up
-                        const targetY = -35; // vh units
-                        titleContainer.style.transform = `translateY(${moveProgress * targetY}vh)`;
-                        titleContainer.style.opacity = 1 - (moveProgress * 0.3);
+                    // Phase 4 (30-45%): Title/subtitle move to top, content container appears
+                    else if (progress < 0.45) {
+                        const moveProgress = (progress - 0.30) / 0.15;
+                        // Move title container up and make it smaller
+                        const targetY = -38; // vh units
+                        titleContainer.style.transform = `translateY(${moveProgress * targetY}vh) scale(${1 - moveProgress * 0.3})`;
+                        titleContainer.style.opacity = '1';
                         insightsSubtitle.style.opacity = '1';
                         insightsSubtitle.style.transform = 'translateY(0)';
                         // Fade in content container
                         insightsContent.style.opacity = moveProgress;
                         insightsContent.style.pointerEvents = moveProgress > 0.5 ? 'auto' : 'none';
-                        // Show title at top
-                        titleAtTop.style.opacity = moveProgress;
                         // Email mockup starts appearing
                         emailMockup.style.opacity = moveProgress * 0.5;
                         emailMockup.style.transform = `translateY(${(1 - moveProgress) * 80}px)`;
                     }
-                    // Phase 5 (50-65%): Email mockup fully appears, counters animate
-                    else if (progress < 0.65) {
-                        const emailProgress = (progress - 0.50) / 0.15;
-                        titleContainer.style.opacity = '0';
+                    // Phase 5 (45-60%): Email mockup fully appears, counters animate
+                    else if (progress < 0.60) {
+                        const emailProgress = (progress - 0.45) / 0.15;
+                        titleContainer.style.transform = 'translateY(-38vh) scale(0.7)';
+                        titleContainer.style.opacity = '1';
                         insightsContent.style.opacity = '1';
                         insightsContent.style.pointerEvents = 'auto';
-                        titleAtTop.style.opacity = '1';
                         emailMockup.style.opacity = 0.5 + (emailProgress * 0.5);
                         emailMockup.style.transform = `translateY(${(1 - emailProgress) * 40}px)`;
 
                         // Trigger counters once
-                        if (!countersAnimated && progress >= 0.55) {
+                        if (!countersAnimated && progress >= 0.50) {
                             countersAnimated = true;
                             gsap.to(statTotal, {
                                 innerHTML: 312,
@@ -1643,12 +1633,13 @@
                             });
                         }
                     }
-                    // Phase 6 (65-90%): Category bars appear one by one
-                    else if (progress < 0.90) {
+                    // Phase 6 (60-85%): Category bars appear one by one
+                    else if (progress < 0.85) {
+                        titleContainer.style.transform = 'translateY(-38vh) scale(0.7)';
                         emailMockup.style.opacity = '1';
                         emailMockup.style.transform = 'translateY(0)';
 
-                        const barProgress = (progress - 0.65) / 0.25;
+                        const barProgress = (progress - 0.60) / 0.25;
                         const totalBars = categoryBars.length;
 
                         categoryBars.forEach((bar, i) => {
@@ -1666,8 +1657,9 @@
                             }
                         });
                     }
-                    // Phase 7 (90-100%): Alert tip appears
+                    // Phase 7 (85-100%): Alert tip appears
                     else {
+                        titleContainer.style.transform = 'translateY(-38vh) scale(0.7)';
                         categoryBars.forEach(bar => {
                             bar.style.opacity = '1';
                             bar.style.transform = 'translateY(0)';
@@ -1675,14 +1667,15 @@
                             if (fill) fill.style.width = fill.dataset.width;
                         });
 
-                        const alertProgress = (progress - 0.90) / 0.10;
+                        const alertProgress = (progress - 0.85) / 0.15;
                         emailAlert.style.opacity = alertProgress;
                         emailAlert.style.transform = `translateY(${(1 - alertProgress) * 15}px)`;
                     }
 
-                    // Reset overlay when scrolling back up completely
-                    if (progress < 0.05) {
-                        transitionOverlay.style.opacity = progress / 0.05;
+                    // Reset when scrolling back up completely
+                    if (progress < 0.02) {
+                        transitionOverlay.style.opacity = '0';
+                        phone.style.opacity = '1';
                     }
                 }
             });
@@ -1726,6 +1719,139 @@
                 ScrollTrigger.refresh();
             }, 250);
         });
+
+        // ==========================================
+        // DEBUG COMPONENT (remove in production)
+        // ==========================================
+        function initDebugComponent() {
+            // Create debug element
+            const debug = document.createElement('div');
+            debug.id = 'scroll-debug';
+            debug.innerHTML = `
+                <div class="debug-content">
+                    <span class="debug-label">Scroll</span>
+                    <span class="debug-value" id="debug-percent">0%</span>
+                    <span class="debug-section" id="debug-section">hero-chat</span>
+                </div>
+                <div class="debug-hint">Click to copy</div>
+            `;
+            debug.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: rgba(0, 0, 0, 0.9);
+                color: #00ff88;
+                padding: 12px 16px;
+                border-radius: 12px;
+                font-family: 'Monaco', 'Menlo', monospace;
+                font-size: 14px;
+                z-index: 9999;
+                cursor: pointer;
+                border: 2px solid #00ff88;
+                box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
+                transition: all 0.2s ease;
+                min-width: 180px;
+            `;
+
+            const style = document.createElement('style');
+            style.textContent = `
+                #scroll-debug:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0 6px 30px rgba(0, 255, 136, 0.5);
+                }
+                #scroll-debug .debug-content {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
+                }
+                #scroll-debug .debug-label {
+                    font-size: 10px;
+                    color: #888;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }
+                #scroll-debug .debug-value {
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+                #scroll-debug .debug-section {
+                    font-size: 11px;
+                    color: #00aaff;
+                    margin-top: 4px;
+                }
+                #scroll-debug .debug-hint {
+                    font-size: 9px;
+                    color: #666;
+                    margin-top: 8px;
+                    text-align: center;
+                }
+                #scroll-debug.copied {
+                    border-color: #ffaa00;
+                    background: rgba(255, 170, 0, 0.2);
+                }
+                #scroll-debug.copied .debug-value {
+                    color: #ffaa00;
+                }
+            `;
+            document.head.appendChild(style);
+            document.body.appendChild(debug);
+
+            const debugPercent = document.getElementById('debug-percent');
+            const debugSection = document.getElementById('debug-section');
+
+            // Track current section
+            function getCurrentSection() {
+                const sections = ['hero-chat', 'insights-transition', 'final-cta'];
+                const scrollY = window.scrollY;
+                const windowHeight = window.innerHeight;
+
+                for (const sectionId of sections) {
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        const rect = section.getBoundingClientRect();
+                        if (rect.top <= windowHeight * 0.5 && rect.bottom >= windowHeight * 0.5) {
+                            const sectionProgress = (windowHeight * 0.5 - rect.top) / section.offsetHeight;
+                            return { id: sectionId, progress: Math.max(0, Math.min(1, sectionProgress)) };
+                        }
+                    }
+                }
+                return { id: 'unknown', progress: 0 };
+            }
+
+            // Update on scroll
+            window.addEventListener('scroll', () => {
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const globalPercent = ((window.scrollY / totalHeight) * 100).toFixed(1);
+                const current = getCurrentSection();
+                const sectionPercent = (current.progress * 100).toFixed(1);
+
+                debugPercent.textContent = `${sectionPercent}%`;
+                debugSection.textContent = `${current.id} (global: ${globalPercent}%)`;
+            });
+
+            // Copy to clipboard on click
+            debug.addEventListener('click', () => {
+                const current = getCurrentSection();
+                const sectionPercent = (current.progress * 100).toFixed(1);
+                const scrollY = window.scrollY;
+
+                const command = `[BUG en ${current.id} @ ${sectionPercent}% | scrollY: ${scrollY}px] `;
+
+                navigator.clipboard.writeText(command).then(() => {
+                    debug.classList.add('copied');
+                    const hint = debug.querySelector('.debug-hint');
+                    hint.textContent = 'Copied!';
+
+                    setTimeout(() => {
+                        debug.classList.remove('copied');
+                        hint.textContent = 'Click to copy';
+                    }, 1500);
+                });
+            });
+        }
+
+        // Initialize debug on load
+        document.addEventListener('DOMContentLoaded', initDebugComponent);
     </script>
 </body>
 </html>
