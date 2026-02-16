@@ -473,6 +473,8 @@
   }
   document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')sendScroll();});
   window.addEventListener('beforeunload',sendScroll);
+  document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('.wa-link');if(a)fetch(SB_URL+'/rest/v1/landing_page_visits',{method:'POST',headers:H,
+    body:JSON.stringify(Object.assign({},base,{event_type:'cta_click'}))}).catch(function(){});});
 })();
 </script>
 </body>
