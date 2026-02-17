@@ -45,6 +45,7 @@ const webhookLimiter = rateLimit({
   message: { error: 'Rate limit exceeded' },
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { xForwardedForHeader: false, ip: false },
   keyGenerator: (req) => {
     // Use phone number if available, otherwise IP
     const phone = req.body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.from;
