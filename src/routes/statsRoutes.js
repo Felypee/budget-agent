@@ -77,7 +77,9 @@ router.get('/api/stats', requireStatsToken, async (req, res) => {
     // Group by day for chart
     const byDay = {};
     for (const expense of expenses) {
-      const day = new Date(expense.createdAt).toISOString().split('T')[0];
+      const expenseDate = new Date(expense.createdAt || expense.date);
+      if (isNaN(expenseDate.getTime())) continue; // Skip invalid dates
+      const day = expenseDate.toISOString().split('T')[0];
       if (!byDay[day]) {
         byDay[day] = 0;
       }
@@ -130,14 +132,14 @@ router.get('/api/stats', requireStatsToken, async (req, res) => {
       byDay: Object.entries(byDay).map(([date, total]) => ({ date, total })).sort((a, b) => a.date.localeCompare(b.date)),
       budgets: budgetProgress,
       recentExpenses: expenses
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .sort((a, b) => new Date(b.createdAt || b.date || 0) - new Date(a.createdAt || a.date || 0))
         .slice(0, 20)
         .map(e => ({
           id: e.id,
           amount: parseFloat(e.amount),
           category: e.category,
           description: e.description,
-          date: e.createdAt,
+          date: e.createdAt || e.date,
         })),
     });
   } catch (error) {
