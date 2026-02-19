@@ -223,6 +223,57 @@ export async function sendTypingIndicator(to) {
 }
 
 /**
+ * Send a contact card (vCard) via WhatsApp
+ * @param {string} to - Recipient phone number
+ * @param {object} contact - Contact info { name, phone, website }
+ */
+export async function sendContactCard(to, contact) {
+  try {
+    const response = await axios.post(
+      `${WHATSAPP_API_URL}/${PHONE_NUMBER_ID}/messages`,
+      {
+        messaging_product: 'whatsapp',
+        recipient_type: 'individual',
+        to: to,
+        type: 'contacts',
+        contacts: [
+          {
+            name: {
+              formatted_name: contact.name,
+              first_name: contact.name
+            },
+            phones: [
+              {
+                phone: contact.phone,
+                type: 'WORK'
+              }
+            ],
+            ...(contact.website && {
+              urls: [
+                {
+                  url: contact.website,
+                  type: 'WORK'
+                }
+              ]
+            })
+          }
+        ]
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${ACCESS_TOKEN}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error sending contact card:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+/**
  * Download media from WhatsApp
  * @param {string} mediaId - The media ID from the message
  * @returns {Promise<{buffer: Buffer, mimeType: string}>}

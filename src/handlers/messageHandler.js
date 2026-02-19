@@ -5,6 +5,7 @@ import {
   markAsRead,
   downloadMedia,
   showProcessingIndicator,
+  sendContactCard,
 } from "../utils/whatsappClient.js";
 import {
   queueMessage,
@@ -80,10 +81,15 @@ export async function handleIncomingMessage(message, phone) {
 
     const lang = user.language || 'en';
 
-    // For new users, send welcome message asking for name
+    // For new users, send vCard first, then welcome message
     if (isNewUser) {
-      const welcomeMsg = getWelcomeMessage(lang);
       if (clearIndicator) await clearIndicator();
+
+      // Send vCard first so they can save the contact
+      await sendMoneditaContactCard(phone, lang);
+
+      // Then send welcome message
+      const welcomeMsg = getWelcomeMessage(lang);
       await sendTextMessage(phone, welcomeMsg);
       return; // Wait for them to respond with their name
     }
@@ -542,6 +548,28 @@ async function processAudioMessage(phone, audioData, userCurrency, lang = 'en') 
       content: error.message,
     });
     return getMessage('audio_error', lang);
+  }
+}
+
+/**
+ * Send Monedita contact card so user can save it
+ */
+async function sendMoneditaContactCard(phone, lang = 'en') {
+  const botNumber = process.env.WHATSAPP_BOT_NUMBER;
+  if (!botNumber) {
+    console.log('[vCard] WHATSAPP_BOT_NUMBER not set, skipping contact card');
+    return;
+  }
+
+  try {
+    await sendContactCard(phone, {
+      name: 'Monedita',
+      phone: `+${botNumber}`,
+      website: 'https://monedita.app'
+    });
+  } catch (error) {
+    console.error('Error sending Monedita contact card:', error);
+    // Don't fail the flow if vCard fails
   }
 }
 
