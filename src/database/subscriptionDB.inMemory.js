@@ -13,7 +13,7 @@ const PLANS = {
     id: 'free',
     name: 'Free',
     priceMonthly: 0,
-    moneditasMonthly: 50,      // ~$0.10 max cost
+    moneditasMonthly: 200,     // ~$0.40 max cost
     historyDays: 30,
     // Legacy fields (kept for backward compatibility during migration)
     limitTextMessages: 50,

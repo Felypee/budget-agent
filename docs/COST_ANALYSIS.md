@@ -19,7 +19,7 @@
 
 | Plan | Precio | Moneditas/mes | Uso Tipico |
 |------|--------|---------------|------------|
-| **Free** | $0 | 50 | ~10 gastos texto |
+| **Free** | $0 | 200 | ~40 gastos texto |
 | **Basic** | $2.99 | 1,200 | ~240 gastos texto |
 | **Premium** | $7.99 | 3,500 | ~700 gastos texto |
 
@@ -27,7 +27,7 @@
 
 | Plan | Ingreso Neto | Costo Total | Margen |
 |------|--------------|-------------|--------|
-| Free | $0 | $0.15 | -$0.15 |
+| Free | $0 | $0.40 | -$0.40 |
 | Basic | $2.62 | $2.45 | **+$0.17 (6%)** |
 | Premium | $7.45 | $7.05 | **+$0.40 (5%)** |
 
@@ -120,7 +120,7 @@ const OPERATION_COSTS = {
 |----------------|----------|-----------|-------------|
 | **Precio** | $0 | $2.99/mes | $7.99/mes |
 | **Precio COP** | $0 | ~$12,000 | ~$32,000 |
-| **Moneditas/mes** | 50 | 1,200 | 3,500 |
+| **Moneditas/mes** | 200 | 1,200 | 3,500 |
 | **Historial** | 30 dias | 6 meses | 12 meses |
 | **Presupuestos** | Ilimitado | Ilimitado | Ilimitado |
 | **Resumen semanal** | Si | Si | Si |
@@ -129,23 +129,23 @@ const OPERATION_COSTS = {
 
 ### Que Puede Hacer Cada Plan
 
-| Accion | Free (50) | Basic (1,200) | Premium (3,500) |
+| Accion | Free (200) | Basic (1,200) | Premium (3,500) |
 |--------|-----------|---------------|-----------------|
-| Texto (5 c/u) | 10 gastos | 240 gastos | 700 gastos |
-| Imagenes (6 c/u) | 8 recibos | 200 recibos | 583 recibos |
-| Audio (4 c/u) | 12 audios | 300 audios | 875 audios |
-| **Mixto tipico*** | ~8 ops | ~190 ops | ~550 ops |
+| Texto (5 c/u) | 40 gastos | 240 gastos | 700 gastos |
+| Imagenes (6 c/u) | 33 recibos | 200 recibos | 583 recibos |
+| Audio (4 c/u) | 50 audios | 300 audios | 875 audios |
+| **Mixto tipico*** | ~32 ops | ~190 ops | ~550 ops |
 
 *Mixto tipico: 70% texto, 20% imagen, 10% audio
 
 ### Calculo de Uso Mixto
 
 ```
-Free (50 moneditas):
-- 7 textos × 5 = 35 moneditas
-- 1 imagen × 6 = 6 moneditas
-- 2 audios × 4 = 8 moneditas
-= 49 moneditas (~8 operaciones)
+Free (200 moneditas):
+- 28 textos × 5 = 140 moneditas
+- 5 imagenes × 6 = 30 moneditas
+- 7 audios × 4 = 28 moneditas
+= 198 moneditas (~40 operaciones)
 
 Basic (1,200 moneditas):
 - 168 textos × 5 = 840 moneditas
@@ -170,11 +170,11 @@ Premium (3,500 moneditas):
 
 | Concepto | Calculo | Total |
 |----------|---------|-------|
-| Moneditas usadas (80% = 40) | 40 × $0.002 | $0.08 |
+| Moneditas usadas (80% = 160) | 160 × $0.002 | $0.32 |
 | Infraestructura prorrateada | - | $0.05 |
-| **TOTAL COSTO** | | **~$0.13/mes** |
+| **TOTAL COSTO** | | **~$0.37/mes** |
 | Ingreso | | **$0** |
-| **MARGEN** | | **-$0.13** |
+| **MARGEN** | | **-$0.37** |
 
 #### Plan Basic ($2.99)
 
@@ -204,7 +204,7 @@ Premium (3,500 moneditas):
 
 | Plan | Ingreso Neto | Costo Total | Margen USD | Margen % |
 |------|--------------|-------------|------------|----------|
-| Free | $0 | $0.13 | -$0.13 | N/A |
+| Free | $0 | $0.37 | -$0.37 | N/A |
 | Basic | $2.62 | $2.45 | **+$0.17** | **6%** |
 | Premium | $7.45 | $7.05 | **+$0.40** | **5%** |
 
@@ -354,7 +354,7 @@ const OPERATION_COSTS = {
 // Planes
 const PLANS = {
   free: {
-    moneditasMonthly: 50,
+    moneditasMonthly: 200,
     historyDays: 30,
     priceMonthly: 0,
   },

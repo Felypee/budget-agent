@@ -106,10 +106,10 @@ export async function getMoneditasStatus(phone) {
     console.error("[moneditasService] Error getting status:", error);
     // Return a default free plan status on error
     return {
-      plan: { id: "free", name: "Free", priceMonthly: 0, moneditasMonthly: 50, historyDays: 30 },
+      plan: { id: "free", name: "Free", priceMonthly: 0, moneditasMonthly: 200, historyDays: 30 },
       used: 0,
-      limit: 50,
-      remaining: 50,
+      limit: 200,
+      remaining: 200,
       error: true,
     };
   }

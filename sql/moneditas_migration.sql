@@ -5,12 +5,12 @@
 
 -- 1. Agregar columnas nuevas a subscription_plans
 ALTER TABLE subscription_plans
-ADD COLUMN IF NOT EXISTS moneditas_monthly INTEGER DEFAULT 50,
+ADD COLUMN IF NOT EXISTS moneditas_monthly INTEGER DEFAULT 200,
 ADD COLUMN IF NOT EXISTS history_days INTEGER DEFAULT 30;
 
 -- 2. Actualizar los planes con los nuevos valores
 UPDATE subscription_plans SET
-  moneditas_monthly = 50,
+  moneditas_monthly = 200,
   history_days = 30,
   limit_budgets = -1,        -- Presupuestos ilimitados para todos
   can_export_csv = true      -- CSV para todos
@@ -78,6 +78,6 @@ ORDER BY price_monthly;
 -- Resultado esperado:
 -- | id      | name    | moneditas_monthly | history_days | price_monthly |
 -- |---------|---------|-------------------|--------------|---------------|
--- | free    | Free    | 50                | 30           | 0             |
+-- | free    | Free    | 200               | 30           | 0             |
 -- | basic   | Basic   | 1200              | 180          | 2.99          |
 -- | premium | Premium | 3500              | 365          | 7.99          |
