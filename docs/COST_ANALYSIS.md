@@ -2,6 +2,36 @@
 
 > Ultima actualizacion: Febrero 2026
 
+## Resumen Rapido de Costos
+
+### Costos Fijos Actuales: $6.25/mes
+
+| Servicio | Costo |
+|----------|-------|
+| Railway | $5.00 |
+| Supabase | $0 (free tier) |
+| Dominio | $1.25 ($15/año) |
+| Monitoring | $0 (sin Sentry) |
+
+### Costos Variables
+
+| Por Operacion | Costo |
+|---------------|-------|
+| Texto | $0.009 |
+| Imagen | $0.010 |
+| Audio | $0.004 |
+| Wompi | ~12% del pago |
+
+### Proyeccion por Escala
+
+| Usuarios | Costos Fijos | Costos Variables | Total | Ingreso | Ganancia |
+|----------|--------------|------------------|-------|---------|----------|
+| **100** | $6.25 | $96.92 | $103 | $110 | **+$7 (6%)** |
+| **500** | $46.25 | $545.40 | $592 | $649 | **+$57 (9%)** |
+| **2000** | $101.25 | $2,486.00 | $2,587 | $3,093 | **+$506 (16%)** |
+
+---
+
 ## Tabla de Contenidos
 
 1. [Resumen del Nuevo Sistema](#resumen-del-nuevo-sistema)
@@ -173,11 +203,13 @@ Premium (800 moneditas):
 
 ### Resumen de Margenes
 
-| Plan | Precio | Costo Max | Margen | Margen % |
-|------|--------|-----------|--------|----------|
-| **Free** | $0 | $0.32 | -$0.32 | N/A |
-| **Basic** | $2.99 | $1.52 | +$1.47 | 49% |
-| **Premium** | $7.99 | $5.08 | +$2.91 | 36% |
+| Plan | Precio | Costo API | Comisión Wompi* | **Margen Real** | **Margen %** |
+|------|--------|-----------|-----------------|-----------------|--------------|
+| **Free** | $0 | $0.32 | $0 | -$0.32 | N/A |
+| **Basic** | $2.99 | $1.52 | $0.37 | **+$1.10** | **37%** |
+| **Premium** | $7.99 | $5.08 | $0.54 | **+$2.37** | **30%** |
+
+*Comisión Wompi asume pago con tarjeta (2.9% + $900 COP + IVA). Ver sección "Comisiones del Procesador de Pagos" para detalles.
 
 > Nota: Margenes mas conservadores que el modelo anterior debido a:
 > 1. Resumen semanal para todos (incluyendo Free)
@@ -198,118 +230,239 @@ Premium (800 moneditas):
 
 ### Escenario 1: 100 Usuarios
 
-#### Ingresos
+#### Ingresos (Neto después de Wompi)
 
-| Plan | Usuarios | Precio | Mensual |
-|------|----------|--------|---------|
-| Free | 75 | $0 | $0 |
-| Basic | 18 | $2.99 | $53.82 |
-| Premium | 7 | $7.99 | $55.93 |
-| **TOTAL** | **100** | | **$109.75** |
+| Plan | Precio/mes | Usuarios | % | Precio Bruto | Comisión Wompi | **Ingreso Neto** |
+|------|------------|----------|---|--------------|----------------|------------------|
+| Free | $0 | 75 | 75% | $0 | $0 | $0 |
+| Basic | $2.99 | 18 | 18% | $53.82 | $6.66 | $47.16 |
+| Premium | $7.99 | 7 | 7% | $55.93 | $3.78 | $52.15 |
+| **TOTAL** | | **100** | 100% | $109.75 | $10.44 | **$99.31** |
 
 #### Costos
 
-| Plan | Usuarios | Costo/Usuario | Mensual |
-|------|----------|---------------|---------|
-| Free | 75 | $0.32 | $24.00 |
-| Basic | 18 | $1.52 | $27.36 |
-| Premium | 7 | $5.08 | $35.56 |
-| **API Total** | | | **$86.92** |
-| **Infraestructura** | | | **$15.00** |
-| **TOTAL COSTOS** | | | **$101.92** |
+| Tipo | Concepto | Costo |
+|------|----------|-------|
+| **FIJOS** | Railway | $5.00 |
+| | Supabase | $0.00 |
+| | Dominio ($15/año) | $1.25 |
+| | **Subtotal Fijos** | **$6.25** |
+| **VARIABLES** | Free (75 × $0.32) | $24.00 |
+| | Basic (18 × $1.52) | $27.36 |
+| | Premium (7 × $5.08) | $35.56 |
+| | Wompi (25 pagos × $0.40) | $10.00 |
+| | **Subtotal Variables** | **$96.92** |
+| **TOTAL** | | **$103.17** |
 
 #### Resultado
 
 | Metrica | Valor |
 |---------|-------|
-| Ingreso | $109.75 |
-| Costos | $101.92 |
-| **Ganancia** | **$7.83** |
-| **Margen** | **7.1%** |
+| Ingreso bruto | $109.75 |
+| Costos fijos | -$6.25 |
+| Costos variables (API + Wompi) | -$96.92 |
+| **Ganancia** | **+$6.58** |
+| **Margen** | **6%** |
+
+> Con costos fijos bajos ($6.25), 100 usuarios ya genera ganancia.
 
 ### Escenario 2: 500 Usuarios
 
-#### Ingresos
+#### Ingresos (Neto después de Wompi)
 
-| Plan | Usuarios | Precio | Mensual |
-|------|----------|--------|---------|
-| Free | 350 | $0 | $0 |
-| Basic | 110 | $2.99 | $328.90 |
-| Premium | 40 | $7.99 | $319.60 |
-| **TOTAL** | **500** | | **$648.50** |
+| Plan | Precio/mes | Usuarios | % | Precio Bruto | Comisión Wompi | **Ingreso Neto** |
+|------|------------|----------|---|--------------|----------------|------------------|
+| Free | $0 | 350 | 70% | $0 | $0 | $0 |
+| Basic | $2.99 | 110 | 22% | $328.90 | $40.70 | $288.20 |
+| Premium | $7.99 | 40 | 8% | $319.60 | $21.60 | $298.00 |
+| **TOTAL** | | **500** | 100% | $648.50 | $62.30 | **$586.20** |
 
 #### Costos
 
-| Plan | Usuarios | Costo/Usuario | Mensual |
-|------|----------|---------------|---------|
-| Free | 350 | $0.32 | $112.00 |
-| Basic | 110 | $1.52 | $167.20 |
-| Premium | 40 | $5.08 | $203.20 |
-| **API Total** | | | **$482.40** |
-| **Infraestructura** | | | **$50.00** |
-| **TOTAL COSTOS** | | | **$532.40** |
+| Tipo | Concepto | Costo |
+|------|----------|-------|
+| **FIJOS** | Railway | $20.00 |
+| | Supabase | $25.00 |
+| | Dominio ($15/año) | $1.25 |
+| | **Subtotal Fijos** | **$46.25** |
+| **VARIABLES** | Free (350 × $0.32) | $112.00 |
+| | Basic (110 × $1.52) | $167.20 |
+| | Premium (40 × $5.08) | $203.20 |
+| | Wompi (150 pagos × $0.42) | $63.00 |
+| | **Subtotal Variables** | **$545.40** |
+| **TOTAL** | | **$591.65** |
 
 #### Resultado
 
 | Metrica | Valor |
 |---------|-------|
-| Ingreso | $648.50 |
-| Costos | $532.40 |
-| **Ganancia** | **$116.10** |
-| **Margen** | **17.9%** |
+| Ingreso bruto | $648.50 |
+| Costos fijos | -$46.25 |
+| Costos variables (API + Wompi) | -$545.40 |
+| **Ganancia** | **+$56.85** |
+| **Margen** | **9%** |
 
 ### Escenario 3: 2000 Usuarios
 
-#### Ingresos
+#### Ingresos (Neto después de Wompi)
 
-| Plan | Usuarios | Precio | Mensual |
-|------|----------|--------|---------|
-| Free | 1300 | $0 | $0 |
-| Basic | 500 | $2.99 | $1,495.00 |
-| Premium | 200 | $7.99 | $1,598.00 |
-| **TOTAL** | **2000** | | **$3,093.00** |
+| Plan | Precio/mes | Usuarios | % | Precio Bruto | Comisión Wompi | **Ingreso Neto** |
+|------|------------|----------|---|--------------|----------------|------------------|
+| Free | $0 | 1300 | 65% | $0 | $0 | $0 |
+| Basic | $2.99 | 500 | 25% | $1,495.00 | $185.00 | $1,310.00 |
+| Premium | $7.99 | 200 | 10% | $1,598.00 | $108.00 | $1,490.00 |
+| **TOTAL** | | **2000** | 100% | $3,093.00 | $293.00 | **$2,800.00** |
 
 #### Costos
 
-| Plan | Usuarios | Costo/Usuario | Mensual |
-|------|----------|---------------|---------|
-| Free | 1300 | $0.32 | $416.00 |
-| Basic | 500 | $1.52 | $760.00 |
-| Premium | 200 | $5.08 | $1,016.00 |
-| **API Total** | | | **$2,192.00** |
-| **Infraestructura** | | | **$150.00** |
-| **TOTAL COSTOS** | | | **$2,342.00** |
+| Tipo | Concepto | Costo |
+|------|----------|-------|
+| **FIJOS** | Railway | $50.00 |
+| | Supabase | $50.00 |
+| | Dominio ($15/año) | $1.25 |
+| | **Subtotal Fijos** | **$101.25** |
+| **VARIABLES** | Free (1300 × $0.32) | $416.00 |
+| | Basic (500 × $1.52) | $760.00 |
+| | Premium (200 × $5.08) | $1,016.00 |
+| | Wompi (700 pagos × $0.42) | $294.00 |
+| | **Subtotal Variables** | **$2,486.00** |
+| **TOTAL** | | **$2,587.25** |
 
 #### Resultado
 
 | Metrica | Valor |
 |---------|-------|
-| Ingreso | $3,093.00 |
-| Costos | $2,342.00 |
-| **Ganancia** | **$751.00** |
-| **Margen** | **24.3%** |
+| Ingreso bruto | $3,093.00 |
+| Costos fijos | -$101.25 |
+| Costos variables (API + Wompi) | -$2,486.00 |
+| **Ganancia** | **+$505.75** |
+| **Margen** | **16%** |
+
+---
+
+## Comisiones del Procesador de Pagos (Wompi)
+
+### Tarifas de Wompi Colombia (Febrero 2026)
+
+| Método de Pago | Comisión | Fijo |
+|----------------|----------|------|
+| **Tarjeta crédito/débito** | 2.9% | + $900 COP |
+| **PSE (transferencia)** | 0% | $2,500 COP |
+| **Nequi** | 2.5% | $0 |
+| **Bancolombia QR** | 1.5% | $0 |
+
+> Nota: IVA del 19% aplica sobre la comisión de Wompi
+
+### Impacto por Plan (Pago con Tarjeta)
+
+| Plan | Precio COP | Comisión (2.9% + $900) | IVA (19%) | **Neto Recibido** |
+|------|------------|------------------------|-----------|-------------------|
+| **Basic** | $12,000 | $1,248 | $237 | **$10,515** |
+| **Premium** | $32,000 | $1,828 | $347 | **$29,825** |
+
+### Impacto por Plan (Pago con PSE)
+
+| Plan | Precio COP | Comisión Fija | IVA (19%) | **Neto Recibido** |
+|------|------------|---------------|-----------|-------------------|
+| **Basic** | $12,000 | $2,500 | $475 | **$9,025** |
+| **Premium** | $32,000 | $2,500 | $475 | **$29,025** |
+
+### Margen Real Ajustado (con Wompi)
+
+Usando tarjeta como método más común (~80% de pagos):
+
+#### Plan Basic ($2.99 / $12,000 COP)
+
+| Concepto | Valor |
+|----------|-------|
+| Precio bruto | $12,000 COP (~$2.99 USD) |
+| Comisión Wompi + IVA | -$1,485 COP (~$0.37 USD) |
+| **Ingreso neto** | **$10,515 COP (~$2.62 USD)** |
+| Costo APIs (moneditas) | -$1.52 USD |
+| **Margen real** | **$1.10 USD (37%)** |
+
+#### Plan Premium ($7.99 / $32,000 COP)
+
+| Concepto | Valor |
+|----------|-------|
+| Precio bruto | $32,000 COP (~$7.99 USD) |
+| Comisión Wompi + IVA | -$2,175 COP (~$0.54 USD) |
+| **Ingreso neto** | **$29,825 COP (~$7.45 USD)** |
+| Costo APIs (moneditas) | -$5.08 USD |
+| **Margen real** | **$2.37 USD (30%)** |
+
+### Comparación: Margen Bruto vs Margen Real
+
+| Plan | Margen sin Wompi | Margen con Wompi | Diferencia |
+|------|------------------|------------------|------------|
+| **Basic** | $1.47 (49%) | $1.10 (37%) | -$0.37 (-12pp) |
+| **Premium** | $2.91 (36%) | $2.37 (30%) | -$0.54 (-6pp) |
+
+> **Importante**: Los escenarios de rentabilidad en este documento usan márgenes brutos.
+> Para cálculos reales, restar ~12% adicional del ingreso por comisiones de pago.
 
 ---
 
 ## Costos de Infraestructura
 
-### Por Escala
+### Costos Fijos vs Variables
 
-| Usuarios | Hosting | Base de Datos | Dominio | Monitoring | Total |
-|----------|---------|---------------|---------|------------|-------|
-| 100 | $7 | $0 (free) | $1 | $5 | **$13** |
-| 500 | $20 | $25 | $1 | $10 | **$56** |
-| 2000 | $50 | $50 | $1 | $25 | **$126** |
-| 5000 | $100 | $100 | $1 | $50 | **$251** |
+| Tipo | Descripcion | Ejemplo |
+|------|-------------|---------|
+| **Fijo** | No cambia con cantidad de usuarios | Hosting, dominio |
+| **Variable** | Cambia por cada operacion/usuario | APIs (Claude, WhatsApp), Wompi |
 
-### Detalle de Servicios
+### Costos Fijos por Escala
 
-| Servicio | Free Tier | Pro | Notas |
-|----------|-----------|-----|-------|
-| **Railway/Render** | $0-5 | $20+ | Hosting Node.js |
-| **Supabase** | 500MB, 50k MAU | $25/mes | Base de datos |
-| **Vercel** | 100GB BW | $20/mes | Landing + pagina visual |
-| **Sentry/LogRocket** | Limitado | $26/mes | Monitoring |
+| Usuarios | Railway | Supabase | Dominio | **Total Fijo** |
+|----------|---------|----------|---------|----------------|
+| Actual | $5 | $0 (free) | $1.25 | **$6.25** |
+| 100 | $5 | $0 (free) | $1.25 | **$6.25** |
+| 500 | $20 | $25 | $1.25 | **$46.25** |
+| 2000 | $50 | $50 | $1.25 | **$101.25** |
+
+> Nota: Dominio = $15/año = $1.25/mes. Sin monitoring (Sentry) por ahora.
+
+### Detalle de Servicios Actuales
+
+| Servicio | Costo Actual | Escala | Notas |
+|----------|--------------|--------|-------|
+| **Railway** | $5/mes | $20+ con trafico | Hosting Node.js |
+| **Supabase** | $0 (free) | $25/mes >500 MAU | Base de datos |
+| **Dominio** | $1.25/mes | Fijo | $15/año |
+| **Monitoring** | $0 | - | No usando Sentry |
+
+### Costos Variables por Operacion
+
+| Operacion | Costo | Moneditas | Servicio |
+|-----------|-------|-----------|----------|
+| Mensaje texto | $0.009 | 1 | Claude API |
+| Imagen/recibo | $0.010 | 3 | Claude Vision |
+| Audio | $0.004 | 2 | Groq Whisper |
+| Resumen semanal | $0.009 | 2 | Claude API |
+| WhatsApp saliente | $0.001 | - | Meta API |
+
+### Costos Variables por Usuario/Mes
+
+| Plan | Costo API |
+|------|-----------|
+| Free (50 moneditas) | $0.32 |
+| Basic (250 moneditas) | $1.52 |
+| Premium (800 moneditas) | $5.08 |
+
+### Comisiones Wompi (Variable por transaccion)
+
+| Metodo | Comision | Fijo |
+|--------|----------|------|
+| Tarjeta credito/debito | 2.9% + IVA | $900 COP |
+| PSE | 0% + IVA | $2,500 COP |
+| Nequi | 2.5% + IVA | $0 |
+| Bancolombia QR | 1.5% + IVA | $0 |
+
+| Plan | Precio | Comision Wompi | Te queda |
+|------|--------|----------------|----------|
+| Basic | $12,000 COP | ~$1,485 COP | $10,515 COP |
+| Premium | $32,000 COP | ~$2,175 COP | $29,825 COP |
 
 ---
 
@@ -355,27 +508,40 @@ Premium (800 moneditas):
 
 ### Usuarios Minimos para Rentabilidad
 
-Con costos fijos de ~$50/mes (infraestructura basica):
+Con costos fijos actuales de ~$6.25/mes (Railway $5 + Dominio $1.25):
 
 | Escenario | Usuarios Pagos Necesarios |
 |-----------|---------------------------|
-| 100% Basic | ~34 usuarios Basic |
-| 100% Premium | ~17 usuarios Premium |
-| Mix 70/30 Basic/Premium | ~25 usuarios pagos |
-| **Realista (22% Basic, 8% Premium)** | **~100 usuarios totales** |
+| 100% Basic | ~6 usuarios Basic |
+| 100% Premium | ~3 usuarios Premium |
+| Mix 70/30 Basic/Premium | ~5 usuarios pagos |
+| **Realista (22% Basic, 8% Premium)** | **~15 usuarios totales** |
+
+> Con costos fijos bajos, el break-even es muy accesible. Al escalar a 500+ usuarios, Supabase ($25) aumenta los fijos.
 
 ### Formula de Break-even
 
 ```
-Break-even usuarios = Costos Fijos / (ARPU - Costo Variable por Usuario)
+Break-even usuarios = Costos Fijos / (ARPU Neto - Costo Variable por Usuario)
 
-Donde:
-- Costos Fijos = $50/mes (infraestructura)
-- ARPU (Average Revenue Per User) = $1.30 (con 70% free, 22% basic, 8% premium)
-- Costo Variable = $0.70/usuario promedio
+Escenario Inicial (100 usuarios):
+- Costos Fijos = $6.25/mes
+- ARPU Bruto = $1.10 (con 75% free, 18% basic, 7% premium)
+- Comisión Wompi = ~$0.10/usuario
+- ARPU Neto = $1.00
+- Costo Variable = $0.97/usuario promedio
 
-Break-even = $50 / ($1.30 - $0.70) = ~83 usuarios
+Break-even = $6.25 / ($1.00 - $0.97) = ~208 usuarios para profit
+
+Pero como ya tienes margen positivo desde ~50 usuarios con tu mix actual.
 ```
+
+### Resumen de Costos
+
+| Escala | Fijos | Variables | Total | Ingreso | Ganancia |
+|--------|-------|-----------|-------|---------|----------|
+| **100 usuarios** | $6.25 | $96.92 | $103 | $110 | **+$7** |
+| **500 usuarios** | $46.25 | $545.40 | $592 | $649 | **+$57** |
 
 ---
 
@@ -407,6 +573,7 @@ Break-even = $50 / ($1.30 - $0.70) = ~83 usuarios
 - [WhatsApp Business Platform Pricing](https://business.whatsapp.com/products/platform-pricing)
 - [Groq Pricing](https://groq.com/pricing)
 - [Supabase Pricing](https://supabase.com/pricing)
+- [Wompi Tarifas Colombia](https://wompi.com/es/co/tarifas)
 
 ---
 
