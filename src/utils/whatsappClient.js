@@ -229,6 +229,9 @@ export async function sendTypingIndicator(to) {
  */
 export async function sendContactCard(to, contact) {
   try {
+    // Extract wa_id (phone number without + sign)
+    const waId = contact.phone.replace(/^\+/, '');
+
     const response = await axios.post(
       `${WHATSAPP_API_URL}/${PHONE_NUMBER_ID}/messages`,
       {
@@ -245,7 +248,8 @@ export async function sendContactCard(to, contact) {
             phones: [
               {
                 phone: contact.phone,
-                type: 'WORK'
+                type: 'WORK',
+                wa_id: waId  // This tells WhatsApp the number is registered
               }
             ],
             ...(contact.website && {
