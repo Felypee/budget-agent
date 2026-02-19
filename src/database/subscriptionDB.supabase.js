@@ -223,20 +223,33 @@ export const MoneditasDB = {
     // Use upsert to either create or increment
     const { data: existing } = await supabase
       .from("moneditas_usage")
-      .select("id, moneditas_used")
+      .select("id, moneditas_used, text_count, image_count, voice_count")
       .eq("phone", phone)
       .eq("period_start", periodStart.toISOString())
       .single();
 
+    // Determine which counter to increment based on operation type
+    const counterField = operationType === "text_message" ? "text_count"
+      : operationType === "image_receipt" ? "image_count"
+      : operationType === "audio_message" ? "voice_count"
+      : null;
+
     if (existing) {
       // Update existing record
+      const updateData = {
+        moneditas_used: existing.moneditas_used + amount,
+        last_operation: operationType,
+        updated_at: new Date().toISOString(),
+      };
+
+      // Increment the specific counter if applicable
+      if (counterField && existing[counterField] !== undefined) {
+        updateData[counterField] = (existing[counterField] || 0) + 1;
+      }
+
       const { data, error } = await supabase
         .from("moneditas_usage")
-        .update({
-          moneditas_used: existing.moneditas_used + amount,
-          last_operation: operationType,
-          updated_at: new Date().toISOString(),
-        })
+        .update(updateData)
         .eq("id", existing.id)
         .select("moneditas_used")
         .single();
@@ -244,18 +257,21 @@ export const MoneditasDB = {
       if (error) throw error;
       return data.moneditas_used;
     } else {
-      // Insert new record
+      // Insert new record with counter
+      const insertData = {
+        phone,
+        period_start: periodStart.toISOString(),
+        moneditas_used: amount,
+        moneditas_limit: plan.moneditasMonthly,
+        last_operation: operationType,
+        text_count: operationType === "text_message" ? 1 : 0,
+        image_count: operationType === "image_receipt" ? 1 : 0,
+        voice_count: operationType === "audio_message" ? 1 : 0,
+      };
+
       const { data, error } = await supabase
         .from("moneditas_usage")
-        .insert([
-          {
-            phone,
-            period_start: periodStart.toISOString(),
-            moneditas_used: amount,
-            moneditas_limit: plan.moneditasMonthly,
-            last_operation: operationType,
-          },
-        ])
+        .insert([insertData])
         .select("moneditas_used")
         .single();
 
