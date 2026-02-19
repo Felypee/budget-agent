@@ -42,8 +42,8 @@ const PLANS = {
   premium: {
     id: 'premium',
     name: 'Premium',
-    priceMonthly: 7.99,
-    moneditasMonthly: 3500,    // ~$7.00 max cost (neto $7.45 - margen 5%)
+    priceMonthly: 8.99,
+    moneditasMonthly: 3500,    // ~$7.00 max cost (neto $7.91 - margen 11%)
     historyDays: 365,
     // Legacy fields
     limitTextMessages: 3500,

@@ -29,7 +29,7 @@ INSERT INTO subscription_plans (id, name, price_monthly, moneditas_monthly, hist
 VALUES
   ('free', 'Free', 0, 50, 30, 50, 50, 50, 50, -1, true, false),
   ('basic', 'Basic', 2.99, 1200, 180, 1200, 1200, 1200, 1200, -1, true, true),
-  ('premium', 'Premium', 7.99, 3500, 365, 3500, 3500, 3500, 3500, -1, true, true)
+  ('premium', 'Premium', 8.99, 3500, 365, 3500, 3500, 3500, 3500, -1, true, true)
 ON CONFLICT (id) DO UPDATE SET
   moneditas_monthly = EXCLUDED.moneditas_monthly,
   history_days = EXCLUDED.history_days,

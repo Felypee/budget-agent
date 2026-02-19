@@ -160,9 +160,9 @@ For payments (Wompi):
 
 The app uses a token-based system called "moneditas" instead of separate limits per feature.
 
-| Feature | Free | Basic ($2.99) | Premium ($7.99) |
+| Feature | Free | Basic ($2.99) | Premium ($8.99) |
 |---------|------|---------------|-----------------|
-| Moneditas/month | 50 | 250 | 800 |
+| Moneditas/month | 50 | 1,200 | 3,500 |
 | Budgets | Unlimited | Unlimited | Unlimited |
 | Weekly Summary | Yes | Yes | Yes |
 | Visual Report Page | Yes | Yes | Yes |

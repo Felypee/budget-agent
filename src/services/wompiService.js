@@ -31,14 +31,14 @@ export const SUBSCRIPTION_PLANS = {
     name: "Basic",
     priceUSD: 2.99,
     priceCOP: 12000, // ~$2.99 USD
-    description: "150 mensajes/mes, 30 audios, exportar CSV",
+    description: "1,200 moneditas/mes, 6 meses historial, exportar CSV/PDF",
   },
   premium: {
     id: "premium",
     name: "Premium",
-    priceUSD: 7.99,
-    priceCOP: 32000, // ~$7.99 USD
-    description: "Mensajes ilimitados, 100 audios, exportar PDF",
+    priceUSD: 8.99,
+    priceCOP: 36000, // ~$8.99 USD
+    description: "3,500 moneditas/mes, 12 meses historial, exportar PDF",
   },
 };
 
