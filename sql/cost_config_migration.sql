@@ -6,7 +6,7 @@
 -- Tabla para guardar configuración de costos (key-value)
 CREATE TABLE IF NOT EXISTS cost_config (
   key TEXT PRIMARY KEY,
-  value DECIMAL(10,6) NOT NULL,
+  value DECIMAL(14,6) NOT NULL,
   description TEXT,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
