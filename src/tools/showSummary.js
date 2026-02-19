@@ -61,7 +61,7 @@ ${statsUrl}
 Este link é válido por ${expiryTime}.`
   };
 
-  return { success: true, message: messages[lang] || messages.es };
+  return { success: true, message: messages[lang] || messages.es, sticker: 'money' };
 }
 
 export default { definition, handler };

@@ -6,6 +6,7 @@ import { checkLimit, trackUsage, getSubscriptionStatus, getLimitExceededMessage,
 import { getMessage } from "../utils/languageUtils.js";
 import { getContextForClaude, addMessage } from "../services/conversationContext.js";
 import { trackUsage as trackDailyUsage, isAllowed } from "../utils/usageMonitor.js";
+import { sendContextSticker } from "../services/stickerService.js";
 
 dotenv.config();
 
@@ -156,6 +157,13 @@ When logging expenses:
 
       // If tools were called, return their results
       if (toolResults.length > 0) {
+        // Send stickers if any tool returned one
+        for (const result of toolResults) {
+          if (result.sticker) {
+            await sendContextSticker(this.userPhone, result.sticker);
+          }
+        }
+
         // Filter out null messages (e.g., document sent)
         const responseMessages = toolResults
           .map(r => r.message)

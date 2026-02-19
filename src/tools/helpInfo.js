@@ -16,7 +16,7 @@ export const definition = {
 };
 
 export async function handler(phone, params, lang, userCurrency) {
-  return { success: true, message: getMessage('welcome', lang) };
+  return { success: true, message: getMessage('welcome', lang), sticker: 'welcome' };
 }
 
 export default { definition, handler };

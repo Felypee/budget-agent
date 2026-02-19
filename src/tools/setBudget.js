@@ -44,7 +44,8 @@ export async function handler(phone, params, lang, userCurrency) {
       message: getMessage('budget_updated', lang, {
         category: category.toLowerCase(),
         amount: formatAmount(amount, userCurrency)
-      })
+      }),
+      sticker: 'success'
     };
   } else {
     // Budgets are unlimited for all plans
@@ -59,7 +60,8 @@ export async function handler(phone, params, lang, userCurrency) {
       message: getMessage('budget_set', lang, {
         category: category.toLowerCase(),
         amount: formatAmount(amount, userCurrency)
-      })
+      }),
+      sticker: 'success'
     };
   }
 }

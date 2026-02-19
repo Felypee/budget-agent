@@ -111,11 +111,16 @@ export async function handler(phone, params, lang, userCurrency) {
     }
   }
 
+  // Determine sticker based on budget status
+  let sticker = 'money'; // Default for expense logged
   if (budgetAlerts.length > 0) {
     response += `\n${budgetAlerts.join("\n")}`;
+    // Check if any alert is "exceeded" (100%+)
+    const hasExceeded = budgetAlerts.some(a => a.includes('100%') || a.includes('exceeded') || a.includes('excediste'));
+    sticker = hasExceeded ? 'sad' : 'warning';
   }
 
-  return { success: true, message: response };
+  return { success: true, message: response, sticker };
 }
 
 /**
