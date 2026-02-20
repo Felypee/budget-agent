@@ -16,15 +16,18 @@ function requireSetupToken(req, res, next) {
   const token = req.query.token || req.headers.authorization?.replace('Bearer ', '');
 
   if (!token) {
+    console.log('[setupRoutes] No token provided');
     return res.status(401).json({ error: 'Token required' });
   }
 
   const validation = validateSetupToken(token);
 
   if (!validation.valid) {
+    console.log('[setupRoutes] Token validation failed:', validation.error);
     return res.status(401).json({ error: validation.error });
   }
 
+  console.log('[setupRoutes] Token valid for phone:', validation.phone);
   req.userPhone = validation.phone;
   next();
 }
@@ -39,6 +42,7 @@ router.get('/api/setup', requireSetupToken, async (req, res) => {
 
     const user = await UserDB.get(phone);
     if (!user) {
+      console.log('[setupRoutes] User not found:', phone);
       return res.status(404).json({ error: 'User not found' });
     }
 
