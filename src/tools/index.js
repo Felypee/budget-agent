@@ -20,6 +20,7 @@ import editExpense from "./editExpense.js";
 import deleteBudget from "./deleteBudget.js";
 import showStats from "./showStats.js";
 import sendContact from "./sendContact.js";
+import manageSubscription from "./manageSubscription.js";
 
 // Registry of all available tools
 const tools = {
@@ -40,6 +41,7 @@ const tools = {
   delete_budget: deleteBudget,
   show_stats: showStats,
   send_contact: sendContact,
+  manage_subscription: manageSubscription,
 };
 
 /**

@@ -2,6 +2,7 @@
 // Use DB_DRIVER env var to choose between 'inmemory' (default) and 'supabase'
 import * as InMemory from "./inMemoryDB.js";
 import * as SubscriptionInMemory from "./subscriptionDB.inMemory.js";
+import * as PaymentSourceInMemory from "./paymentSourceDB.inMemory.js";
 
 const driver = (process.env.DB_DRIVER || "inmemory").toLowerCase();
 
@@ -13,6 +14,8 @@ let SubscriptionPlanDB = SubscriptionInMemory.SubscriptionPlanDB;
 let UserSubscriptionDB = SubscriptionInMemory.UserSubscriptionDB;
 let UsageDB = SubscriptionInMemory.UsageDB;
 let MoneditasDB = SubscriptionInMemory.MoneditasDB;
+let PaymentSourceDB = PaymentSourceInMemory.PaymentSourceDB;
+let BillingHistoryDB = PaymentSourceInMemory.BillingHistoryDB;
 let testConnection = () => Promise.resolve(true);
 let supabase = null;
 
@@ -37,6 +40,11 @@ if (driver === "supabase" || driver === "supa") {
     UserSubscriptionDB = SubscriptionSupabase.UserSubscriptionDB;
     UsageDB = SubscriptionSupabase.UsageDB;
     MoneditasDB = SubscriptionSupabase.MoneditasDB;
+
+    // Load payment source DBs from Supabase
+    const PaymentSourceSupabase = await import("./paymentSourceDB.supabase.js");
+    PaymentSourceDB = PaymentSourceSupabase.PaymentSourceDB;
+    BillingHistoryDB = PaymentSourceSupabase.BillingHistoryDB;
   } catch (err) {
     // If dynamic import fails, keep using in-memory and warn
     console.warn(
@@ -57,6 +65,8 @@ export {
   UserSubscriptionDB,
   UsageDB,
   MoneditasDB,
+  PaymentSourceDB,
+  BillingHistoryDB,
   testConnection,
   supabase,
 };

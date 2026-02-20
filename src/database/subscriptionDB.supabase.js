@@ -117,6 +117,9 @@ export const UserSubscriptionDB = {
     if (data.startedAt !== undefined) updateData.started_at = data.startedAt;
     if (data.expiresAt !== undefined) updateData.expires_at = data.expiresAt;
     if (data.isActive !== undefined) updateData.is_active = data.isActive;
+    if (data.autoRenew !== undefined) updateData.auto_renew = data.autoRenew;
+    if (data.nextBillingDate !== undefined) updateData.next_billing_date = data.nextBillingDate;
+    if (data.cancelledAt !== undefined) updateData.cancelled_at = data.cancelledAt;
     updateData.updated_at = new Date().toISOString();
 
     const { data: result, error } = await supabase
@@ -175,6 +178,9 @@ export const UserSubscriptionDB = {
       startedAt: row.started_at,
       expiresAt: row.expires_at,
       isActive: row.is_active,
+      autoRenew: row.auto_renew || false,
+      nextBillingDate: row.next_billing_date,
+      cancelledAt: row.cancelled_at,
       createdAt: row.created_at,
       updatedAt: row.updated_at,
     };

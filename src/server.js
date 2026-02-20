@@ -13,6 +13,11 @@ import {
   sendExpenseReminder,
 } from './services/reminderService.js';
 import { handleWompiWebhook } from './handlers/wompiWebhookHandler.js';
+import {
+  startBillingScheduler,
+  triggerRenewals,
+  triggerRetries,
+} from './services/billingScheduler.js';
 import { getUsageStats } from './utils/usageMonitor.js';
 import statsRoutes from './routes/statsRoutes.js';
 
@@ -150,6 +155,39 @@ app.post('/webhook/wompi', wompiLimiter, async (req, res) => {
   }
 });
 
+// Billing API endpoints (protected with reminder secret)
+app.post('/api/billing/renewals', async (req, res) => {
+  if (REMINDER_SECRET) {
+    const token = req.headers['x-reminder-secret'] || req.query.secret;
+    if (token !== REMINDER_SECRET) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  }
+
+  try {
+    const result = await triggerRenewals();
+    res.json({ success: true, ...result });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/billing/retries', async (req, res) => {
+  if (REMINDER_SECRET) {
+    const token = req.headers['x-reminder-secret'] || req.query.secret;
+    if (token !== REMINDER_SECRET) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  }
+
+  try {
+    const result = await triggerRetries();
+    res.json({ success: true, ...result });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Webhook verification endpoint (required by WhatsApp)
 app.get('/webhook', verifyWebhook);
 
@@ -188,4 +226,7 @@ app.listen(PORT, () => {
 
   // Start the reminder scheduler
   startReminderScheduler();
+
+  // Start the billing scheduler for recurring payments
+  startBillingScheduler();
 });

@@ -98,6 +98,9 @@ export const UserSubscriptionDB = {
       startedAt: new Date(),
       expiresAt: null,
       isActive: true,
+      autoRenew: false,
+      nextBillingDate: null,
+      cancelledAt: null,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -121,7 +124,13 @@ export const UserSubscriptionDB = {
   update(phone, data) {
     const subscription = subscriptions.get(phone);
     if (subscription) {
-      Object.assign(subscription, data, { updatedAt: new Date() });
+      // Handle both camelCase and snake_case for compatibility
+      const normalizedData = { ...data };
+      if (data.auto_renew !== undefined) normalizedData.autoRenew = data.auto_renew;
+      if (data.next_billing_date !== undefined) normalizedData.nextBillingDate = data.next_billing_date;
+      if (data.cancelled_at !== undefined) normalizedData.cancelledAt = data.cancelled_at;
+
+      Object.assign(subscription, normalizedData, { updatedAt: new Date() });
       subscriptions.set(phone, subscription);
     }
     return subscription;

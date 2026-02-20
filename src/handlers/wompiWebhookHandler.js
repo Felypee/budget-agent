@@ -12,6 +12,7 @@ import {
   formatPriceCOP,
   SUBSCRIPTION_PLANS,
 } from "../services/wompiService.js";
+import { createPaymentSource } from "../services/wompiRecurringService.js";
 import { UserSubscriptionDB } from "../database/index.js";
 import { sendTextMessage } from "../utils/whatsappClient.js";
 import { getMessage } from "../utils/languageUtils.js";
@@ -91,6 +92,32 @@ export async function handleWompiWebhook(payload, signature, timestamp) {
     console.log(`[wompi webhook] Calling UserSubscriptionDB.upgradePlan...`);
     const updatedSubscription = await UserSubscriptionDB.upgradePlan(phone, planId);
     console.log(`[wompi webhook] Subscription updated:`, JSON.stringify(updatedSubscription));
+
+    // Try to create payment source for recurring payments
+    // Card token is in transaction.payment_method.extra.card_token for card payments
+    const paymentMethod = transaction.payment_method;
+    if (paymentMethod?.type === "CARD" && paymentMethod?.extra?.card_token) {
+      console.log(`[wompi webhook] Found card token, creating payment source...`);
+      const cardInfo = {
+        lastFour: paymentMethod.extra?.last_four,
+        brand: paymentMethod.extra?.brand,
+      };
+      const sourceResult = await createPaymentSource(phone, paymentMethod.extra.card_token, cardInfo);
+
+      if (sourceResult.success) {
+        console.log(`[wompi webhook] ✅ Payment source created: ${sourceResult.paymentSourceId}`);
+
+        // Enable auto-renewal and set next billing date
+        const nextBilling = new Date();
+        nextBilling.setDate(nextBilling.getDate() + 30);
+        await UserSubscriptionDB.update(phone, {
+          autoRenew: true,
+          nextBillingDate: nextBilling.toISOString(),
+        });
+      } else {
+        console.log(`[wompi webhook] ⚠️ Could not create payment source: ${sourceResult.error}`);
+      }
+    }
 
     // Get user language for notification
     const user = await UserDB.get(phone);
