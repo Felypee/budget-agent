@@ -20,8 +20,8 @@
 | Plan | Precio | Moneditas/mes | Uso Tipico |
 |------|--------|---------------|------------|
 | **Free** | $0 | 200 | ~40 gastos texto |
-| **Basic** | $3.99 | 1,200 | ~240 gastos texto |
-| **Premium** | $9.99 | 3,500 | ~700 gastos texto |
+| **Basic** | $5.99 | 1,200 | ~240 gastos texto |
+| **Premium** | $12.99 | 3,500 | ~700 gastos texto |
 
 ### Margenes Reales (con Wompi incluido)
 
@@ -118,7 +118,7 @@ const OPERATION_COSTS = {
 
 | Caracteristica | **Free** | **Basic** | **Premium** |
 |----------------|----------|-----------|-------------|
-| **Precio** | $0 | $3.99/mes | $9.99/mes |
+| **Precio** | $0 | $5.99/mes | $12.99/mes |
 | **Precio COP** | $0 | ~$16,000 | ~$40,000 |
 | **Moneditas/mes** | 200 | 1,200 | 3,500 |
 | **Historial** | 30 dias | 6 meses | 12 meses |
@@ -176,26 +176,26 @@ Premium (3,500 moneditas):
 | Ingreso | | **$0** |
 | **MARGEN** | | **-$0.37** |
 
-#### Plan Basic ($3.99)
+#### Plan Basic ($5.99)
 
 | Concepto | Calculo | Total |
 |----------|---------|-------|
 | Moneditas usadas (100% = 1,200) | 1,200 × $0.002 | $2.40 |
 | Infraestructura prorrateada | - | $0.05 |
 | **TOTAL COSTO** | | **~$2.45/mes** |
-| Precio bruto | | $3.99 |
+| Precio bruto | | $5.99 |
 | Comision Wompi (~12%) | | -$0.47 |
 | **INGRESO NETO** | | **$3.52** |
 | **MARGEN** | | **+$1.07 (30%)** |
 
-#### Plan Premium ($9.99)
+#### Plan Premium ($12.99)
 
 | Concepto | Calculo | Total |
 |----------|---------|-------|
 | Moneditas usadas (100% = 3,500) | 3,500 × $0.002 | $7.00 |
 | Infraestructura prorrateada | - | $0.05 |
 | **TOTAL COSTO** | | **~$7.05/mes** |
-| Precio bruto | | $9.99 |
+| Precio bruto | | $12.99 |
 | Comision Wompi (~6%) | | -$0.60 |
 | **INGRESO NETO** | | **$9.39** |
 | **MARGEN** | | **+$2.34 (25%)** |
@@ -227,8 +227,8 @@ Premium (3,500 moneditas):
 | Plan | Usuarios | Precio | Bruto | Wompi | **Neto** |
 |------|----------|--------|-------|-------|----------|
 | Free | 75 | $0 | $0 | $0 | $0 |
-| Basic | 18 | $3.99 | $53.82 | $6.66 | $47.16 |
-| Premium | 7 | $9.99 | $55.93 | $3.78 | $52.15 |
+| Basic | 18 | $5.99 | $53.82 | $6.66 | $47.16 |
+| Premium | 7 | $12.99 | $55.93 | $3.78 | $52.15 |
 | **TOTAL** | **100** | | $109.75 | $10.44 | **$99.31** |
 
 #### Costos
@@ -361,12 +361,12 @@ const PLANS = {
   basic: {
     moneditasMonthly: 1200,
     historyDays: 180,
-    priceMonthly: 3.99,
+    priceMonthly: 5.99,
   },
   premium: {
     moneditasMonthly: 3500,
     historyDays: 365,
-    priceMonthly: 9.99,
+    priceMonthly: 12.99,
   },
 };
 ```
