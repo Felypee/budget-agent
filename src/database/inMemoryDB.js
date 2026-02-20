@@ -30,6 +30,8 @@ export const UserDB = {
       preferences: {},
       currency: null,
       language: null,
+      setup_complete: false,
+      setup_reminded: false,
       ...data
     };
     users.set(phone, user);
@@ -97,6 +99,24 @@ export const UserDB = {
   getCategories(phone) {
     const user = users.get(phone);
     return user ? user.categories || null : null;
+  },
+
+  setSetupComplete(phone, complete = true) {
+    const user = users.get(phone);
+    if (user) {
+      user.setup_complete = complete;
+      users.set(phone, user);
+    }
+    return user;
+  },
+
+  setSetupReminded(phone, reminded = true) {
+    const user = users.get(phone);
+    if (user) {
+      user.setup_reminded = reminded;
+      users.set(phone, user);
+    }
+    return user;
   }
 };
 

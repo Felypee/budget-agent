@@ -3,7 +3,7 @@
  * Records one or more expenses from user message
  */
 
-import { ExpenseDB, BudgetDB } from "../database/index.js";
+import { ExpenseDB, BudgetDB, UserDB } from "../database/index.js";
 import { validateAmount, formatAmount } from "../utils/currencyUtils.js";
 import { getMessage } from "../utils/languageUtils.js";
 
@@ -120,7 +120,45 @@ export async function handler(phone, params, lang, userCurrency) {
     sticker = hasExceeded ? 'sad' : 'warning';
   }
 
+  // Check if this is a good time to show setup reminder
+  const setupReminder = await getSetupReminder(phone, lang);
+  if (setupReminder) {
+    response += `\n\n${setupReminder}`;
+  }
+
   return { success: true, message: response, sticker };
+}
+
+/**
+ * Get setup reminder message if user hasn't completed setup
+ * Only shows once after first few expenses
+ */
+async function getSetupReminder(phone, lang) {
+  try {
+    const user = await UserDB.get(phone);
+    if (!user) return null;
+
+    // Don't show if already completed setup or already reminded
+    if (user.setup_complete || user.setup_reminded) return null;
+
+    // Count user's expenses - only show reminder after 2-3 expenses
+    const expenses = await ExpenseDB.getByUser(phone);
+    if (expenses.length < 2 || expenses.length > 5) return null;
+
+    // Mark as reminded so we don't show again
+    await UserDB.setSetupReminded(phone, true);
+
+    const messages = {
+      en: `💡 *Tip:* Set up your categories and budgets at:\nhttps://monedita.app/setup`,
+      es: `💡 *Tip:* Configura tus categorías y presupuestos en:\nhttps://monedita.app/setup`,
+      pt: `💡 *Dica:* Configure suas categorias e orçamentos em:\nhttps://monedita.app/setup`,
+    };
+
+    return messages[lang] || messages.en;
+  } catch (error) {
+    console.error('[logExpense] Error checking setup reminder:', error);
+    return null;
+  }
 }
 
 /**

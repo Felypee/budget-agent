@@ -20,6 +20,7 @@ import {
 } from './services/billingScheduler.js';
 import { getUsageStats } from './utils/usageMonitor.js';
 import statsRoutes from './routes/statsRoutes.js';
+import setupRoutes from './routes/setupRoutes.js';
 
 dotenv.config();
 
@@ -89,6 +90,9 @@ app.get('/health', (req, res) => {
 
 // Stats API routes (JWT protected)
 app.use(statsRoutes);
+
+// Setup routes (for web-based category/budget configuration)
+app.use(setupRoutes);
 
 // Usage stats endpoint (protected)
 app.get('/api/usage', (req, res) => {

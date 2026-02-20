@@ -53,6 +53,8 @@ export const UserDB = {
             preferences: data.preferences || {},
             currency: data.currency || null,
             language: data.language || null,
+            setup_complete: data.setup_complete || false,
+            setup_reminded: data.setup_reminded || false,
           },
         ])
         .select()
@@ -177,6 +179,30 @@ export const UserDB = {
 
     if (error && error.code !== "PGRST116") throw error;
     return data ? data.categories : null;
+  },
+
+  async setSetupComplete(phone, complete = true) {
+    const { data: user, error } = await supabase
+      .from("users")
+      .update({ setup_complete: complete })
+      .eq("phone", phone)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return user;
+  },
+
+  async setSetupReminded(phone, reminded = true) {
+    const { data: user, error } = await supabase
+      .from("users")
+      .update({ setup_reminded: reminded })
+      .eq("phone", phone)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return user;
   },
 };
 
