@@ -222,35 +222,11 @@ Qual é o seu nome?`
 function getNameSavedMessage(name, lang) {
   const messages = {
     en: `Nice to meet you, *${name}*! 🎉
-
-You have *100 free moneditas* to start.
-
-Just tell me your expenses:
-• "Spent 20 on coffee"
-• Send a receipt photo
-• Or send a voice note
-
-Let's go! 💪`,
+You have *100 free moneditas*. Just tell me your expenses!`,
     es: `¡Mucho gusto, *${name}*! 🎉
-
-Tienes *100 moneditas gratis* para empezar.
-
-Solo dime tus gastos:
-• "Gasté 20000 en café"
-• Envía foto de un recibo
-• O envía una nota de voz
-
-¡Vamos! 💪`,
+Tienes *100 moneditas gratis*. ¡Solo dime tus gastos!`,
     pt: `Prazer, *${name}*! 🎉
-
-Você tem *100 moneditas grátis* para começar.
-
-Só me diga seus gastos:
-• "Gastei 20 em café"
-• Envie foto de um recibo
-• Ou envie uma nota de voz
-
-Vamos lá! 💪`
+Você tem *100 moneditas grátis*. Só me diga seus gastos!`
   };
   return messages[lang] || messages.en;
 }
