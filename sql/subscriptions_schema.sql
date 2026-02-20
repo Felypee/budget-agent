@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS subscription_plans (
   name TEXT NOT NULL,
   price_monthly DECIMAL(10,2) DEFAULT 0,
   -- New moneditas system (February 2026)
-  moneditas_monthly INTEGER DEFAULT 200,
+  moneditas_monthly INTEGER DEFAULT 100,
   history_days INTEGER DEFAULT 30,
   -- Legacy limits (kept for backward compatibility, will be deprecated)
   limit_text_messages INTEGER DEFAULT 50,
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS subscription_plans (
 -- Insert/update plans with new moneditas values
 INSERT INTO subscription_plans (id, name, price_monthly, moneditas_monthly, history_days, limit_text_messages, limit_voice_messages, limit_image_messages, limit_ai_conversations, limit_budgets, can_export_csv, can_export_pdf)
 VALUES
-  ('free', 'Free', 0, 200, 30, 200, 200, 200, 200, -1, true, false),
+  ('free', 'Free', 0, 100, 30, 100, 100, 100, 100, -1, true, false),
   ('basic', 'Basic', 3.99, 1200, 180, 1200, 1200, 1200, 1200, -1, true, true),
   ('premium', 'Premium', 9.99, 3500, 365, 3500, 3500, 3500, 3500, -1, true, true)
 ON CONFLICT (id) DO UPDATE SET
@@ -182,11 +182,11 @@ BEGIN
     SELECT 1 FROM information_schema.columns
     WHERE table_name = 'subscription_plans' AND column_name = 'moneditas_monthly'
   ) THEN
-    ALTER TABLE subscription_plans ADD COLUMN moneditas_monthly INTEGER DEFAULT 200;
+    ALTER TABLE subscription_plans ADD COLUMN moneditas_monthly INTEGER DEFAULT 100;
     ALTER TABLE subscription_plans ADD COLUMN history_days INTEGER DEFAULT 30;
 
     -- Update existing plans with correct values
-    UPDATE subscription_plans SET moneditas_monthly = 200, history_days = 30 WHERE id = 'free';
+    UPDATE subscription_plans SET moneditas_monthly = 100, history_days = 30 WHERE id = 'free';
     UPDATE subscription_plans SET moneditas_monthly = 1200, history_days = 180 WHERE id = 'basic';
     UPDATE subscription_plans SET moneditas_monthly = 3500, history_days = 365 WHERE id = 'premium';
   END IF;

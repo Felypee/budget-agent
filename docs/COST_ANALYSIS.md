@@ -141,11 +141,11 @@ const OPERATION_COSTS = {
 ### Calculo de Uso Mixto
 
 ```
-Free (200 moneditas):
-- 28 textos × 5 = 140 moneditas
-- 5 imagenes × 6 = 30 moneditas
-- 7 audios × 4 = 28 moneditas
-= 198 moneditas (~40 operaciones)
+Free (100 moneditas):
+- 14 textos × 5 = 70 moneditas
+- 3 imagenes × 6 = 18 moneditas
+- 3 audios × 4 = 12 moneditas
+= 100 moneditas (~20 operaciones)
 
 Basic (1,200 moneditas):
 - 168 textos × 5 = 840 moneditas
@@ -354,7 +354,7 @@ const OPERATION_COSTS = {
 // Planes
 const PLANS = {
   free: {
-    moneditasMonthly: 200,
+    moneditasMonthly: 100,
     historyDays: 30,
     priceMonthly: 0,
   },

@@ -223,7 +223,7 @@ function getNameSavedMessage(name, lang) {
   const messages = {
     en: `Nice to meet you, *${name}*! 🎉
 
-You have *200 free moneditas* to start.
+You have *100 free moneditas* to start.
 
 Just tell me your expenses:
 • "Spent 20 on coffee"
@@ -233,7 +233,7 @@ Just tell me your expenses:
 Let's go! 💪`,
     es: `¡Mucho gusto, *${name}*! 🎉
 
-Tienes *200 moneditas gratis* para empezar.
+Tienes *100 moneditas gratis* para empezar.
 
 Solo dime tus gastos:
 • "Gasté 20000 en café"
@@ -243,7 +243,7 @@ Solo dime tus gastos:
 ¡Vamos! 💪`,
     pt: `Prazer, *${name}*! 🎉
 
-Você tem *200 moneditas grátis* para começar.
+Você tem *100 moneditas grátis* para começar.
 
 Só me diga seus gastos:
 • "Gastei 20 em café"

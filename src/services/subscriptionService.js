@@ -158,9 +158,9 @@ export async function getSubscriptionStatus(phone) {
     console.error("[subscriptionService] Error getting status:", error);
     // Return a default free plan status on error
     return {
-      plan: { id: "free", name: "Free", priceMonthly: 0, moneditasMonthly: 200, historyDays: 30 },
-      moneditas: { used: 0, limit: 200, remaining: 200 },
-      limits: { text: 200, voice: 200, image: 200, ai_conversation: 200, budget: -1 },
+      plan: { id: "free", name: "Free", priceMonthly: 0, moneditasMonthly: 100, historyDays: 30 },
+      moneditas: { used: 0, limit: 100, remaining: 100 },
+      limits: { text: 100, voice: 100, image: 100, ai_conversation: 100, budget: -1 },
       usage: { text: 0, voice: 0, image: 0, ai_conversation: 0, budget: 0 },
       features: { canExportCsv: true, canExportPdf: false },
       error: true,

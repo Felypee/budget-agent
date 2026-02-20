@@ -1,7 +1,6 @@
 import axios from 'axios';
 import FormData from 'form-data';
 import dotenv from 'dotenv';
-import { formatWhatsAppMessage } from './messageUtils.js';
 
 dotenv.config();
 
@@ -11,13 +10,9 @@ const ACCESS_TOKEN = process.env.WHATSAPP_TOKEN;
 
 /**
  * Send a text message via WhatsApp
- * Automatically truncates messages to 12 lines max
  */
 export async function sendTextMessage(to, message) {
   try {
-    // Format message: truncate to 12 lines, clean up whitespace
-    const formattedMessage = formatWhatsAppMessage(message);
-
     const response = await axios.post(
       `${WHATSAPP_API_URL}/${PHONE_NUMBER_ID}/messages`,
       {
@@ -25,7 +20,7 @@ export async function sendTextMessage(to, message) {
         recipient_type: 'individual',
         to: to,
         type: 'text',
-        text: { body: formattedMessage }
+        text: { body: message }
       },
       {
         headers: {

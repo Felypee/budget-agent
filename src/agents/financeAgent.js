@@ -87,7 +87,7 @@ IMPORTANT INSTRUCTIONS:
 2. Use the appropriate tool to fulfill their request
 3. For expense logging, extract ALL expenses mentioned (can be multiple)
 4. For categories, use: food, transport, shopping, entertainment, bills, health, other
-5. Be helpful and concise - this is WhatsApp, keep responses short
+5. CRITICAL: Keep responses SHORT - maximum 10 lines. This is WhatsApp, users read on mobile
 6. Respond in the same language as the user's message
 7. Use conversation history for context when needed
 
