@@ -19,7 +19,7 @@
 import { sendSticker } from "../utils/whatsappClient.js";
 
 // Sticker URLs - Served from the Express server's public folder
-// Set SERVER_URL in production (e.g., https://your-railway-app.up.railway.app)
+// Set SERVER_URL in production (e.g., https://budget-agent-production.up.railway.app)
 const SERVER_URL = process.env.SERVER_URL || "http://localhost:3000";
 const STICKER_BASE_URL = `${SERVER_URL}/stickers`;
 

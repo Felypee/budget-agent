@@ -58,7 +58,7 @@ git push heroku main
 ```
 
 8. **Configure WhatsApp Webhook**
-- URL: `https://financeflow-production.herokuapp.com/webhook`
+- URL: `https://budget-agent-production.up.railway.app/webhook`
 - Update in Meta Developer Console
 
 9. **Scale Dynos**
